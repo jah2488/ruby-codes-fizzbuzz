@@ -1,0 +1,8 @@
+<h1>RubyConf2020</h1>
+
+<h2>Available Programs (<%= programs.count %>)</h2>
+<% programs.each do |prog| %>
+  <div class='program' id='prog-<%= prog.id %>'>
+    <%= prog.name %>
+  </div>
+<% end %>
