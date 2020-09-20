@@ -1,32 +1,53 @@
 <h1><%= program.name %> - <%= program.mode %></h1>
 
-<div class="program-code">
-  <%= program.chars.map(&:name).join(" ").html_safe %> []
-</div>
+<div class="program-content">
+  <div class="code-section">
+    <div class="program-code">
+      <%= program.code.html_safe %> []
+    </div>
 
-<%= form_with model: [program] do |f| %>
-  <div>
-    <%= f.label :addition %>
-    <%= f.text_field :addition %>
+    <%= form_with model: [program] do |f| %>
+      <div>
+        <%= f.label :addition %>
+        <%= f.text_field :addition %>
+      </div>
+
+      <%= f.submit %>
+    <% end %>
+
+    <br />
+
+    <%= form_with model: [program] do |f| %>
+      <%= f.hidden_field :addition, value: "&nbsp;&nbsp;" %>
+      <%= f.submit "Tab" %>
+    <% end %>
+
+    <br />
+
+    <%= form_with model: [program] do |f| %>
+      <%= f.hidden_field :addition, value: "<br />" %>
+      <%= f.submit "New Line" %>
+    <% end %>
+
+    <br />
+
+    <%= form_with(url: "/programs/#{program.id}/clear", method: "put") do |f| %>
+      <%= f.submit "Clear" %>
+    <% end %>
   </div>
 
-  <%= f.submit %>
-<% end %>
-
-<br />
-
-<%= form_with(url: "/programs/#{program.id}/tab", method: "put") do |f| %>
-  <%= f.submit "Tab" %>
-<% end %>
-
-<br />
-
-<%= form_with(url: "/programs/#{program.id}/new_line", method: "put") do |f| %>
-  <%= f.submit "New Line" %>
-<% end %>
-
-<br />
-
-<%= form_with(url: "/programs/#{program.id}/clear", method: "put") do |f| %>
-  <%= f.submit "Clear" %>
-<% end %>
+  <div class="vote-section">
+    <h3 class="vote-title">Democracy</h3>
+    <ul class="vote-list">
+      <% program.chars.order(votes_count: :desc).each do |char| %>
+        <li class="vote-item">
+          <%= "#{Char::SPECIAL_CHAR[char.name] || char.name} - #{char.votes_count}" %>
+          <%= form_with model: [program] do |f| %>
+            <%= f.hidden_field :addition, value: char.name %>
+            <%= f.submit "Vote" %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

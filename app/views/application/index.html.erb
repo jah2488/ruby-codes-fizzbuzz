@@ -3,6 +3,6 @@
 <h2>Available Programs (<%= programs.count %>)</h2>
 <% programs.each do |prog| %>
   <div class='program' id='prog-<%= prog.id %>'>
-    <%= link_to prog.name, program_path(prog) %>
+    <%= link_to "#{prog.name} - #{prog.mode}", program_path(prog) %>
   </div>
 <% end %>

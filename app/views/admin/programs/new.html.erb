@@ -6,8 +6,10 @@
   </div>
 
   <div>
-    <%= f.label :mode %>
-    <%= f.text_field :mode %>
+    <%= f.label :mode, "Anarchy" %>
+    <%= f.radio_button :mode, "Anarchy" %>
+    <%= f.label :mode, "Democracy" %>
+    <%= f.radio_button :mode, "Democracy", checked: true %>
   </div>
 
   <%= f.submit %>
