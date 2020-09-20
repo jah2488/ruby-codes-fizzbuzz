@@ -1,7 +1,7 @@
 <h1><%= program.name %> - <%= program.mode %></h1>
 
 <div class="program-code">
-  <%= program.code.html_safe %>
+  <%= program.chars.map(&:name).join(" ").html_safe %> []
 </div>
 
 <%= form_with model: [program] do |f| %>
