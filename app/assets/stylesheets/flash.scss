@@ -1,0 +1,23 @@
+@import '_variables';
+
+.flash-notice, .flash-alert {
+  margin: 5px;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  color: $white;
+}
+
+.flash-success {
+  background: $green;
+}
+.flash-alert {
+  background: $red;
+}
+.flash-warning {
+  background: $yellow;
+  color: $black;
+}
+.flash-notice {
+  background: $light-blue;
+}

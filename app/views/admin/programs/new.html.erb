@@ -1,4 +1,14 @@
 <%= form_with model: [:admin, program] do |f| %>
-  <%= f.text_field :name %>
-  <% f.submit %>
+  
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :mode %>
+    <%= f.text_field :mode %>
+  </div>
+
+  <%= f.submit %>
 <% end %>

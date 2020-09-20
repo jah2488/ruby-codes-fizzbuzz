@@ -10,6 +10,12 @@
   </head>
 
   <body>
+    <% flash.each do |type, msg| %>
+      <div class="flash-<%=type%>">
+        <%= msg %>
+      </div>
+    <% end %>
+
     <% if Rails.env.development? %>
       <%= link_to :home, :home %>
       <%= link_to :admin, :admin_root %>
