@@ -1,1 +1,32 @@
-<h1>Code!</h1>
+<h1><%= program.name %> - <%= program.mode %></h1>
+
+<div class="program-code">
+  <%= program.code.html_safe %>
+</div>
+
+<%= form_with model: [program] do |f| %>
+  <div>
+    <%= f.label :addition %>
+    <%= f.text_field :addition %>
+  </div>
+
+  <%= f.submit %>
+<% end %>
+
+<br />
+
+<%= form_with(url: "/programs/#{program.id}/tab", method: "put") do |f| %>
+  <%= f.submit "Tab" %>
+<% end %>
+
+<br />
+
+<%= form_with(url: "/programs/#{program.id}/new_line", method: "put") do |f| %>
+  <%= f.submit "New Line" %>
+<% end %>
+
+<br />
+
+<%= form_with(url: "/programs/#{program.id}/clear", method: "put") do |f| %>
+  <%= f.submit "Clear" %>
+<% end %>

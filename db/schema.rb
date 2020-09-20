@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_11_204759) do
+ActiveRecord::Schema.define(version: 2020_09_20_174403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,14 +35,14 @@ ActiveRecord::Schema.define(version: 2020_09_11_204759) do
   create_table "programs", force: :cascade do |t|
     t.string "name", null: false
     t.string "mode", default: "anarchy", null: false
+    t.boolean "complete", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "complete"
-    t.boolean "#<ActiveRecord::ConnectionAdapters::PostgreSQL::TableDefinition"
+    t.text "code", default: "", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name", default: "user-9eea0c", null: false
+    t.string "name", default: "user-027ea7", null: false
     t.boolean "mod", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
