@@ -1,9 +1,39 @@
+.program-content {
+  display: flex;
+}
+
 .program-code {
   min-height: 10rem;
+  width: 30rem;
   border: 1px solid black;
   border-radius: 4px;
   background: #eee;
   padding: 0.5rem;
-  width: 30rem;
   margin: 1rem 0;
+}
+
+.vote-section {
+  min-height: 10rem;
+  height: 100%;
+  border: 1px solid black;
+  border-radius: 4px;
+  background: #eee;
+  padding: 0.5rem;
+  width: 15rem;
+  margin: 1rem;
+}
+
+.vote-title {
+  margin: 0;
+}
+
+.vote-list {
+  margin: 0;
+  padding: 0;
+}
+
+.vote-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
 }
