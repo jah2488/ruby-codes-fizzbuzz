@@ -1,13 +1,12 @@
 class ProgramsController < ApplicationController
   def show
-    program = Program.find(params.fetch(:id))
+    program = Program.includes(:chars).find(params.fetch(:id))
     render locals: { program: program }
   end
 
   def update
     program = Program.find(params.fetch(:id))
-    code = program.code + " #{params.dig(:program, :addition)}"
-    unless program.update(code: code)
+    unless program.chars.create!(name: params[:program][:addition])
       flash[:alert] = "Something went wrong!"
     end
     redirect_to program
@@ -15,21 +14,19 @@ class ProgramsController < ApplicationController
 
   def tab
     program = Program.find(params.fetch(:id))
-    code = program.code + "&nbsp;&nbsp;"
-    program.update(code: code)
+    program.chars.create!(name: "&nbsp;&nbsp;")
     redirect_to program
   end
 
   def new_line
     program = Program.find(params.fetch(:id))
-    code = program.code + "<br />"
-    program.update(code: code)
+    program.chars.create!(name: "<br />")
     redirect_to program
   end
 
   def clear
     program = Program.find(params.fetch(:id))
-    program.update(code: "")
+    program.chars.destroy_all
     redirect_to program
   end
 
