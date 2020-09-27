@@ -1,5 +1,12 @@
+.program-container {
+  display: flex;
+}
+
 .program-content {
   display: flex;
+  &.column {
+    flex-direction: column;
+  }
 }
 
 .program-code {
@@ -10,6 +17,11 @@
   background: #eee;
   padding: 0.5rem;
   margin: 1rem 0;
+}
+
+.addition-field {
+  display: flex;
+  align-items: flex-start;
 }
 
 .vote-section {
