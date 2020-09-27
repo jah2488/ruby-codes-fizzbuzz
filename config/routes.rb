@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  put "programs/:id/clear", to: "programs#clear"
-  resources :programs, only: [:show, :update]
+  resources :programs, only: [:show, :update] do
+    member do
+      put :clear
+    end
+  end
 
   namespace :admin do
     resources :programs
