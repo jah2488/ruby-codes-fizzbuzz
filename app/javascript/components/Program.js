@@ -14,8 +14,6 @@ const Program = () => {
   const [program, setProgram] = useState({});
   const [addition, setAddition] = useState("");
   
-  console.log(window.location);
-
   useEffect(() => {
     const programId = window.location.pathname.split("/")[2]
     const url = `/programs/${programId}`;
@@ -55,8 +53,9 @@ const Program = () => {
     client.put(url, data)
       .then(response => response.json())
       .then(response => setProgram(response));
-  }
+  };
 
+  if (!program.id) return "";
   return (
     <>
       <h1>{`${program.name} - ${program.mode}`}</h1>

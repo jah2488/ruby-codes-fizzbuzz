@@ -4,7 +4,7 @@ class ProgramsController < ApplicationController
   def show
     program = Program.includes(:chars).find(params.fetch(:id))
     
-    if request.xhr?
+    if request.headers["HTTP_RESPONSE_TYPE"] == "json"
       render json: view(program)
     else
       render :show
