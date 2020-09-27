@@ -5,7 +5,11 @@ class ProgramsController < ApplicationController
     program = Program.includes(:chars).find(params.fetch(:id))
     
     if request.headers["HTTP_RESPONSE_TYPE"] == "json"
+<<<<<<< HEAD
       render json: view(program)
+=======
+      render json: program.view
+>>>>>>> Able to send messages via action cable to update chat.
     else
       render :show
     end
@@ -20,7 +24,7 @@ class ProgramsController < ApplicationController
       program.chars.destroy_all
     end
 
-    render json: view(program)
+    render json: program.view
   end
 
   def clear
@@ -28,18 +32,6 @@ class ProgramsController < ApplicationController
     program.update(code: "")
     program.chars.destroy_all
 
-    render json: view(program)
-  end
-
-  private
-
-  def view(program)
-    {
-      id: program.id,
-      name: program.name,
-      mode: program.mode,
-      code: program.code,
-      chars: program.chars.order(votes_count: :desc)
-    }
+    render json: program.view
   end
 end

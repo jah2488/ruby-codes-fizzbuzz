@@ -1,39 +1,26 @@
 import consumer from "./consumer";
 
-export default (program_id) => {
-  return consumer.subscriptions.create(
+export default (program_id, setProgram) => {
+  const sub = consumer.subscriptions.create(
     { channel: "ProgramChannel", id: program_id },
     {
       connected() {
-        // Called when the subscription is ready for use on the server
-        console.log("connected");
+        console.log("Connected to Program Channel(" + program_id + ")"); // Called when the subscription is ready for use on the server
       },
 
       disconnected() {
-        // Called when the subscription has been terminated by the server
-        console.log("disconnected");
+        console.log("disconnected"); // Called when the subscription has been terminated by the server
       },
 
       received(data) {
-        // Called when there's incoming data on the websocket for this channel
-        console.log(`Data: ${data}`);
-      },
-
-      server_tick: function () {
-        return this.perform("server_tick");
-      },
-
-      join: function () {
-        return this.perform("join");
-      },
-
-      leave: function () {
-        return this.perform("leave");
-      },
-
-      message: function () {
-        return this.perform("message");
+        console.log(`Data:`, data); // Called when there's incoming data on the websocket for this channel
+        setProgram(data);
       },
     }
   );
+  return {
+    message: (msg) => {
+      sub.perform("message", msg);
+    },
+  };
 };
