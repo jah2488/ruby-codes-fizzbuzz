@@ -1,0 +1,20 @@
+@mixin spacing($rule) {
+  &-space {
+    &-xs { #{$rule}: 0.5rem; }
+    &-sm { #{$rule}: 1rem; }
+    &-md { #{$rule}: 1.5rem; }
+    &-lg { #{$rule}: 2rem; }
+    &-xl { #{$rule}: 2.5rem; }
+    &-xxl { #{$rule}: 3rem; }
+  }
+}
+
+.mb { @include spacing("margin-bottom") }
+.mt { @include spacing("margin-top") }
+.ml { @include spacing("margin-left") }
+.mr { @include spacing("margin-right") }
+
+.pb { @include spacing("padding-bottom") }
+.pt { @include spacing("padding-top") }
+.pl { @include spacing("padding-left") }
+.pr { @include spacing("padding-right") }
