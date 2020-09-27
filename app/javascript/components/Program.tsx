@@ -10,10 +10,23 @@ const SPECIAL_CHAR = {
 
 const ENTER = "Enter";
 
+type Char = {
+  name: string;
+  votes_count: number;
+};
+
+type Program = {
+  id: string;
+  code: string;
+  mode: string;
+  name: string;
+  chars: [Char];
+};
+
 const Program = () => {
   const client = new ApiClient();
   const [channel, setChannel] = useState(null);
-  const [program, setProgram] = useState({});
+  const [program, setProgram] = useState({} as Program);
   const [addition, setAddition] = useState("");
 
   useEffect(() => {
