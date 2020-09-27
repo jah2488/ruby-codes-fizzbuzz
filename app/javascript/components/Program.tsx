@@ -68,7 +68,7 @@ const Program = () => {
       .then((response) => setProgram(response));
   };
 
-  if (!program.id) return "";
+  if (!program.id) return null;
   return (
     <>
       <h1>{`${program.name} - ${program.mode}`}</h1>
