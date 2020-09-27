@@ -34,8 +34,11 @@ ActiveRecord::Schema.define(version: 2020_09_20_200019) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name", default: "user-027ea7", null: false
+    t.string "name", default: "user-516889", null: false
+    t.string "token", null: false
+    t.inet "ip", null: false
     t.boolean "mod", default: false, null: false
+    t.boolean "banned", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

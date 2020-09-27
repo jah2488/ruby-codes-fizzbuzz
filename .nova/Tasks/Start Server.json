@@ -1,0 +1,9 @@
+{
+  "actions": {
+    "run": {
+      "enabled": true,
+      "script": "#!/bin/sh\nbin/rails server -p 4001"
+    }
+  },
+  "identifier": "F7DBF7BA-606B-4128-BCFB-42336E89C8D3"
+}
