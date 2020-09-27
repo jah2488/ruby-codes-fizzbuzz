@@ -13,4 +13,14 @@ class Program < ApplicationRecord
   def self.active
     where(complete: false)
   end
+
+  def view
+    {
+      id: id,
+      name: name,
+      mode: mode,
+      code: code,
+      chars: chars.order(votes_count: :desc)
+    }
+  end
 end

@@ -1,27 +1,35 @@
 import ApiClient from "../packs/ApiClient";
+import ProgramChannel from "../channels/program_channel";
 import Button from "./Button";
 import React, { useEffect, useState } from "react";
 
 const SPECIAL_CHAR = {
   ["&nbsp;&nbsp;"]: "[TAB]",
-  ["<br />"]: "[NEW LINE]"
-}
+  ["<br />"]: "[NEW LINE]",
+};
 
-const ENTER = "Enter"
+const ENTER = "Enter";
 
 const Program = () => {
   const client = new ApiClient();
+  const [channel, setChannel] = useState(null);
   const [program, setProgram] = useState({});
   const [addition, setAddition] = useState("");
+<<<<<<< HEAD
   
-  useEffect(() => {
-    const programId = window.location.pathname.split("/")[2]
-    const url = `/programs/${programId}`;
+=======
 
-    client.get(url)
-      .then(response => response.json())
-      .then(response => {
-        setProgram(response);
+>>>>>>> Able to send messages via action cable to update chat.
+  useEffect(() => {
+    const id = window.location.pathname.split("/")[2];
+    const url = `/programs/${id}`;
+
+    client
+      .get(url)
+      .then((response) => response.json())
+      .then((program) => {
+        setChannel(ProgramChannel(program.id, setProgram));
+        setProgram(program);
       });
   }, []);
 
@@ -35,24 +43,26 @@ const Program = () => {
 
   const _handleSubmit = (val) => {
     if (val === "") return;
-    const url = `/programs/${program.id}`;
     const data = { addition: val };
 
-    client.put(url, data)
-      .then(response => response.json())
-      .then(response => {
-        setProgram(response);
-        setAddition("");
-      });
+    channel.message(data);
+    setAddition("");
   };
 
   const _handleClear = () => {
     const url = `/programs/${program.id}/clear`;
     const data = {};
 
+<<<<<<< HEAD
     client.put(url, data)
       .then(response => response.json())
       .then(response => setProgram(response));
+=======
+    client
+      .put(url, data)
+      .then((response) => response.json())
+      .then((response) => setProgram(response));
+>>>>>>> Able to send messages via action cable to update chat.
   };
 
   if (!program.id) return "";
@@ -67,7 +77,13 @@ const Program = () => {
             </div>
 
             <div className="addition-field">
-              <input onInput={_handleInput} onKeyDown={(e) => _handleEnter(e)} onChange={() => {}} placeholder="Start Coding..." value={addition} />
+              <input
+                onInput={_handleInput}
+                onKeyDown={(e) => _handleEnter(e)}
+                onChange={() => {}}
+                placeholder="Start Coding..."
+                value={addition}
+              />
               <Button className="mb-space-sm" handleSubmit={_handleSubmit} value={addition} name="Submit" />
             </div>
           </div>
@@ -80,17 +96,19 @@ const Program = () => {
         <div className="vote-section">
           <h3 className="vote-title">Democracy</h3>
           <ul className="vote-list">
-            {program && program.chars && program.chars.map((char, i) => (
-              <li key={i} className="vote-item">
-                {`${SPECIAL_CHAR[char.name] || char.name} - ${char.votes_count}`}
-                <Button handleSubmit={_handleSubmit} value={char.name} name="Vote" />
-              </li>
-            ))}
+            {program &&
+              program.chars &&
+              program.chars.map((char, i) => (
+                <li key={i} className="vote-item">
+                  {`${SPECIAL_CHAR[char.name] || char.name} - ${char.votes_count}`}
+                  <Button handleSubmit={_handleSubmit} value={char.name} name="Vote" />
+                </li>
+              ))}
           </ul>
         </div>
       </div>
     </>
   );
-}
+};
 
-export default Program
+export default Program;
