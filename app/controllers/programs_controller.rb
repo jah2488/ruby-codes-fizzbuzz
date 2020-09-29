@@ -13,7 +13,7 @@ class ProgramsController < ApplicationController
 
   def update
     program = Program.find(params.fetch(:id))
-    char = program.chars.find_or_create_by(name: params.fetch(:addition))
+    char = program.chars.find_or_create_by(name: params.fetch(:addition), user: current_user)
     Vote.create(char: char)
     if char.votes_count >= Program::VOTE_THRESHOLD[program.mode]
       program.update(code: "#{program.code} #{char.name}")
@@ -29,5 +29,12 @@ class ProgramsController < ApplicationController
     program.chars.destroy_all
 
     render json: program.view
+  end
+
+  private
+
+  def current_user
+    token = cookies.encrypted[:user_token]
+    User.find_or_create_by_token(token, request.remote_ip)
   end
 end

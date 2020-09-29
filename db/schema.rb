@@ -18,10 +18,12 @@ ActiveRecord::Schema.define(version: 2020_09_20_200019) do
   create_table "chars", force: :cascade do |t|
     t.string "name"
     t.bigint "program_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "votes_count"
     t.index ["program_id"], name: "index_chars_on_program_id"
+    t.index ["user_id"], name: "index_chars_on_user_id"
   end
 
   create_table "programs", force: :cascade do |t|
@@ -34,7 +36,7 @@ ActiveRecord::Schema.define(version: 2020_09_20_200019) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name", default: "user-516889", null: false
+    t.string "name", default: "user-07ea17", null: false
     t.string "token", null: false
     t.inet "ip", null: false
     t.boolean "mod", default: false, null: false
@@ -52,5 +54,6 @@ ActiveRecord::Schema.define(version: 2020_09_20_200019) do
   end
 
   add_foreign_key "chars", "programs"
+  add_foreign_key "chars", "users"
   add_foreign_key "votes", "chars"
 end

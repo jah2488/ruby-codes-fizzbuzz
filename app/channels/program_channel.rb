@@ -16,7 +16,7 @@ class ProgramChannel < ApplicationCable::Channel
   end
 
   def message(data)
-    char = current_program.chars.find_or_create_by(name: data.fetch("addition"))
+    char = current_program.chars.find_or_create_by(name: data.fetch("addition"), user: current_user)
     Vote.create(char: char)
     current_program.update(code: "#{current_program.code} #{char.name}")
     ProgramChannel.broadcast_to(room, current_program.view)
