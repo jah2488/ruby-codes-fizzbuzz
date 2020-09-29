@@ -1,32 +1,17 @@
 import ApiClient from "../packs/ApiClient";
 import ProgramChannel from "../channels/program_channel";
 import Button from "./Button";
+import Chat from "./Chat";
 import React, { useEffect, useState } from "react";
-
-const SPECIAL_CHAR = {
-  ["&nbsp;&nbsp;"]: "[TAB]",
-  ["<br />"]: "[NEW LINE]",
-};
+import Votes from "./Votes";
+import { IProgram } from "./types";
 
 const ENTER = "Enter";
-
-type Char = {
-  name: string;
-  votes_count: number;
-};
-
-type Program = {
-  id: string;
-  code: string;
-  mode: string;
-  name: string;
-  chars: [Char];
-};
 
 const Program = () => {
   const client = new ApiClient();
   const [channel, setChannel] = useState(null);
-  const [program, setProgram] = useState({} as Program);
+  const [program, setProgram] = useState({} as IProgram);
   const [addition, setAddition] = useState("");
 
   useEffect(() => {
@@ -96,19 +81,14 @@ const Program = () => {
           <Button className="mb-space-sm" handleSubmit={_handleClear} value={""} name="Clear" />
         </div>
 
-        <div className="vote-section">
-          <h3 className="vote-title">Democracy</h3>
-          <ul className="vote-list">
-            {program &&
-              program.chars &&
-              program.chars.map((char, i) => (
-                <li key={i} className="vote-item">
-                  {`${SPECIAL_CHAR[char.name] || char.name} - ${char.votes_count}`}
-                  <Button handleSubmit={_handleSubmit} value={char.name} name="Vote" />
-                </li>
-              ))}
-          </ul>
-        </div>
+        <Votes _handleSubmit={_handleSubmit} program={program} />
+        <Chat
+          _handleSubmit={_handleSubmit}
+          _handleInput={_handleInput}
+          _handleEnter={_handleEnter}
+          program={program}
+          addition={addition}
+        />
       </div>
     </>
   );

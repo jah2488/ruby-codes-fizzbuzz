@@ -20,7 +20,8 @@ class Program < ApplicationRecord
       name: name,
       mode: mode,
       code: code,
-      chars: chars.order(votes_count: :desc)
+      chars: chars.order(votes_count: :desc),
+      chat: chars.order(created_at: :asc)
     }
   end
 end
