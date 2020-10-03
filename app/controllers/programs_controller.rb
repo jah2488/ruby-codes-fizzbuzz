@@ -10,11 +10,4 @@ class ProgramsController < ApplicationController
       render :show
     end
   end
-
-  private
-
-  def current_user
-    token = cookies.encrypted[:user_token]
-    User.find_or_create_by_token(token, request.remote_ip)
-  end
 end
