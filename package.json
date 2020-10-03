@@ -20,6 +20,7 @@
   "version": "0.1.0",
   "devDependencies": {
     "fork-ts-checker-webpack-plugin": "^5.2.0",
+    "prettier": "2.1.2",
     "webpack-dev-server": "^3.11.0"
   }
 }
