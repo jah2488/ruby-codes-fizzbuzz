@@ -1,10 +1,45 @@
 class ProgramChannel < ApplicationCable::Channel
-  CODE_KEY = "!"
   periodically :tick, every: 1.seconds
 
   def subscribed
     puts "Subscribed!"
     stream_for room
+  end
+
+  def set_mode(message)
+    current_program.update(mode: message["data"])
+    ProgramChannel.broadcast_to(room, { action: :update, data: current_program.tick_view })
+  end
+
+  def set_max_input_mode(message)
+    current_program.update(settings: current_program.settings.merge({
+      max_input_mode: message["data"]
+    }))
+    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
+  end
+
+  def set_vote_interval(message)
+    current_program.update(settings: current_program.settings.merge({
+      vote_interval: message["data"]
+    }))
+    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
+  end
+
+  def pause
+    current_program.update(settings: current_program.settings.merge({
+      play_state: "paused" }))
+    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
+  end
+
+  def resume
+    current_program.update(settings: current_program.settings.merge({
+      play_state: "playing" }))
+    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
+  end
+
+  def reset_tick
+    current_program.update(tick: 0)
+    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
   end
 
   def unsubscribed
@@ -16,12 +51,14 @@ class ProgramChannel < ApplicationCable::Channel
   end
 
   def tick
-    current_program.update(tick: current_program.tick.succ)
-    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.view })
+    if current_program.playing?
+      current_program.update(tick: current_program.tick.succ)
+      ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
+    end
   end
 
   def message(data)
-    program = Program.find(current_program.id)
+    program = current_program
     addition = data.fetch("addition")
     is_code = data.fetch("isCode")
     program.messages.create(name: addition, is_code: is_code, user: current_user)
@@ -33,19 +70,21 @@ class ProgramChannel < ApplicationCable::Channel
         program.chars.destroy_all
       end
     end
+
     ProgramChannel.broadcast_to(room, { action: :message, data: program.view })
   end
 
   def clear
-    program = Program.find(current_program.id)
+    program = current_program
     program.update(code: "")
     program.chars.destroy_all
+
     ProgramChannel.broadcast_to(room, { action: :clear, data: program.view })
   end
 
   private
   def current_program
-    @current_program ||= Program.find(params.fetch(:id))
+    Program.find(params.fetch(:id))
   end
 
   def room

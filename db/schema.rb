@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2020_10_03_145731) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name", default: "user-75f070", null: false
+    t.string "name", default: "user", null: false
     t.string "token", null: false
     t.inet "ip", null: false
     t.boolean "mod", default: false, null: false

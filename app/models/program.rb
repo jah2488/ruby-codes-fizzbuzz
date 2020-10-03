@@ -15,6 +15,21 @@ class Program < ApplicationRecord
     where(complete: false)
   end
 
+  def playing?
+    settings["play_state"] == "playing"
+  end
+
+  def tick_view
+    {
+      id: id,
+      name: name,
+      mode: mode,
+      code: code,
+      tick: tick,
+      settings: settings
+    }
+  end
+
   def view
     {
       id: id,
