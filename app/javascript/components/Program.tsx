@@ -1,17 +1,18 @@
 import ApiClient from "../packs/ApiClient";
-import ProgramChannel from "../channels/program_channel";
 import Button from "./Button";
 import Chat from "./Chat";
+import { Program } from "./types";
+import Output from "./Output";
+import ProgramChannel from "../channels/program_channel";
 import React, { useEffect, useState } from "react";
 import Votes from "./Votes";
-import { IProgram } from "./types";
 
 const ENTER = "Enter";
 
 const Program = () => {
   const client = new ApiClient();
   const [channel, setChannel] = useState(null);
-  const [program, setProgram] = useState({} as IProgram);
+  const [program, setProgram] = useState({} as Program);
   const [addition, setAddition] = useState("");
 
   useEffect(() => {
@@ -37,20 +38,27 @@ const Program = () => {
 
   const _handleSubmit = (val) => {
     if (val === "") return;
-    const data = { addition: val };
+
+    type Data = {
+      isCode: boolean;
+      addition: string
+    };
+
+    const data: Data = {
+      isCode: false,
+      addition: val
+    };
+    if (val[0] === "!") {
+      data.isCode = true;
+      data.addition = val.substring(1);
+    };
 
     channel.message(data);
     setAddition("");
   };
 
   const _handleClear = () => {
-    const url = `/programs/${program.id}/clear`;
-    const data = {};
-
-    client
-      .put(url, data)
-      .then((response) => response.json())
-      .then((response) => setProgram(response));
+    channel.clear()
   };
 
   if (!program.id) return null;
@@ -58,37 +66,29 @@ const Program = () => {
     <>
       <h1>{`${program.name} - ${program.mode}`}</h1>
       <div className="program-container">
-        <div className="program-content column">
-          <div className="code-section">
-            <div className="program-code">
-              <div dangerouslySetInnerHTML={{ __html: `${program.code} []` }} />
-            </div>
+        <div className="program-content section column">
+          <Output program={program} />
 
-            <div className="addition-field">
-              <input
-                onInput={_handleInput}
-                onKeyDown={(e) => _handleEnter(e)}
-                onChange={() => {}}
-                placeholder="Start Coding..."
-                value={addition}
-              />
-              <Button className="mb-space-sm" handleSubmit={_handleSubmit} value={addition} name="Submit" />
-            </div>
+          <div className="flex space-between full">
+            <Button className="button button__action third" handleSubmit={_handleSubmit} value="![TAB]" name="Tab" />
+            <Button className="button button__action third" handleSubmit={_handleSubmit} value="![NEW LINE]" name="New Line" />
+            <Button className="button button__action third" handleSubmit={_handleClear} value={""} name="Clear" />
           </div>
-
-          <Button className="mb-space-sm" handleSubmit={_handleSubmit} value={"&nbsp;&nbsp;"} name="Tab" />
-          <Button className="mb-space-sm" handleSubmit={_handleSubmit} value={"<br />"} name="New Line" />
-          <Button className="mb-space-sm" handleSubmit={_handleClear} value={""} name="Clear" />
         </div>
 
-        <Votes _handleSubmit={_handleSubmit} program={program} />
-        <Chat
-          _handleSubmit={_handleSubmit}
-          _handleInput={_handleInput}
-          _handleEnter={_handleEnter}
-          program={program}
-          addition={addition}
-        />
+        <div className="section">
+          <Votes _handleSubmit={_handleSubmit} program={program} />
+        </div>
+
+        <div className="section">
+          <Chat
+            _handleSubmit={_handleSubmit}
+            _handleInput={_handleInput}
+            _handleEnter={_handleEnter}
+            program={program}
+            addition={addition}
+          />
+        </div>
       </div>
     </>
   );

@@ -1,0 +1,15 @@
+.button {
+  input {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.button__action {
+  input {
+    flex-grow: 1;
+    height: 2rem;
+    width: 100%;
+  }
+}

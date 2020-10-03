@@ -21,6 +21,12 @@ group :development do
   gem 'listen', '~> 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  gem 'rack-mini-profiler', require: false
+  # NOTE: Be sure to require rack_mini_profiler below the pg and mysql gems in your Gemfile. rack_mini_profiler will identify these gems if they are loaded to insert instrumentation. If included too early no SQL will show up.
+  gem 'memory_profiler'
+  gem 'flamegraph'
+  gem 'stackprof'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

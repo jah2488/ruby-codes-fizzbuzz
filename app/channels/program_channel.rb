@@ -1,4 +1,6 @@
 class ProgramChannel < ApplicationCable::Channel
+  CODE_KEY = "!"
+
   def subscribed
     puts "Subscribed!"
     stream_for room
@@ -16,10 +18,26 @@ class ProgramChannel < ApplicationCable::Channel
   end
 
   def message(data)
-    char = current_program.chars.find_or_create_by(name: data.fetch("addition"), user: current_user)
-    Vote.create(char: char)
-    current_program.update(code: "#{current_program.code} #{char.name}")
-    ProgramChannel.broadcast_to(room, current_program.view)
+    program = Program.find(current_program.id)
+    addition = data.fetch("addition")
+    is_code = data.fetch("isCode")
+    program.messages.create(name: addition, is_code: is_code, user: current_user)
+    if is_code
+      char = program.chars.find_or_create_by(name: addition)
+      Vote.create(char: char)
+      if char.votes_count >= Program::VOTE_THRESHOLD[program.mode]
+        program.update(code: "#{program.code} #{char.formatted_name}")
+        program.chars.destroy_all
+      end
+    end
+    ProgramChannel.broadcast_to(room, program.view)
+  end
+
+  def clear
+    program = Program.find(current_program.id)
+    program.update(code: "")
+    program.chars.destroy_all
+    ProgramChannel.broadcast_to(room, program.view)
   end
 
   private

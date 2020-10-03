@@ -1,5 +1,6 @@
 .program-container {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .program-content {
@@ -16,7 +17,7 @@
   border-radius: 4px;
   background: #eee;
   padding: 0.5rem;
-  margin: 1rem 0;
+  margin-bottom: 1rem;
 }
 
 .addition-field {

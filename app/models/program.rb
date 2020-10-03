@@ -2,6 +2,7 @@ class Program < ApplicationRecord
   attr_accessor :addition
 
   has_many :chars, dependent: :destroy
+  has_many :messages, dependent: :destroy
   
   validates :name, presence: true
 
@@ -20,8 +21,14 @@ class Program < ApplicationRecord
       name: name,
       mode: mode,
       code: code,
-      chars: chars.order(votes_count: :desc),
-      chat: chars.order(created_at: :asc)
+      chars: chars
+        .select(:id, :name, :votes_count)
+        .order(votes_count: :desc),
+      messages: messages
+        .select(:id, :name, :is_code, :user_id)
+        .order(created_at: :desc)
+        .limit(50)
+        .reverse
     }
   end
 end

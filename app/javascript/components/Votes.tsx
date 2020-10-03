@@ -1,11 +1,6 @@
 import Button from "./Button";
 import React from "react";
 
-const SPECIAL_CHAR = {
-  ["&nbsp;&nbsp;"]: "[TAB]",
-  ["<br />"]: "[NEW LINE]",
-};
-
 const Votes = ({ _handleSubmit, program }) => {
   return (
     <div className="vote-section">
@@ -13,10 +8,10 @@ const Votes = ({ _handleSubmit, program }) => {
       <ul className="vote-list">
         {program &&
           program.chars &&
-          program.chars.map((char, i) => (
-            <li key={i} className="vote-item">
-              {`${SPECIAL_CHAR[char.name] || char.name} - ${char.votes_count}`}
-              <Button handleSubmit={_handleSubmit} value={char.name} name="Vote" />
+          program.chars.map(char => (
+            <li key={char.id} className="vote-item">
+              {`${char.name} - ${char.votes_count}`}
+              <Button className="button" handleSubmit={_handleSubmit} value={`!${char.name}`} name="Vote" />
             </li>
           ))}
       </ul>
