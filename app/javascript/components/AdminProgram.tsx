@@ -48,12 +48,16 @@ const AdminProgram = () => {
   return (
     <>
       <h1>{`${program.name} - ${program.mode}`}</h1>
-      <h2>{`Time: (${String(Math.floor(program.tick / 60)).padStart(2, "0")}:${String(program.tick % 60).padStart(2, "0")})`}</h2>
+      <h2>{`Time: (${tickAsTime(program.tick)})`}</h2>
       <div className="program-container">
         <div className="program-content column">
           <div className="code-section">
             <div className="program-code">
-              <div dangerouslySetInnerHTML={{ __html: `${program.code} ${program.tick % 2 === 0 ? "⎰" : "⎱"}` }} />
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: `${program.code} ${program.tick % 2 === 0 ? "│" : "&nbsp;"}<br/>&nbsp;`,
+                }}
+              />
             </div>
           </div>
         </div>
@@ -74,10 +78,23 @@ const AdminProgram = () => {
           <h3>Mode</h3>
           <button disabled={program.mode === "Democracy" ? true : false}>democracy</button>
           <button disabled={program.mode === "Anarchy" ? true : false}>anarchy</button>
+          <div>
+            <button>Clear Progress</button>
+            <button>Reset Timer</button>
+            <button>Restart</button>
+          </div>
+          <input type="number" />
+          Max Char Length
+          <input type="number" />
+          Vote Interval
         </div>
       </div>
     </>
   );
 };
+
+const tickAsTime = (tick: number): string => [leftPad(Math.floor(tick / 60)), ":", leftPad(tick % 60)].join("");
+
+const leftPad = (number: number): string => String(number).padStart(2, "0");
 
 export default AdminProgram;
