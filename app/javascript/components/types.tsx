@@ -14,3 +14,9 @@ export type Char = {
   votes_count: number;
   user_id: number;
 };
+
+export enum MaxInputMode {
+  Char, // MaxLength = 1
+  Word, // Until white space character
+  Line, // Until new-line character
+}

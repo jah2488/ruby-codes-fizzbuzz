@@ -1,7 +1,8 @@
 import ApiClient from "../packs/ApiClient";
-import ProgramChannel from "../channels/program_channel";
+import { ProgramChannel } from "../channels/program_channel";
 import Button from "./Button";
 import React, { useEffect, useState } from "react";
+import { MaxInputMode } from "./types";
 
 const SPECIAL_CHAR = {
   ["&nbsp;&nbsp;"]: "[TAB]",
@@ -38,7 +39,7 @@ const AdminProgram = () => {
       .get(url)
       .then((response) => response.json())
       .then((program) => {
-        setChannel(ProgramChannel(program.id, setProgram));
+        setChannel(ProgramChannel(program, setProgram));
         setProgram(program);
       });
   }, []);
@@ -75,22 +76,88 @@ const AdminProgram = () => {
           </ul>
         </div>
         <div className="admin-section">
-          <h3>Mode</h3>
-          <button disabled={program.mode === "Democracy" ? true : false}>democracy</button>
-          <button disabled={program.mode === "Anarchy" ? true : false}>anarchy</button>
-          <div>
-            <button>Clear Progress</button>
-            <button>Reset Timer</button>
-            <button>Restart</button>
-          </div>
-          <input type="number" />
-          Max Char Length
-          <input type="number" />
-          Vote Interval
+          <Section name="Mode">
+            <button onClick={() => channel.setMode("democracy")} disabled={program.mode === "democracy" ? true : false}>
+              democracy
+            </button>
+            <button onClick={() => channel.setMode("anarchy")} disabled={program.mode === "anarchy" ? true : false}>
+              anarchy
+            </button>
+          </Section>
+          <Section name="Difficulty">
+            <label>Max Char Length</label>
+            <div>
+              <button
+                onClick={() => channel.setMaxInputMode(MaxInputMode.Char)}
+                disabled={program.settings.max_input_mode == MaxInputMode.Char}
+              >
+                Character
+              </button>
+              <button
+                onClick={() => channel.setMaxInputMode(MaxInputMode.Word)}
+                disabled={program.settings.max_input_mode == MaxInputMode.Word}
+              >
+                Word
+              </button>
+              <button
+                onClick={() => channel.setMaxInputMode(MaxInputMode.Line)}
+                disabled={program.settings.max_input_mode == MaxInputMode.Line}
+              >
+                Line
+              </button>
+            </div>
+            <br />
+            <label>Vote Interval</label>
+            <div>
+              <button onClick={() => channel.setVoteInterval(1)} disabled={program.settings.vote_interval == 1}>
+                1 sec
+              </button>
+              <button onClick={() => channel.setVoteInterval(3)} disabled={program.settings.vote_interval == 3}>
+                3 sec
+              </button>
+              <button onClick={() => channel.setVoteInterval(5)} disabled={program.settings.vote_interval == 5}>
+                5 sec
+              </button>
+              <button onClick={() => channel.setVoteInterval(9)} disabled={program.settings.vote_interval == 9}>
+                9 sec
+              </button>
+            </div>
+          </Section>
+          <Section name={`Play Controls: (${program.settings.play_state || "playing"})`}>
+            <PlayControls channel={channel} current={program.settings.play_state as PlayState} />
+          </Section>
+          <Section name="Restart Controls">
+            <button onClick={channel.clear}>Clear Progress</button>
+            <button onClick={channel.resetTick}>Reset Timer</button>
+            <button onClick={channel.reset}>Restart</button>
+          </Section>
         </div>
       </div>
     </>
   );
+};
+
+const Section = ({ name, children }) => (
+  <section>
+    <h3>{name}</h3>
+    {children}
+    <hr />
+  </section>
+);
+
+interface PlayControlProps {
+  current: PlayState;
+  channel: ProgramChannel;
+}
+type PlayState = "playing" | "paused";
+const PlayControls = ({ channel, current }: PlayControlProps) => {
+  switch (current) {
+    case "paused":
+      return <button onClick={channel.resume}>Resume</button>;
+    case "playing":
+    default:
+      return <button onClick={channel.pause}>Pause</button>;
+  }
 };
 
 const tickAsTime = (tick: number): string => [leftPad(Math.floor(tick / 60)), ":", leftPad(tick % 60)].join("");

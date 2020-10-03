@@ -3,11 +3,12 @@ import Button from "./Button";
 import Chat from "./Chat";
 import { Program } from "./types";
 import Output from "./Output";
-import ProgramChannel from "../channels/program_channel";
+import { ProgramChannel } from "../channels/program_channel";
 import React, { useEffect, useState } from "react";
 import Votes from "./Votes";
 
 const ENTER = "Enter";
+const CODE_KEY = "!";
 
 const Program = () => {
   const client = new ApiClient();
@@ -23,7 +24,7 @@ const Program = () => {
       .get(url)
       .then((response) => response.json())
       .then((program) => {
-        setChannel(ProgramChannel(program.id, setProgram));
+        setChannel(ProgramChannel(program, setProgram));
         setProgram(program);
       });
   }, []);
@@ -48,7 +49,7 @@ const Program = () => {
       isCode: false,
       addition: val,
     };
-    if (val[0] === "!") {
+    if (val[0] === CODE_KEY) {
       data.isCode = true;
       data.addition = val.substring(1);
     }
@@ -64,15 +65,34 @@ const Program = () => {
   if (!program || !program.id) return null;
   return (
     <>
+      {program.settings.play_state === "paused" && (
+        <>
+          <div className="paused"></div>
+          <h1>PAUSED</h1>
+        </>
+      )}
       <h1>{`${program.name} - ${program.mode}`}</h1>
-      <h2>{`Time: (${String(Math.floor(program.tick / 60)).padStart(2, "0")}:${String(program.tick % 60).padStart(2, "0")})`}</h2>
+      <h2>{`Time: (${String(Math.floor(program.tick / 60)).padStart(2, "0")}:${String(program.tick % 60).padStart(
+        2,
+        "0"
+      )})`}</h2>
       <div className="program-container">
         <div className="program-content section column">
           <Output program={program} />
 
           <div className="flex space-between full">
-            <Button className="button button__action third" handleSubmit={_handleSubmit} value="![TAB]" name="Tab" />
-            <Button className="button button__action third" handleSubmit={_handleSubmit} value="![NEW LINE]" name="New Line" />
+            <Button
+              className="button button__action third"
+              handleSubmit={_handleSubmit}
+              value={`${CODE_KEY}[TAB]`}
+              name="Tab"
+            />
+            <Button
+              className="button button__action third"
+              handleSubmit={_handleSubmit}
+              value={`${CODE_KEY}[NEW LINE]`}
+              name="New Line"
+            />
             <Button className="button button__action third" handleSubmit={_handleClear} value={""} name="Clear" />
           </div>
         </div>
