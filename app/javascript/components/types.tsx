@@ -5,6 +5,8 @@ export type Program = {
   name: string;
   chars: [Char];
   chat: [Char];
+  tick: number;
+  settings: any;
 };
 
 export type Char = {

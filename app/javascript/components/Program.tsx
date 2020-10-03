@@ -41,30 +41,31 @@ const Program = () => {
 
     type Data = {
       isCode: boolean;
-      addition: string
+      addition: string;
     };
 
     const data: Data = {
       isCode: false,
-      addition: val
+      addition: val,
     };
     if (val[0] === "!") {
       data.isCode = true;
       data.addition = val.substring(1);
-    };
+    }
 
     channel.message(data);
     setAddition("");
   };
 
   const _handleClear = () => {
-    channel.clear()
+    channel.clear();
   };
 
-  if (!program.id) return null;
+  if (!program || !program.id) return null;
   return (
     <>
       <h1>{`${program.name} - ${program.mode}`}</h1>
+      <h2>{`Time: (${String(Math.floor(program.tick / 60)).padStart(2, "0")}:${String(program.tick % 60).padStart(2, "0")})`}</h2>
       <div className="program-container">
         <div className="program-content section column">
           <Output program={program} />

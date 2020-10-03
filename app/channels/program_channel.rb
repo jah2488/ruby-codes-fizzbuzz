@@ -1,5 +1,6 @@
 class ProgramChannel < ApplicationCable::Channel
   CODE_KEY = "!"
+  periodically :tick, every: 1.seconds
 
   def subscribed
     puts "Subscribed!"
@@ -14,7 +15,9 @@ class ProgramChannel < ApplicationCable::Channel
     puts "receive:#{data}"
   end
 
-  def server_tick
+  def tick
+    current_program.update(tick: current_program.tick.succ)
+    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.view })
   end
 
   def message(data)
@@ -30,14 +33,14 @@ class ProgramChannel < ApplicationCable::Channel
         program.chars.destroy_all
       end
     end
-    ProgramChannel.broadcast_to(room, program.view)
+    ProgramChannel.broadcast_to(room, { action: :message, data: program.view })
   end
 
   def clear
     program = Program.find(current_program.id)
     program.update(code: "")
     program.chars.destroy_all
-    ProgramChannel.broadcast_to(room, program.view)
+    ProgramChannel.broadcast_to(room, { action: :clear, data: program.view })
   end
 
   private

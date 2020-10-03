@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 2020_10_03_145731) do
     t.string "name", null: false
     t.string "mode", default: "anarchy", null: false
     t.boolean "complete", default: false, null: false
+    t.integer "tick", default: 0, null: false
+    t.jsonb "settings", default: "{}", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "code", default: "", null: false

@@ -28,7 +28,9 @@ class Program < ApplicationRecord
         .select(:id, :name, :is_code, :user_id)
         .order(created_at: :desc)
         .limit(50)
-        .reverse
+        .reverse,
+      tick: tick,
+      settings: settings
     }
   end
 end
