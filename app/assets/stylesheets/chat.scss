@@ -8,12 +8,16 @@
 }
 
 .chat__section {
-  &--output {
-    background: #fff;
-    padding: 0.5rem;
+  &--column-reverse {
+    display: flex;
+    flex-direction: column-reverse;
     height: 100%;
     overflow-y: scroll;
     overflow-x: unset;
+  }
+  &--output {
+    background: #fff;
+    padding: 0.5rem;
   }
   &--input {
     display: flex;
@@ -38,8 +42,11 @@
       color: white;
       &:hover {
         background: #663a82;
-        cursor: pointer;        
       }
     }
   }
+}
+
+.is-code {
+  background: #b491c8;
 }

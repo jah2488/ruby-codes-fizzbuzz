@@ -22,5 +22,8 @@ export default (program_id, setProgram) => {
     message: (msg) => {
       sub.perform("message", msg);
     },
+    clear: () => {
+      sub.perform("clear");
+    }
   };
 };

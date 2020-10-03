@@ -1,13 +1,13 @@
-export interface IProgram {
+export type Program = {
   id: string;
   code: string;
   mode: string;
   name: string;
-  chars: [IChar];
-  chat: [IChar];
+  chars: [Char];
+  chat: [Char];
 };
 
-export interface IChar {
+export type Char = {
   name: string;
   votes_count: number;
   user_id: number;

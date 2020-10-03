@@ -1,13 +1,15 @@
 class Char < ApplicationRecord
   belongs_to :program
-  belongs_to :user
   has_many :votes, dependent: :destroy
 
   validates :name, presence: true
 
   SPECIAL_CHAR = {
-    "&nbsp;&nbsp;" => "[TAB]",
-    "<br />" => "[NEW LINE]"
+    "[TAB]" => "&nbsp;&nbsp;",
+    "[NEW LINE]" => "<br />"
   }.freeze
 
+  def formatted_name
+    SPECIAL_CHAR[name] || name 
+  end
 end
