@@ -3,6 +3,8 @@ module Admin
     http_basic_authenticate_with name: "rubyconf", password: "rubyconf"
 
     def index
+      programs = Program.all
+      render locals: { programs: programs }
     end
 
     def show

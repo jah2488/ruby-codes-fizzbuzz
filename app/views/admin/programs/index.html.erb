@@ -1,3 +1,12 @@
 <h1>Top Secret Admin Interface</h1>
 
-<%= link_to :new_program, new_admin_program_path %>
+<h2>Available Programs (<%= programs.count %>)</h2>
+<% programs.each do |prog| %>
+  <div class='program' id='prog-<%= prog.id %>'>
+    <%= link_to "#{prog.name} - #{prog.mode}", admin_program_path(prog) %>
+  </div>
+<% end %>
+
+<div class="mt-space-md">
+  <%= link_to :new_program, new_admin_program_path %>
+</div>
