@@ -35,7 +35,9 @@ module Admin
     private
 
     def program_params
-      params.require(:program).permit(:name, :mode)
+      unformatted_params = params.require(:program).permit(:name, :mode, :settings)
+      settings = eval(unformatted_params.fetch(:settings))
+      unformatted_params.merge!({ settings: settings })
     end
   end
 end
