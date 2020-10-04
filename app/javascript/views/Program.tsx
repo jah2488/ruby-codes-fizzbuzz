@@ -1,14 +1,14 @@
-import ApiClient from "../packs/ApiClient";
-import Button from "./Button";
-import Chat from "./Chat";
-import { Program } from "./types";
-import Output from "./Output";
+import ApiClient from "../lib/client/ApiClient";
+import { Program } from "../lib/types/types";
 import { ProgramChannel } from "../channels/program_channel";
 import React, { useEffect, useState } from "react";
-import Votes from "./Votes";
-
-const ENTER = "Enter";
-const CODE_KEY = "!";
+import Chat from "./Shared/Chat";
+import Output from "./Shared/Output";
+import Time from "./Shared/Time";
+import Title from "./Shared/Title";
+import Votes from "./Shared/Votes";
+import Controls from "./Program/Controls"
+import Constants from "../lib/constants/constants";
 
 const Program = () => {
   const client = new ApiClient();
@@ -32,7 +32,7 @@ const Program = () => {
   const _handleInput = (e) => setAddition(e.target.value);
 
   const _handleEnter = (e) => {
-    if (e.key === ENTER) {
+    if (e.key === Constants.ENTER) {
       _handleSubmit(addition);
     }
   };
@@ -49,7 +49,7 @@ const Program = () => {
       isCode: false,
       addition: val,
     };
-    if (val[0] === CODE_KEY) {
+    if (val[0] === Constants.CODE_KEY) {
       data.isCode = true;
       data.addition = val.substring(1);
     }
@@ -71,32 +71,12 @@ const Program = () => {
           <h1>PAUSED</h1>
         </>
       )}
-      <h1>{`${program.name} - ${program.mode}`}</h1>
-      <h2>{`Time: (${String(Math.floor(program.tick / 60)).padStart(2, "0")}:${String(program.tick % 60).padStart(
-        2,
-        "0"
-      )})`}</h2>
+      <Title program={program} />
+      <Time program={program} />
       <div className="program-container">
         <div className="program-content section column">
           <Output program={program} />
-
-          <div className="flex space-between full">
-            <Button
-              className="button button__action third"
-              handleClick={() => _handleSubmit(`${CODE_KEY}[TAB]`)}
-              name="Tab"
-            />
-            <Button
-              className="button button__action third"
-              handleClick={() => _handleSubmit(`${CODE_KEY}[NEW LINE]`)}
-              name="New Line"
-            />
-            <Button
-              className="button button__action third"
-              handleClick={_handleClear}
-              name="Clear"
-            />
-          </div>
+          <Controls handleSubmit={_handleSubmit} handleClear={_handleClear} />
         </div>
 
         <div className="section">

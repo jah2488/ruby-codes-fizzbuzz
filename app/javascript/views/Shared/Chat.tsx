@@ -1,4 +1,4 @@
-import Button from "./Button";
+import Button from "../../components/Button";
 import React from "react";
 
 const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) => {
@@ -22,7 +22,11 @@ const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) 
           placeholder="Start Coding..."
           value={addition}
         />
-        <Button className="button chat__field--submit mb-space-sm" handleSubmit={_handleSubmit} value={addition} name="Submit" />
+        <Button
+          className="button chat__field--submit mb-space-sm"
+          handleClick={() => _handleSubmit(addition)}
+          name="Submit"
+        />
       </div>
     </div>
   )

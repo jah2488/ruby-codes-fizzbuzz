@@ -1,4 +1,4 @@
-import { Program, MaxInputMode } from "../components/types";
+import { Program, MaxInputMode } from "../lib/types/types";
 import consumer from "./consumer";
 
 export interface ProgramChannel {

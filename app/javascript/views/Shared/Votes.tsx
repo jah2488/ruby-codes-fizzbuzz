@@ -1,7 +1,7 @@
-import Button from "./Button";
+import Button from "../../components/Button";
 import React from "react";
 
-const Votes = ({ _handleSubmit, program }) => {
+const Votes = ({ program, _handleSubmit, canVote = true }) => {
   return (
     <div className="vote-section">
       <h3 className="vote-title">Democracy</h3>
@@ -11,7 +11,13 @@ const Votes = ({ _handleSubmit, program }) => {
           program.chars.map(char => (
             <li key={char.id} className="vote-item">
               {`${char.name} - ${char.votes_count}`}
-              <Button className="button" handleSubmit={_handleSubmit} value={`!${char.name}`} name="Vote" />
+              {canVote && 
+                <Button
+                  className="button"
+                  handleClick={() => _handleSubmit(`!${char.name}`)}
+                  name="Vote"
+                />
+              }
             </li>
           ))}
       </ul>
