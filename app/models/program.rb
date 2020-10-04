@@ -7,8 +7,8 @@ class Program < ApplicationRecord
   validates :name, presence: true
 
   VOTE_THRESHOLD = {
-    "Anarchy" => 1,
-    "Democracy" => 5
+    "anarchy" => 1,
+    "democracy" => 5
   }.freeze
 
   def self.active

@@ -14,6 +14,11 @@ export interface ProgramChannel {
 }
 
 export const ProgramChannel = (program: Program, setProgram: (program: Program) => void): ProgramChannel => {
+  const updateProgram = (newProgram) => {
+    program = newProgram;
+    setProgram(program);
+  };
+  
   const sub = consumer.subscriptions.create(
     { channel: "ProgramChannel", id: program.id },
     {
@@ -30,12 +35,12 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
         switch (action) {
           case "tick":
             console.debug("tick");
-            setProgram({ ...program, ...data });
+            updateProgram({ ...program, ...data });
             break;
 
           default:
             console.log(`Data:`, data);
-            setProgram(data);
+            updateProgram(data);
             break;
         }
       },
