@@ -83,17 +83,19 @@ const Program = () => {
           <div className="flex space-between full">
             <Button
               className="button button__action third"
-              handleSubmit={_handleSubmit}
-              value={`${CODE_KEY}[TAB]`}
+              handleClick={() => _handleSubmit(`${CODE_KEY}[TAB]`)}
               name="Tab"
             />
             <Button
               className="button button__action third"
-              handleSubmit={_handleSubmit}
-              value={`${CODE_KEY}[NEW LINE]`}
+              handleClick={() => _handleSubmit(`${CODE_KEY}[NEW LINE]`)}
               name="New Line"
             />
-            <Button className="button button__action third" handleSubmit={_handleClear} value={""} name="Clear" />
+            <Button
+              className="button button__action third"
+              handleClick={_handleClear}
+              name="Clear"
+            />
           </div>
         </div>
 
