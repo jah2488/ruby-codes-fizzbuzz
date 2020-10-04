@@ -77,9 +77,16 @@ const AdminProgram = () => {
         </div>
         <div className="admin-section">
           <Section name="Mode">
+            
+            
+            <Button handleClick={() => channel.setMode("democracy")} disabled={program.mode === "democracy" ? true : false} name="democracy" />
+
+            
             <button onClick={() => channel.setMode("democracy")} disabled={program.mode === "democracy" ? true : false}>
               democracy
             </button>
+            
+            
             <button onClick={() => channel.setMode("anarchy")} disabled={program.mode === "anarchy" ? true : false}>
               anarchy
             </button>

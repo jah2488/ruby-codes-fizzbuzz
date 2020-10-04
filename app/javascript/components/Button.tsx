@@ -1,8 +1,8 @@
 import React from "react";
 
-const Button = ({ className = "", handleSubmit, value, name }) => (
+const Button = ({ className = "", handleClick, name, disabled = false }) => (
   <div className={className}>
-    <input type="button" onClick={() => handleSubmit(value)} value={name} />
+    <input type="button" onClick={handleClick} value={name} disabled={disabled} />
   </div>
 );
 
