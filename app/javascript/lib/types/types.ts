@@ -4,6 +4,7 @@ export type Program = {
   mode: string;
   name: string;
   chars: [Char];
+  output: string;
   messages: [Message];
   tick: number;
   settings: any;

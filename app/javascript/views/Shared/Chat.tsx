@@ -6,11 +6,13 @@ const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) 
     <div className="chat">
       <div className="chat__section--column-reverse">
         <div className="chat__section--output">
-          {program && program.messages.map(message => (
-            <div key={message.id} className={message.is_code ? "is-code" : ""}>
-              {message.user_id}: {message.name}
-            </div>
-          ))}
+          {program &&
+            program.messages.map((message) => (
+              <div key={message.id} className={message.is_code ? "is-code" : ""}>
+                <img src={`https://api.adorable.io/avatars/25/${message.user_id}.png`} />
+                {message.name}
+              </div>
+            ))}
         </div>
       </div>
       <div className="chat__section--input">
@@ -18,9 +20,9 @@ const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) 
           className="chat__field--input"
           onInput={_handleInput}
           onKeyDown={(e) => _handleEnter(e)}
-          onChange={() => { }}
+          onChange={() => {}}
           placeholder="Start Coding..."
-          value={addition}
+          value={`${addition}`}
         />
         <Button
           className="button chat__field--submit mb-space-sm"
@@ -29,7 +31,7 @@ const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) 
         />
       </div>
     </div>
-  )
+  );
 };
 
 export default Chat;

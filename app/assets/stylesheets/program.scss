@@ -12,14 +12,50 @@
 }
 
 .program-code {
+  overflow-x: scroll;
   min-height: 10rem;
-  width: 30rem;
-  border: 1px solid black;
-  border-radius: 4px;
-  background: #eee;
+  width: 40rem;
+  background: #FEFEFE;
+  border: 1px solid #EEE;
+  border-radius: .25em;
+  box-shadow: .1em .1em .5em rgba(0, 0, 0, .45);
   padding: 0.5rem;
   margin-bottom: 1rem;
+  font-family: 'Hasklig', 'SourceSans Pro', 'Courier New', Courier, monospace;
+  line-height: 0;
+  counter-reset: line;
+
+  span.identifier {
+    font-weight: bold;
+    color: maroon;
+  }
+
+  span.operator {
+    color: goldenrod;
+  }
+
+  span.symbol {
+    color: mediumvioletred;
+  }
+
+  span.line {
+    display: block;
+    line-height: 1.5rem;
+
+    &:before {
+      counter-increment: line;
+      content: counter(line);
+      display: inline-block;
+      border-right: 1px solid #ddd;
+      padding: 0 .5em;
+      margin-right: .5em;
+      color: #888;
+      text-align: end;
+      width: 1.22em;
+    }
+  }
 }
+
 
 .addition-field {
   display: flex;
