@@ -2,7 +2,7 @@ import { Program, MaxInputMode } from "../lib/types/types";
 import consumer from "./consumer";
 
 export interface ProgramChannel {
-  message: (msg: string) => void;
+  message: (msg: any) => void;
   setMode: (mode: "anarchy" | "democracy") => void;
   setMaxInputMode: (mode: MaxInputMode) => void;
   setVoteInterval: (interval: number) => void;
@@ -18,7 +18,7 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
     program = newProgram;
     setProgram(program);
   };
-  
+
   const sub = consumer.subscriptions.create(
     { channel: "ProgramChannel", id: program.id },
     {
@@ -37,6 +37,9 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
             console.debug("tick");
             updateProgram({ ...program, ...data });
             break;
+          case "output":
+            updateProgram({ ...program, ...{ output: data } });
+            break;
 
           default:
             console.log(`Data:`, data);
@@ -47,7 +50,7 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
     }
   );
   return {
-    message: (msg: string) => sub.perform("message", msg),
+    message: (msg: any) => sub.perform("message", msg),
     setMode: (mode: "anarchy" | "democracy") => sub.perform("set_mode", { data: mode }),
     setMaxInputMode: (mode: MaxInputMode) => sub.perform("set_max_input_mode", { data: mode }),
     setVoteInterval: (interval: number) => sub.perform("set_vote_interval", { data: interval }),

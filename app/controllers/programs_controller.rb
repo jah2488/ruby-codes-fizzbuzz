@@ -3,7 +3,6 @@ class ProgramsController < ApplicationController
 
   def show
     program = Program.find(params.fetch(:id))
-    
     if request.headers["HTTP_RESPONSE_TYPE"] == "json"
       render json: program.view
     else

@@ -2,7 +2,6 @@ class ProgramChannel < ApplicationCable::Channel
   periodically :tick, every: 1.seconds
 
   def subscribed
-    puts "Subscribed!"
     stream_for room
   end
 
@@ -57,6 +56,10 @@ class ProgramChannel < ApplicationCable::Channel
     end
   end
 
+  def evaluate_code
+    ProgramChannel.broadcast_to(room, { action: :output, data: current_program.evaluate })
+  end
+
   def message(data)
     program = current_program
     addition = data.fetch("addition")
@@ -65,6 +68,7 @@ class ProgramChannel < ApplicationCable::Channel
     if is_code
       char = program.chars.find_or_create_by(name: addition)
       Vote.create(char: char)
+      #TODO: Change to pull from program.settings.vote_threshold
       if char.votes_count >= Program::VOTE_THRESHOLD[program.mode]
         program.update(code: "#{program.code} #{char.formatted_name}")
         program.chars.destroy_all
@@ -72,6 +76,7 @@ class ProgramChannel < ApplicationCable::Channel
     end
 
     ProgramChannel.broadcast_to(room, { action: :message, data: program.view })
+    evaluate_code
   end
 
   def clear

@@ -1,3 +1,4 @@
+require 'timeout'
 class CodeEvaluator
   attr_reader :code, :output, :error, :status
 
@@ -6,9 +7,17 @@ class CodeEvaluator
   end
 
   def process
-    self.output,
-    self.error,
-    self.status = Open3.capture3('ruby', '-e', self.sanitized_code)
+    Thread.handle_interrupt(Timeout::Error => :never) {
+      Timeout.timeout(10){
+        Thread.handle_interrupt(Timeout::Error => :on_blocking) {
+          self.output, self.error, self.status = Open3.capture3('ruby', '-e', self.sanitized_code)
+        }
+      }
+    }
+  rescue Timeout::Error => e
+    self.error = e.message
+    self
+  else
     self
   end
 

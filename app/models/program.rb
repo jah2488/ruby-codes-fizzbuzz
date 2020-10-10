@@ -12,7 +12,7 @@ class Program < ApplicationRecord
 
   VOTE_THRESHOLD = {
     "anarchy" => 1,
-    "democracy" => 5
+    "democracy" => 1
   }.freeze
 
   def self.active
@@ -27,6 +27,13 @@ class Program < ApplicationRecord
     # 5) determine if output is correct?
       # - 5a) Each program should have a set of test criteria that we are testing against.
       # - 5b) It could be either a simple string, or code to be evaluated _against_ the code provided. ie a test suite or just an answer.
+    Rails.cache.fetch("#{self.id}-#{self.code.length}") do
+      ce = CodeEvaluator.new(self.code).process
+      puts "*" * 100
+      puts ce.inspect
+      puts "*" * 100
+      "#{ce.output}\n#{ce.error}"
+    end
   end
 
   def playing?

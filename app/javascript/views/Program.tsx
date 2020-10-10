@@ -7,7 +7,7 @@ import Output from "./Shared/Output";
 import Time from "./Shared/Time";
 import Title from "./Shared/Title";
 import Votes from "./Shared/Votes";
-import Controls from "./Program/Controls"
+import Controls from "./Program/Controls";
 import Constants from "../lib/constants/constants";
 
 const Program = () => {
@@ -24,8 +24,13 @@ const Program = () => {
       .get(url)
       .then((response) => response.json())
       .then((program) => {
-        setChannel(ProgramChannel(program, setProgram));
+        const programChannel = ProgramChannel(program, setProgram);
+        setTimeout(() => {
+          programChannel.message({ isCode: false, addition: "" });
+        }, 500);
+
         setProgram(program);
+        setChannel(programChannel);
       });
   }, []);
 
@@ -54,12 +59,18 @@ const Program = () => {
       data.addition = val.substring(1);
     }
 
-    channel.message(data);
+    (channel as ProgramChannel).message(data);
     setAddition("");
   };
 
   const _handleClear = () => {
     channel.clear();
+  };
+
+  const formatCode = (code?: string): string => {
+    if (!code) return "";
+    const lines = code.replace("<", "& lt;").split("\n");
+    return `<span class="line">${lines.join("</span><span class='line'>")}</span>`;
   };
 
   if (!program || !program.id) return null;
@@ -76,6 +87,15 @@ const Program = () => {
       <div className="program-container">
         <div className="program-content section column">
           <Output program={program} />
+          <div className="code-section">
+            <div className="program-code">
+              <pre
+                dangerouslySetInnerHTML={{
+                  __html: `${formatCode(program.output)}`,
+                }}
+              />
+            </div>
+          </div>
           <Controls handleSubmit={_handleSubmit} handleClear={_handleClear} />
         </div>
 

@@ -5,11 +5,11 @@ class Char < ApplicationRecord
   validates :name, presence: true
 
   SPECIAL_CHAR = {
-    "[TAB]" => "&nbsp;&nbsp;",
-    "[NEW LINE]" => "<br />"
+    "[TAB]" => "\t",
+    "[NEW LINE]" => "\n"
   }.freeze
 
   def formatted_name
-    SPECIAL_CHAR[name] || name 
+    SPECIAL_CHAR[name] || name
   end
 end
