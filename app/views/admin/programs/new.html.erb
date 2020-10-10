@@ -1,7 +1,5 @@
 <%= form_with model: [:admin, program] do |f| %>
   
-  <%= f.hidden_field :settings, value: { "play_state" => "created" } %>
-
   <div>
     <%= f.label :name %>
     <%= f.text_field :name %>

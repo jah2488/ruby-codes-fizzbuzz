@@ -3,8 +3,12 @@ class Program < ApplicationRecord
 
   has_many :chars, dependent: :destroy
   has_many :messages, dependent: :destroy
-  
   validates :name, presence: true
+  before_save -> () do
+    if settings.empty?
+      self.settings = { play_state: "created" }
+    end
+  end
 
   VOTE_THRESHOLD = {
     "anarchy" => 1,
@@ -13,6 +17,16 @@ class Program < ApplicationRecord
 
   def self.active
     where(complete: false)
+  end
+
+  def evaluate
+    #✔️ 1) clean/sanitize code sample to remove potential security issues.
+    #✔️ 2) run code in a separate process/thread.
+    #✔️ 3) capture output from code sample.
+    #✔️ 4) return captured output.
+    # 5) determine if output is correct?
+      # - 5a) Each program should have a set of test criteria that we are testing against.
+      # - 5b) It could be either a simple string, or code to be evaluated _against_ the code provided. ie a test suite or just an answer.
   end
 
   def playing?
