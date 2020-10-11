@@ -13,7 +13,7 @@ class ProgramChannel < ApplicationCable::Channel
         vote_threshold: Program::VOTE_THRESHOLD[message["data"]],
       })
     )
-    ProgramChannel.broadcast_to(room, { action: :update, data: current_program.tick_view })
+    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
   end
 
   def set_max_input_mode(message)
