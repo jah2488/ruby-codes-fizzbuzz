@@ -7,14 +7,14 @@ const ModeSection = ({ channel, program }) => {
     <Section name="Mode">
       <div className="flex">
         <Button
-          handleClick={() => channel.setMode("democracy")}
-          disabled={program.mode === "democracy" ? true : false}
-          name="democracy"
+          handleClick={() => channel.setMode("Democracy")}
+          disabled={program.mode === "Democracy" ? true : false}
+          name="Democracy"
         />
         <Button
-          handleClick={() => channel.setMode("anarchy")}
-          disabled={program.mode === "anarchy" ? true : false}
-          name="anarchy"
+          handleClick={() => channel.setMode("Anarchy")}
+          disabled={program.mode === "Anarchy" ? true : false}
+          name="Anarchy"
         />
       </div>
     </Section>

@@ -4,15 +4,23 @@ class Program < ApplicationRecord
   has_many :chars, dependent: :destroy
   has_many :messages, dependent: :destroy
   validates :name, presence: true
+
+  enum max_input_mode: { char: 0, word: 1, line: 2 }
+
   before_save -> () do
     if settings.empty?
-      self.settings = { play_state: "created" }
+      self.settings = {
+        play_state: "created",
+        max_input_mode: Program.max_input_modes["word"],
+        vote_interval: VOTE_THRESHOLD[mode],
+        vote_threshold: VOTE_THRESHOLD[mode]
+      }
     end
   end
 
   VOTE_THRESHOLD = {
-    "anarchy" => 1,
-    "democracy" => 1
+    "Anarchy" => 0,
+    "Democracy" => 3
   }.freeze
 
   def self.active
@@ -34,6 +42,29 @@ class Program < ApplicationRecord
       puts "*" * 100
       "#{ce.output}\n#{ce.error}"
     end
+  end
+
+  def formatted_code(char)
+    case char.name
+    when "[BACKSPACE]" then handle_backspace
+    else
+      handle_addition(char)
+    end
+  end
+
+  def handle_addition(char)
+    "#{code} #{char.formatted_name}"
+  end
+
+  def handle_backspace
+    delimiter = case settings["max_input_mode"]
+    when Program.max_input_modes["char"] then ""
+    when Program.max_input_modes["word"] then " "
+    when Program.max_input_modes["line"] then "\n"
+    else
+      ""
+    end
+    code.split(/#{delimiter}/)[0..-2].join("#{delimiter}")
   end
 
   def playing?

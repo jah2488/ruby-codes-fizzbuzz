@@ -6,7 +6,13 @@ class ProgramChannel < ApplicationCable::Channel
   end
 
   def set_mode(message)
-    current_program.update(mode: message["data"])
+    current_program.update(
+      mode: message["data"],
+      settings: current_program.settings.merge({
+        vote_interval: Program::VOTE_THRESHOLD[message["data"]],
+        vote_threshold: Program::VOTE_THRESHOLD[message["data"]],
+      })
+    )
     ProgramChannel.broadcast_to(room, { action: :update, data: current_program.tick_view })
   end
 
@@ -68,9 +74,8 @@ class ProgramChannel < ApplicationCable::Channel
     if is_code
       char = program.chars.find_or_create_by(name: addition)
       Vote.create(char: char)
-      #TODO: Change to pull from program.settings.vote_threshold
-      if char.votes_count >= Program::VOTE_THRESHOLD[program.mode]
-        program.update(code: "#{program.code} #{char.formatted_name}")
+      if char.votes_count >= program.settings["vote_threshold"]
+        program.update(code: program.formatted_code(char))
         program.chars.destroy_all
       end
     end

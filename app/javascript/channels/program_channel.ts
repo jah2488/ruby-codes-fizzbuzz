@@ -3,7 +3,7 @@ import consumer from "./consumer";
 
 export interface ProgramChannel {
   message: (msg: any) => void;
-  setMode: (mode: "anarchy" | "democracy") => void;
+  setMode: (mode: "Anarchy" | "Democracy") => void;
   setMaxInputMode: (mode: MaxInputMode) => void;
   setVoteInterval: (interval: number) => void;
   pause: () => void;
@@ -37,13 +37,14 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
             console.debug("tick");
             updateProgram({ ...program, ...data });
             break;
+
           case "output":
             updateProgram({ ...program, ...{ output: data } });
             break;
 
           default:
             console.log(`Data:`, data);
-            updateProgram(data);
+            updateProgram({ ...program, ...data });
             break;
         }
       },
@@ -51,7 +52,7 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
   );
   return {
     message: (msg: any) => sub.perform("message", msg),
-    setMode: (mode: "anarchy" | "democracy") => sub.perform("set_mode", { data: mode }),
+    setMode: (mode: "Anarchy" | "Democracy") => sub.perform("set_mode", { data: mode }),
     setMaxInputMode: (mode: MaxInputMode) => sub.perform("set_max_input_mode", { data: mode }),
     setVoteInterval: (interval: number) => sub.perform("set_vote_interval", { data: interval }),
     pause: () => sub.perform("pause"),

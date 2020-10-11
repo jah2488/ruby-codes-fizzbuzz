@@ -8,17 +8,22 @@ const Controls = ({ handleSubmit, handleClear }) => {
     <Section name="Mode">
       <div className="flex space-between full">
         <Button
-          className="button button__action third"
-          handleClick={() => handleSubmit(`${Constants.CODE_KEY}[TAB]`)}
+          className="button button__action quarter"
+          handleClick={() => handleSubmit("[TAB]")}
           name="Tab"
         />
         <Button
-          className="button button__action third"
-          handleClick={() => handleSubmit(`${Constants.CODE_KEY}[NEW LINE]`)}
+          className="button button__action quarter"
+          handleClick={() => handleSubmit("[NEW LINE]")}
           name="New Line"
         />
         <Button
-          className="button button__action third"
+          className="button button__action quarter"
+          handleClick={() => handleSubmit("[BACKSPACE]")}
+          name="Backspace"
+        />
+        <Button
+          className="button button__action quarter"
           handleClick={handleClear}
           name="Clear"
         />

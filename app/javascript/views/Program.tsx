@@ -51,11 +51,11 @@ const Program = () => {
     };
 
     const data: Data = {
-      isCode: false,
+      isCode: true,
       addition: val,
     };
     if (val[0] === Constants.CODE_KEY) {
-      data.isCode = true;
+      data.isCode = false;
       data.addition = val.substring(1);
     }
 

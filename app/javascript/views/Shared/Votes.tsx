@@ -14,7 +14,7 @@ const Votes = ({ program, _handleSubmit, canVote = true }) => {
               {canVote && 
                 <Button
                   className="button"
-                  handleClick={() => _handleSubmit(`!${char.name}`)}
+                  handleClick={() => _handleSubmit(char.name)}
                   name="Vote"
                 />
               }

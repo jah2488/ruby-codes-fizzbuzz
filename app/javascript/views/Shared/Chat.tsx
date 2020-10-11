@@ -8,9 +8,9 @@ const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) 
         <div className="chat__section--output">
           {program &&
             program.messages.map((message) => (
-              <div key={message.id} className={message.is_code ? "is-code" : ""}>
-                <img src={`https://api.adorable.io/avatars/25/${message.user_id}.png`} />
-                {message.name}
+              <div key={message.id} className={`chat__output ${message.is_code ? "chat__output--code" : ""}`}>
+                <img className="chat__output--avatar" src={`https://api.adorable.io/avatars/25/${message.user_id}.png`} />
+                <span className="chat__output--text">{message.name}</span>
               </div>
             ))}
         </div>
