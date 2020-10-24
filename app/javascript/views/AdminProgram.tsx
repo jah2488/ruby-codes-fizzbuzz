@@ -41,7 +41,7 @@ const AdminProgram = () => {
         </div>
 
         <div className="section">
-          <Votes program={program} _handleSubmit={() => {}} canVote={false} />
+          <Votes program={program} _handleSubmit={() => {}} canVote={true} />
         </div>
 
         <div className="admin-section section">

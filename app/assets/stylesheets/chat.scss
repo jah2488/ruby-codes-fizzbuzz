@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 15rem;
   height: 15rem;
-  border: 1px solid black;
+  border: 2px solid #333;
   border-radius: 4px;
 }
 
@@ -16,13 +16,15 @@
     overflow-x: unset;
   }
   &--output {
+    display: flex;
+    flex-direction: column;;
     background: #fff;
     padding: 0.5rem;
   }
   &--input {
     display: flex;
     width: 100%;
-    border-top: 1px solid black;
+    border-top: 2px solid #333;
   }
 }
 
@@ -34,7 +36,7 @@
   &--submit {
     flex: 0 0 10%;
     height: 100%;
-    border-left: 1px solid black;
+    border-left: 2px solid #333;
     input {
       height: 100%;
       border: none;
@@ -51,19 +53,31 @@
   display: flex;
   align-items: center;
   margin-top: 0.7rem;
-  border-radius: 10px;
   background: #eee;
-  &--code {
-    background: #b491c8;
+  padding: 1rem 0;
+  border-radius: 14px;
+  &--other-user {
+    align-self: flex-start;
+    border-top-left-radius: 0;
   }
-}
-
-.chat__output--avatar {
-  border-radius: 10px;
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
+  &--current-user {
+    align-self: flex-end;
+    border-top-right-radius: 0;
+  }
+  &--code {
+    background: #ddd3ee;
+    width: fit-content;
+    padding: 0.3rem 1rem;
+    border-radius: 14px;
+    :before{content:"\"";};
+    :after{content:"\"";};
+  }
 }
 
 .chat__output--text {
   padding: 0 0.5rem;
+}
+
+.fa-tag {
+  font-weight: 200;
 }

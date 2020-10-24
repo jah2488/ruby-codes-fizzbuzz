@@ -29,7 +29,10 @@ const formatCode = (code?: string): string => {
       .replace(/[</span> ]+(:[a-zA-Z_]+[a-zA-Z0-9_\-]+[ \n]*)/, " <span class='symbol'>$1</span>")
   );
 
-  return `<span class="line">${lines.join("</span><span class='line'>")}`;
+  const presentLine = lines.pop();
+
+  return `<span class="line">${lines.join("</span><span class='line'>")}` + 
+         `</span><span class='line present-line'>${presentLine}`;
 };
 
 export default Output;

@@ -100,7 +100,7 @@ const Program = () => {
         </div>
 
         <div className="section">
-          <Votes _handleSubmit={_handleSubmit} program={program} />
+          <Votes _handleSubmit={_handleSubmit} program={program} canVote={false} />
         </div>
 
         <div className="section">

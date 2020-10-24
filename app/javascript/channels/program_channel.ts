@@ -6,6 +6,7 @@ export interface ProgramChannel {
   setMode: (mode: "Anarchy" | "Democracy") => void;
   setMaxInputMode: (mode: MaxInputMode) => void;
   setVoteInterval: (interval: number) => void;
+  setVoteThreshold: (threshold: number) => void;
   pause: () => void;
   resume: () => void;
   resetTick: () => void;
@@ -55,6 +56,7 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
     setMode: (mode: "Anarchy" | "Democracy") => sub.perform("set_mode", { data: mode }),
     setMaxInputMode: (mode: MaxInputMode) => sub.perform("set_max_input_mode", { data: mode }),
     setVoteInterval: (interval: number) => sub.perform("set_vote_interval", { data: interval }),
+    setVoteThreshold: (threshold: number) => sub.perform("set_vote_threshold", { data: threshold }),
     pause: () => sub.perform("pause"),
     resume: () => sub.perform("resume"),
     resetTick: () => sub.perform("reset_tick"),
