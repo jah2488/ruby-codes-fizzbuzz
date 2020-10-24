@@ -13,38 +13,66 @@ class ProgramChannel < ApplicationCable::Channel
         vote_threshold: Program::VOTE_THRESHOLD[message["data"]],
       })
     )
-    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
+    ProgramChannel.broadcast_to(room, {
+      action: :tick,
+      data: current_program.tick_view(current_user)
+    })
   end
 
   def set_max_input_mode(message)
     current_program.update(settings: current_program.settings.merge({
       max_input_mode: message["data"]
     }))
-    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
+    ProgramChannel.broadcast_to(room, {
+      action: :tick,
+      data: current_program.tick_view(current_user)
+    })
   end
 
   def set_vote_interval(message)
     current_program.update(settings: current_program.settings.merge({
       vote_interval: message["data"]
     }))
-    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
+    ProgramChannel.broadcast_to(room, {
+      action: :tick,
+      data: current_program.tick_view(current_user)
+    })
+  end
+
+  def set_vote_threshold(message)
+    current_program.update(settings: current_program.settings.merge({
+      vote_threshold: message["data"]
+    }))
+    ProgramChannel.broadcast_to(room, {
+      action: :tick,
+      data: current_program.tick_view(current_user)
+    })
   end
 
   def pause
     current_program.update(settings: current_program.settings.merge({
       play_state: "paused" }))
-    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
+    ProgramChannel.broadcast_to(room, {
+      action: :tick,
+      data: current_program.tick_view(current_user)
+    })
   end
 
   def resume
     current_program.update(settings: current_program.settings.merge({
       play_state: "playing" }))
-    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
+    ProgramChannel.broadcast_to(room, {
+      action: :tick,
+      data: current_program.tick_view(current_user)
+    })
   end
 
   def reset_tick
     current_program.update(tick: 0)
-    ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
+    ProgramChannel.broadcast_to(room, {
+      action: :tick,
+      data: current_program.tick_view(current_user)
+    })
   end
 
   def unsubscribed
@@ -58,12 +86,18 @@ class ProgramChannel < ApplicationCable::Channel
   def tick
     if current_program.playing?
       current_program.update(tick: current_program.tick.succ)
-      ProgramChannel.broadcast_to(room, { action: :tick, data: current_program.tick_view })
+      ProgramChannel.broadcast_to(room, {
+        action: :tick,
+        data: current_program.tick_view(current_user)
+      })
     end
   end
 
   def evaluate_code
-    ProgramChannel.broadcast_to(room, { action: :output, data: current_program.evaluate })
+    ProgramChannel.broadcast_to(room, {
+      action: :output,
+      data: current_program.evaluate
+    })
   end
 
   def message(data)
@@ -80,7 +114,10 @@ class ProgramChannel < ApplicationCable::Channel
       end
     end
 
-    ProgramChannel.broadcast_to(room, { action: :message, data: program.view })
+    ProgramChannel.broadcast_to(room, {
+      action: :message,
+      data: program.view(current_user)
+    })
     evaluate_code
   end
 
@@ -89,7 +126,10 @@ class ProgramChannel < ApplicationCable::Channel
     program.update(code: "")
     program.chars.destroy_all
 
-    ProgramChannel.broadcast_to(room, { action: :clear, data: program.view })
+    ProgramChannel.broadcast_to(room, {
+      action: :clear,
+      data: program.view(current_user)
+    })
   end
 
   private

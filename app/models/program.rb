@@ -64,25 +64,27 @@ class Program < ApplicationRecord
     else
       ""
     end
-    code.split(/#{delimiter}/)[0..-2].join("#{delimiter}")
+    # split(//, -1) is necessary to prevent over-deletion when the last character is a new-line
+    code.split(/#{delimiter}/, -1)[0..-2].join("#{delimiter}")
   end
 
   def playing?
     settings["play_state"] == "playing"
   end
 
-  def tick_view
+  def tick_view(current_user=nil)
     {
       id: id,
       name: name,
       mode: mode,
       code: code,
       tick: tick,
-      settings: settings
+      settings: settings,
+      current_user_id: current_user && current_user.id
     }
   end
 
-  def view
+  def view(current_user=nil)
     {
       id: id,
       name: name,
@@ -97,7 +99,8 @@ class Program < ApplicationRecord
         .limit(50)
         .reverse,
       tick: tick,
-      settings: settings
+      settings: settings,
+      current_user_id: current_user && current_user.id
     }
   end
 end

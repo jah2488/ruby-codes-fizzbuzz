@@ -1,5 +1,7 @@
 import Button from "../../components/Button";
 import React from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCode } from '@fortawesome/free-solid-svg-icons'
 
 const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) => {
   return (
@@ -7,12 +9,26 @@ const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) 
       <div className="chat__section--column-reverse">
         <div className="chat__section--output">
           {program &&
-            program.messages.map((message) => (
-              <div key={message.id} className={`chat__output ${message.is_code ? "chat__output--code" : ""}`}>
-                <img className="chat__output--avatar" src={`https://api.adorable.io/avatars/25/${message.user_id}.png`} />
-                <span className="chat__output--text">{message.name}</span>
-              </div>
-            ))}
+            program.messages.map(message => {
+              const currentUserStyle = program.current_user_id === message.user_id ? "chat__output--current-user" : "chat__output--other-user";
+
+              if (message.is_code) {
+                return (
+                  <div key={message.id} className={`chat__output chat__output--code ${currentUserStyle}`}>
+                    <FontAwesomeIcon size="xs" icon={faCode} />
+                    <span className="chat__output--text">{message.name}</span>
+                  </div>
+                )
+              } else {
+                return (
+                  <div key={message.id} className={`chat__output ${currentUserStyle}`}>
+                    <span className="chat__output--text">{message.name}</span>
+                  </div>
+                )
+              }
+              
+            })
+          }
         </div>
       </div>
       <div className="chat__section--input">
@@ -23,6 +39,7 @@ const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) 
           onChange={() => {}}
           placeholder="Start Coding..."
           value={`${addition}`}
+          autoFocus
         />
         <Button
           className="button chat__field--submit mb-space-sm"
