@@ -85,7 +85,6 @@ class ProgramChannel < ApplicationCable::Channel
 
   def tick
     if current_program.playing?
-      current_program.update(tick: current_program.tick.succ)
       ProgramChannel.broadcast_to(room, {
         action: :tick,
         data: current_program.tick_view(current_user)
