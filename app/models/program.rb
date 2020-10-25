@@ -17,7 +17,7 @@ class Program < ApplicationRecord
       }
     end
   end
-
+  
   VOTE_THRESHOLD = {
     "Anarchy" => 0,
     "Democracy" => 3
@@ -27,19 +27,17 @@ class Program < ApplicationRecord
     where(complete: false)
   end
 
+  def self.running
+    self.active.where("settings ->> 'play_state' = :state", state: "playing")
+  end
+
+
   def evaluate
-    #✔️ 1) clean/sanitize code sample to remove potential security issues.
-    #✔️ 2) run code in a separate process/thread.
-    #✔️ 3) capture output from code sample.
-    #✔️ 4) return captured output.
-    # 5) determine if output is correct?
-      # - 5a) Each program should have a set of test criteria that we are testing against.
-      # - 5b) It could be either a simple string, or code to be evaluated _against_ the code provided. ie a test suite or just an answer.
+    # TODO) determine if output is correct?
+      # - 1) Each program should have a set of test criteria that we are testing against.
+      # - 2) It could be either a simple string, or code to be evaluated _against_ the code provided. ie a test suite or just an answer.
     Rails.cache.fetch("#{self.id}-#{self.code.length}") do
       ce = CodeEvaluator.new(self.code).process
-      puts "*" * 100
-      puts ce.inspect
-      puts "*" * 100
       "#{ce.output}\n#{ce.error}"
     end
   end
