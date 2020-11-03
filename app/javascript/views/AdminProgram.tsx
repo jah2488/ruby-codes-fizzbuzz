@@ -4,6 +4,7 @@ import { Program } from "../lib/types/types";
 import React, { useEffect, useState } from "react";
 import ModeSection from "./Admin/ModeSection";
 import DifficultySection from "./Admin/DifficultySection";
+import FunSection from "./Admin/FunSection";
 import PlayControlsSection from "./Admin/PlayControlsSection";
 import RestartControlsSection from "./Admin/RestartControlsSection";
 import Output from "./Shared/Output";
@@ -47,6 +48,7 @@ const AdminProgram = () => {
         <div className="admin-section section">
           <ModeSection channel={channel} program={program} />
           <DifficultySection channel={channel} program={program} />
+          <FunSection channel={channel} program={program} />
           <PlayControlsSection channel={channel} program={program} />
           <RestartControlsSection channel={channel} />
         </div>

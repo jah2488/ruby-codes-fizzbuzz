@@ -8,6 +8,7 @@ export interface ProgramChannel {
   setMaxInputMode: (mode: MaxInputMode) => void;
   setVoteInterval: (interval: number) => void;
   setVoteThreshold: (threshold: number) => void;
+  setConfetti: (value: boolean) => void;
   pause: () => void;
   resume: () => void;
   resetTick: () => void;
@@ -63,6 +64,7 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
     setMaxInputMode: (mode: MaxInputMode) => sub.perform("set_max_input_mode", { data: mode }),
     setVoteInterval: (interval: number) => sub.perform("set_vote_interval", { data: interval }),
     setVoteThreshold: (threshold: number) => sub.perform("set_vote_threshold", { data: threshold }),
+    setConfetti: (value) => sub.perform("set_confetti", { data: value }),
     pause: () => sub.perform("pause"),
     resume: () => sub.perform("resume"),
     resetTick: () => sub.perform("reset_tick"),

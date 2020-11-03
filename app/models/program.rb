@@ -13,7 +13,8 @@ class Program < ApplicationRecord
         play_state: "created",
         max_input_mode: Program.max_input_modes["word"],
         vote_interval: VOTE_THRESHOLD[mode],
-        vote_threshold: VOTE_THRESHOLD[mode]
+        vote_threshold: VOTE_THRESHOLD[mode],
+        confetti: false
       }
     end
   end
