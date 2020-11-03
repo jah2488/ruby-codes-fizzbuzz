@@ -5,6 +5,13 @@ class ProgramChannel < ApplicationCable::Channel
     stream_for room
   end
 
+  def fetch_user_token
+    ProgramChannel.broadcast_to(room, {
+      action: :set_user_token,
+      data: { token: current_user.token }
+    })
+  end
+
   def set_mode(message)
     current_program.update(
       mode: message["data"],
@@ -15,7 +22,7 @@ class ProgramChannel < ApplicationCable::Channel
     )
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view(current_user)
+      data: current_program.tick_view
     })
   end
 
@@ -25,7 +32,7 @@ class ProgramChannel < ApplicationCable::Channel
     }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view(current_user)
+      data: current_program.tick_view
     })
   end
 
@@ -35,7 +42,7 @@ class ProgramChannel < ApplicationCable::Channel
     }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view(current_user)
+      data: current_program.tick_view
     })
   end
 
@@ -45,7 +52,7 @@ class ProgramChannel < ApplicationCable::Channel
     }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view(current_user)
+      data: current_program.tick_view
     })
   end
 
@@ -54,7 +61,7 @@ class ProgramChannel < ApplicationCable::Channel
       play_state: "paused" }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view(current_user)
+      data: current_program.tick_view
     })
   end
 
@@ -63,7 +70,7 @@ class ProgramChannel < ApplicationCable::Channel
       play_state: "playing" }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view(current_user)
+      data: current_program.tick_view
     })
   end
 
@@ -71,7 +78,7 @@ class ProgramChannel < ApplicationCable::Channel
     current_program.update(tick: 0)
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view(current_user)
+      data: current_program.tick_view
     })
   end
 
@@ -87,7 +94,7 @@ class ProgramChannel < ApplicationCable::Channel
     if current_program.playing?
       ProgramChannel.broadcast_to(room, {
         action: :tick,
-        data: current_program.tick_view(current_user)
+        data: current_program.tick_view
       })
     end
   end
@@ -115,7 +122,7 @@ class ProgramChannel < ApplicationCable::Channel
 
     ProgramChannel.broadcast_to(room, {
       action: :message,
-      data: program.view(current_user)
+      data: program.view
     })
     evaluate_code
   end
@@ -127,7 +134,7 @@ class ProgramChannel < ApplicationCable::Channel
 
     ProgramChannel.broadcast_to(room, {
       action: :clear,
-      data: program.view(current_user)
+      data: program.view
     })
   end
 

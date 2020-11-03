@@ -26,6 +26,7 @@ const Program = () => {
       .then((program) => {
         const programChannel = ProgramChannel(program, setProgram);
         setTimeout(() => {
+          programChannel.fetchUserToken();
           programChannel.message({ isCode: false, addition: "" });
         }, 500);
 
