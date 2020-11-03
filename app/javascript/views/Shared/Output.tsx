@@ -1,11 +1,20 @@
 import React from "react";
+import hljs from 'highlight.js';
+import ruby from 'highlight.js/lib/languages/ruby';
+import 'highlight.js/styles/github.css';
+hljs.registerLanguage('ruby', ruby);
 
 const Output = ({ program: { code, tick }, program }) => (
   <div className="code-section">
     <div className="program-code">
-      <pre
+      {/* <pre
         dangerouslySetInnerHTML={{
           __html: `${formatCode(code)}${tick % 2 === 0 ? "│" : "&nbsp;"}&nbsp;</span>`,
+        }}
+      /> */}
+      <pre
+        dangerouslySetInnerHTML={{
+          __html: `${formatCode(hljs.highlight('ruby', code).value)}${tick % 2 === 0 ? "│" : "&nbsp;"}&nbsp;</span>`,
         }}
       />
     </div>
@@ -14,7 +23,15 @@ const Output = ({ program: { code, tick }, program }) => (
 
 const formatCode = (code?: string): string => {
   if (!code) return "";
-  const lines = code.split("\n").map((line) =>
+  const lines = code.split("\n")
+  const presentLine = lines.pop();
+
+  return `<span class="line">${lines.join("</span><span class='line'>")}` + 
+         `</span><span class='line present-line'>${presentLine}`;
+};
+
+const customSyntaxHighlighting = (lines) => {
+  return lines.map(line => 
     line
       .replace(" def ", "<span class='identifier'> def </span>")
       .replace(/( end[ \n]*)/, "<span class='identifier'>$1</span>")
@@ -28,12 +45,7 @@ const formatCode = (code?: string): string => {
       .replace(/( [0-9]+ )/, "<span class='operator'> $1 </span>")
       .replace(/[</span> ]+(:[a-zA-Z_]+[a-zA-Z0-9_\-]+[ \n]*)/, " <span class='symbol'>$1</span>")
       .replace(/("[^"]*")/g, "<span class='string'>$1</span>")
-  );
-
-  const presentLine = lines.pop();
-
-  return `<span class="line">${lines.join("</span><span class='line'>")}` + 
-         `</span><span class='line present-line'>${presentLine}`;
+  )
 };
 
 export default Output;
