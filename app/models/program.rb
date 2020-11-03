@@ -70,19 +70,19 @@ class Program < ApplicationRecord
     settings["play_state"] == "playing"
   end
 
-  def tick_view(current_user=nil)
+  def tick_view
     {
       id: id,
       name: name,
       mode: mode,
       code: code,
+      messages: messages_data,
       tick: tick,
       settings: settings,
-      current_user_id: current_user && current_user.id
     }
   end
 
-  def view(current_user=nil)
+  def view
     {
       id: id,
       name: name,
@@ -91,14 +91,20 @@ class Program < ApplicationRecord
       chars: chars
         .select(:id, :name, :votes_count)
         .order(votes_count: :desc),
-      messages: messages
-        .select(:id, :name, :is_code, :user_id)
-        .order(created_at: :desc)
-        .limit(50)
-        .reverse,
+      messages: messages_data,
       tick: tick,
-      settings: settings,
-      current_user_id: current_user && current_user.id
+      settings: settings
     }
+  end
+
+  private
+
+  def messages_data
+    messages
+      .joins(:user)
+      .select(:id, :name, :is_code, :token)
+      .order(created_at: :desc)
+      .limit(50)
+      .reverse
   end
 end

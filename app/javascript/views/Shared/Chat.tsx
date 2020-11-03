@@ -2,15 +2,19 @@ import Button from "../../components/Button";
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCode } from '@fortawesome/free-solid-svg-icons'
+import { parseCookies } from "../../lib/helpers/helpers"
 
 const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) => {
+  const cookies = parseCookies();
+  const userToken = cookies.user_token;
+
   return (
     <div className="chat">
       <div className="chat__section--column-reverse">
         <div className="chat__section--output">
           {program &&
             program.messages.map(message => {
-              const currentUserStyle = program.current_user_id === message.user_id ? "chat__output--current-user" : "chat__output--other-user";
+              const currentUserStyle = userToken === message.token ? "chat__output--current-user" : "chat__output--other-user";
 
               if (message.is_code) {
                 return (

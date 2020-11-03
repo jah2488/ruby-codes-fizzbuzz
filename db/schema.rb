@@ -37,13 +37,14 @@ ActiveRecord::Schema.define(version: 2020_10_03_145731) do
 
   create_table "programs", force: :cascade do |t|
     t.string "name", null: false
-    t.string "mode", default: "Anarchy", null: false
+    t.text "code", default: "", null: false
+    t.text "boilerplate", default: "", null: false
+    t.string "mode", default: "anarchy", null: false
     t.boolean "complete", default: false, null: false
     t.integer "tick", default: 0, null: false
     t.jsonb "settings", default: {}, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.text "code", default: "", null: false
   end
 
   create_table "users", force: :cascade do |t|
