@@ -27,6 +27,7 @@ const formatCode = (code?: string): string => {
       .replace(/( puts[\( \n]*)/, "<span class='operator'>$1</span>")
       .replace(/( [0-9]+ )/, "<span class='operator'> $1 </span>")
       .replace(/[</span> ]+(:[a-zA-Z_]+[a-zA-Z0-9_\-]+[ \n]*)/, " <span class='symbol'>$1</span>")
+      .replace(/("[^"]*")/g, "<span class='string'>$1</span>")
   );
 
   const presentLine = lines.pop();
