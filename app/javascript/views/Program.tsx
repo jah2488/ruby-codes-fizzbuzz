@@ -1,3 +1,4 @@
+import _ from "lodash";
 import ApiClient from "../lib/client/ApiClient";
 import { Program } from "../lib/types/types";
 import { ProgramChannel } from "../channels/program_channel";
@@ -9,12 +10,14 @@ import Title from "./Shared/Title";
 import Votes from "./Shared/Votes";
 import Controls from "./Program/Controls";
 import Constants from "../lib/constants/constants";
+import ConfettiGenerator from "confetti-js";
 
 const Program = () => {
   const client = new ApiClient();
   const [channel, setChannel] = useState(null);
   const [program, setProgram] = useState({} as Program);
   const [addition, setAddition] = useState("");
+  const [confetti, setConfetti] = useState(false);
 
   useEffect(() => {
     const id = window.location.pathname.split("/")[2];
@@ -34,6 +37,24 @@ const Program = () => {
         setChannel(programChannel);
       });
   }, []);
+
+  useEffect(() => {
+    setConfetti(_.get(program, "settings.confetti"));
+  }, [program]);
+
+
+  useEffect(() => {
+    console.log("confetti", confetti);
+
+    if (!confetti) return;
+    const confettiSettings = {
+      target: 'my-canvas'
+    };
+    const _confetti = new ConfettiGenerator(confettiSettings);
+    _confetti.render();
+
+    return () => _confetti.clear();
+  }, [confetti]);
 
   const _handleInput = (e) => setAddition(e.target.value);
 
@@ -77,6 +98,7 @@ const Program = () => {
   if (!program || !program.id) return null;
   return (
     <>
+      <canvas className={program.settings.confetti ? "confetti-on" : "confetti-off"} id="my-canvas"></canvas>
       {program.settings.play_state === "paused" && (
         <>
           <div className="paused"></div>

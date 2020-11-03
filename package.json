@@ -13,6 +13,7 @@
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "confetti-js": "^0.0.18",
     "highlight.js": "^10.3.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",

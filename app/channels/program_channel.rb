@@ -56,6 +56,16 @@ class ProgramChannel < ApplicationCable::Channel
     })
   end
 
+  def set_confetti(message)
+    current_program.update(settings: current_program.settings.merge({
+      confetti: message["data"]
+    }))
+    ProgramChannel.broadcast_to(room, {
+      action: :tick,
+      data: current_program.tick_view
+    })
+  end
+
   def pause
     current_program.update(settings: current_program.settings.merge({
       play_state: "paused" }))
