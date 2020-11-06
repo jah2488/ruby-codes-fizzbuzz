@@ -11,6 +11,7 @@ import Votes from "./Shared/Votes";
 import Controls from "./Program/Controls";
 import Constants from "../lib/constants/constants";
 import ConfettiGenerator from "confetti-js";
+import Reference from "./Program/Reference";
 
 const Program = () => {
   const client = new ApiClient();
@@ -44,8 +45,6 @@ const Program = () => {
 
 
   useEffect(() => {
-    console.log("confetti", confetti);
-
     if (!confetti) return;
     const confettiSettings = {
       target: 'my-canvas'
@@ -119,7 +118,6 @@ const Program = () => {
               />
             </div>
           </div>
-          <Controls handleSubmit={_handleSubmit} handleClear={_handleClear} />
         </div>
 
         <div className="section">
@@ -134,6 +132,8 @@ const Program = () => {
             program={program}
             addition={addition}
           />
+          <Reference />
+          <Controls handleSubmit={_handleSubmit} handleClear={_handleClear} />
         </div>
       </div>
     </>

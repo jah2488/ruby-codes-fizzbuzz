@@ -4,9 +4,15 @@ class Char < ApplicationRecord
 
   validates :name, presence: true
 
+  COMMANDS = {
+    TAB: ":t",
+    NEW_LINE: ":nl",
+    BACKSPACE: ":bk"
+  }
+
   SPECIAL_CHAR = {
-    "[TAB]" => "\t",
-    "[NEW LINE]" => "\n"
+    COMMANDS[:TAB] => "\t",
+    COMMANDS[:NEW_LINE] => "\n"
   }.freeze
 
   def formatted_name

@@ -45,7 +45,7 @@ class Program < ApplicationRecord
 
   def formatted_code(char)
     case char.name
-    when "[BACKSPACE]" then handle_backspace
+    when Char::COMMANDS[:BACKSPACE] then handle_backspace
     else
       handle_addition(char)
     end

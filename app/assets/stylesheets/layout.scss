@@ -1,6 +1,7 @@
 .flex {
   display: flex;
   &.space-between { justify-content: space-between; }
+  &.column { flex-direction: column;}
 }
 
 .full { width: 100%; }
