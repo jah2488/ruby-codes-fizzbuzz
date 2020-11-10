@@ -1,9 +1,11 @@
 .chat {
   display: flex;
   flex-direction: column;
-  width: 15rem;
-  height: 15rem;
-  border: 2px solid #333;
+  min-width: 17rem;
+  width: 100%;
+  min-height: 15rem;
+  height: 100%;
+  max-height: 60vh;
   border-radius: 4px;
 }
 
@@ -11,20 +13,27 @@
   &--column-reverse {
     display: flex;
     flex-direction: column-reverse;
+    min-height: 15rem;
     height: 100%;
+    max-height: 60vh;
     overflow-y: scroll;
     overflow-x: unset;
+    background: #FEFEFE;
+    border: 1px solid #EEE;
+    border-radius: .25em;
+    box-shadow: .1em .1em .5em rgba(0, 0, 0, .45);
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+   
   }
   &--output {
     display: flex;
-    flex-direction: column;;
-    background: #fff;
-    padding: 0.5rem;
+    flex-direction: column;
+   
   }
   &--input {
     display: flex;
     width: 100%;
-    border-top: 2px solid #333;
   }
 }
 
@@ -32,14 +41,25 @@
   &--input {
     flex: 1 0 70%;
     border: none;
+    border-radius: 25px;
+    background: rgb(240, 242, 245);
+    padding-left: 0.75rem;
+    &:focus {
+      outline: none;
+      border: 1px solid rgb(230, 232, 235);
+      &::placeholder {
+        color: #AAAAAA;
+      }
+    }
   }
   &--submit {
     flex: 0 0 10%;
     height: 100%;
-    border-left: 2px solid #333;
     input {
-      height: 100%;
+      margin-left: 10px;
+      height: 2rem;
       border: none;
+      border-radius: 25px;
       background: #b491c8;
       color: white;
       &:hover {
@@ -56,6 +76,7 @@
   background: #eee;
   padding: 1rem 0;
   border-radius: 14px;
+  width: 100%;
   &--other-user {
     align-self: flex-start;
     border-top-left-radius: 0;
@@ -65,10 +86,12 @@
     border-top-right-radius: 0;
   }
   &--code {
+    font-family: 'Hasklig', 'SourceSans Pro', 'Courier New', Courier, monospace;
     background: #ddd3ee;
     width: fit-content;
     padding: 0.3rem 1rem;
     border-radius: 14px;
+    text-align: right;
     :before{content:"\"";};
     :after{content:"\"";};
   }

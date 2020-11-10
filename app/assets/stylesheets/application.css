@@ -13,3 +13,38 @@
  *= require_tree .
  *= require_self
  */
+
+h1, h2, h3, h4, h5, .title, .subtitle {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+}
+
+pre, code {
+  font-family: 'Space Mono', monospace;
+}
+
+html, body, p {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+}
+
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+.debug {
+  border: 2px dashed darkorchid;
+}
+.debug::after {
+  float: right;
+  color: darkorchid;
+  opacity: 0.45;
+  content: "admin only section"
+}
+
+pre {
+  max-width: 99vw;
+  white-space: pre-wrap;
+}

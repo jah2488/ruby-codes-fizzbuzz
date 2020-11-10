@@ -52,7 +52,7 @@ class Program < ApplicationRecord
   end
 
   def handle_addition(char)
-    "#{code} #{char.formatted_name}"
+    "#{code}#{char.formatted_name}"
   end
 
   def handle_backspace
