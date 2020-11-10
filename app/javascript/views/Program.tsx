@@ -70,7 +70,7 @@ const Program = () => {
   const _handleSubmit = (val) => {
     if (val === "") return;
 
-    if (Object.values(Constants.COMMANDS).includes(val) == false) {
+    if (Object.values(Constants.COMMANDS).includes(val) == false || val[0] !== Constants.CODE_KEY) {
       if (val.length > maxInputModeToInt(program.settings.max_input_mode)) {
         setError("Message too long")
         return;
