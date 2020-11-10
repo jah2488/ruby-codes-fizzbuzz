@@ -11,7 +11,6 @@ import Votes from "./Shared/Votes";
 import Controls from "./Program/Controls";
 import Constants from "../lib/constants/constants";
 import ConfettiGenerator from "confetti-js";
-import Reference from "./Program/Reference";
 
 const Program = () => {
   const client = new ApiClient();
@@ -55,7 +54,11 @@ const Program = () => {
     return () => _confetti.clear();
   }, [confetti]);
 
-  const _handleInput = (e) => setAddition(e.target.value);
+  const _handleInput = (program) => (e) => {
+    if (e.target.value.length < program.settings.max_input_mode) {
+      setAddition(e.target.value);
+    }
+  };
 
   const _handleEnter = (e) => {
     if (e.key === Constants.ENTER) {
@@ -88,12 +91,6 @@ const Program = () => {
     channel.clear();
   };
 
-  const formatCode = (code?: string): string => {
-    if (!code) return "";
-    const lines = code.replace("<", "& lt;").split("\n");
-    return `<span class="line">${lines.join("</span><span class='line'>")}</span>`;
-  };
-
   if (!program || !program.id) return null;
   return (
     <>
@@ -104,40 +101,54 @@ const Program = () => {
           <h1>PAUSED</h1>
         </>
       )}
-      <Title program={program} />
-      <Time program={program} />
-      <div className="program-container">
-        <div className="program-content section column">
-          <Output program={program} />
-          <div className="code-section">
-            <div className="program-code">
-              <pre
-                dangerouslySetInnerHTML={{
-                  __html: `${formatCode(program.output)}`,
-                }}
+      <Row>
+        <Title program={program} />
+        <Time program={program} />
+      </Row>
+      <Row>
+        <div className="program-container">
+          <Col>
+            <div className="program-content section column">
+              <Output program={program} />
+              <Result output={program.output}/>
+            </div>
+            <div className="section">
+              <Votes _handleSubmit={_handleSubmit} program={program} canVote={false} />
+            </div>
+          </Col>
+          <Col>
+           <div className="section">
+              <Chat
+                _handleSubmit={_handleSubmit}
+                _handleInput={_handleInput}
+                _handleEnter={_handleEnter}
+                program={program}
+                addition={addition}
               />
             </div>
-          </div>
+          </Col>
         </div>
-
-        <div className="section">
-          <Votes _handleSubmit={_handleSubmit} program={program} canVote={false} />
-        </div>
-
-        <div className="section">
-          <Chat
-            _handleSubmit={_handleSubmit}
-            _handleInput={_handleInput}
-            _handleEnter={_handleEnter}
-            program={program}
-            addition={addition}
-          />
-          <Reference />
-          <Controls handleSubmit={_handleSubmit} handleClear={_handleClear} />
-        </div>
-      </div>
+      </Row>
     </>
   );
 };
+
+const formatCode = (code?: string): string => {
+  if (!code) return "";
+  const lines = code.replace("<", "&lt;").split("\n");
+  return `<span class="line">${lines.join("</span><span class='line'>")}</span>`;
+};
+
+const Result = ({output}) =>(
+  <div className="code-section">
+    <div className="program-code">
+      <h4>Output</h4>
+      <pre dangerouslySetInnerHTML={{ __html: `${formatCode(output)}` }} />
+    </div>
+  </div>
+);
+
+const Col = ({children}) => <div className="column">{children}</div>
+const Row = ({children}) => <div className="row">{children}</div>
 
 export default Program;

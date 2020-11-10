@@ -7,7 +7,7 @@
 
     <%= stylesheet_link_tag :application, media: :all %>
     <%= javascript_pack_tag :application %>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
   </head>
 
   <body>
@@ -18,9 +18,14 @@
     <% end %>
 
     <% if Rails.env.development? %>
-      <%= link_to :home, :home %>
-      <%= link_to :admin, :admin_root %>
+      <div class="debug">
+        <%= link_to :home, :home %>
+        <%= link_to :admin, :admin_root %>
+        <pre><%= local_assigns[:program]&.attributes["settings"]&.inspect %></pre>
+      </div>
     <% end %>
-    <%= yield %>
+    <div class="main-container">
+      <%= yield %>
+    </div>
   </body>
 </html>

@@ -1,4 +1,5 @@
 import Button from "../../components/Button";
+import Reference from "../Program/Reference";
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCode } from '@fortawesome/free-solid-svg-icons'
@@ -30,15 +31,14 @@ const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) 
                   </div>
                 )
               }
-              
             })
           }
         </div>
       </div>
       <div className="chat__section--input">
         <input
-          className="chat__field--input"
-          onInput={_handleInput}
+          className="chat__field--input mb-space-sm"
+          onInput={_handleInput(program)}
           onKeyDown={(e) => _handleEnter(e)}
           onChange={() => {}}
           placeholder="Start Coding..."
@@ -48,9 +48,10 @@ const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) 
         <Button
           className="button chat__field--submit mb-space-sm"
           handleClick={() => _handleSubmit(addition)}
-          name="Submit"
+          name="Send"
         />
       </div>
+      <Reference />
     </div>
   );
 };

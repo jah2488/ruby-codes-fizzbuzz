@@ -6,7 +6,7 @@ class ProgramsController < ApplicationController
     if request.headers["HTTP_RESPONSE_TYPE"] == "json"
       render json: program.view
     else
-      render :show
+      render :show, locals: { program: program }
     end
   end
 end
