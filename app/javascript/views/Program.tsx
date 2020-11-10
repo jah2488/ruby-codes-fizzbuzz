@@ -1,6 +1,6 @@
 import _ from "lodash";
 import ApiClient from "../lib/client/ApiClient";
-import { Program } from "../lib/types/types";
+import { maxInputModeToInt, Program } from "../lib/types/types";
 import { ProgramChannel } from "../channels/program_channel";
 import React, { useEffect, useState } from "react";
 import Chat from "./Shared/Chat";
@@ -18,6 +18,7 @@ const Program = () => {
   const [channel, setChannel] = useState(null);
   const [program, setProgram] = useState({} as Program);
   const [addition, setAddition] = useState("");
+  const [error, setError] = useState(null);
   const [confetti, setConfetti] = useState(false);
 
   useEffect(() => {
@@ -56,21 +57,8 @@ const Program = () => {
   }, [confetti]);
 
   const _handleInput = (program) => (e) => {
-    let maxInput = 0;
-    switch (program.settings.max_input_mode) {
-      case MaxInputMode.Char:
-        maxInput = 1
-        break;
-      case MaxInputMode.Word:
-        maxInput = 5
-        break;
-      case MaxInputMode.Line:
-        maxInput = 11
-        break;
-    }
-    if (e.target.value.length <= maxInput) {
-      setAddition(e.target.value);
-    }
+    setError(null)
+    setAddition(e.target.value);
   };
 
   const _handleEnter = (e) => {
@@ -81,6 +69,13 @@ const Program = () => {
 
   const _handleSubmit = (val) => {
     if (val === "") return;
+
+    if (Object.values(Constants.COMMANDS).includes(val) == false) {
+      if (val.length > maxInputModeToInt(program.settings.max_input_mode)) {
+        setError("Message too long")
+        return;
+      }
+    }
 
     type Data = {
       isCode: boolean;
@@ -137,6 +132,7 @@ const Program = () => {
                 _handleEnter={_handleEnter}
                 program={program}
                 addition={addition}
+                error={error}
               />
             </div>
           </Col>
