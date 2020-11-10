@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCode } from '@fortawesome/free-solid-svg-icons'
 import { parseCookies } from "../../lib/helpers/helpers"
 
-const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) => {
+const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition, error }) => {
   const cookies = parseCookies();
   const userToken = cookies.user_token;
 
@@ -51,6 +51,7 @@ const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition }) 
           name="Send"
         />
       </div>
+      <small>△  {error}</small>
       <Reference />
     </div>
   );

@@ -21,7 +21,7 @@
       <div class="debug">
         <%= link_to :home, :home %>
         <%= link_to :admin, :admin_root %>
-        <pre><%= local_assigns.dig(:program)&.attributes.dig("settings")&.inspect %></pre>
+        <pre><%= local_assigns.dig(:program)&.attributes&.dig("settings")&.inspect %></pre>
       </div>
     <% end %>
     <div class="main-container">
