@@ -1,7 +1,7 @@
 import React from "react";
-import Section from "../../components/Section";
-import Button from "../../components/Button";
-import Constants from "../../lib/constants/constants";
+import Section from "../../../components/Section";
+import Button from "../../../components/Button";
+import Constants from "../../../lib/constants/constants";
 
 const Controls = ({ handleSubmit, handleClear }) => {
   const { TAB, NEW_LINE, BACKSPACE } = Constants.COMMANDS;

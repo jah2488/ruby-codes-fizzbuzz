@@ -1,5 +1,5 @@
 import Button from "../../components/Button";
-import Reference from "../Program/Reference";
+import Reference from "../Admin/Program/Reference";
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCode } from '@fortawesome/free-solid-svg-icons'
