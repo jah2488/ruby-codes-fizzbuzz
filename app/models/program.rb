@@ -57,14 +57,14 @@ class Program < ApplicationRecord
 
   def handle_backspace
     delimiter = case settings["max_input_mode"]
-    when Program.max_input_modes["char"] then ""
-    when Program.max_input_modes["word"] then " "
-    when Program.max_input_modes["line"] then "\n"
-    else
-      ""
-    end
+                when Program.max_input_modes["char"] then ""
+                when Program.max_input_modes["word"] then " "
+                when Program.max_input_modes["line"] then "\n"
+                else
+                  ""
+                end
     # split(//, -1) is necessary to prevent over-deletion when the last character is a new-line
-    code.split(/#{delimiter}/, -1)[0..-2].join("#{delimiter}")
+    code.split("#{delimiter}", -1)[0..-3].join("#{delimiter}")
   end
 
   def playing?
