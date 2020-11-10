@@ -9,18 +9,18 @@ const DifficultySection = ({ channel, program }) => {
       <label>Max Char Length</label>
       <div className="flex">
         <Button
-          handleClick={() => channel.setMaxInputMode(1)}
-          disabled={program.settings.max_input_mode == 1}
+          handleClick={() => channel.setMaxInputMode(MaxInputMode.Char)}
+          disabled={program.settings.max_input_mode == MaxInputMode.Char}
           name="Character (1)"
         />
         <Button
-          handleClick={() => channel.setMaxInputMode(4)}
-          disabled={program.settings.max_input_mode == 4}
+          handleClick={() => channel.setMaxInputMode(MaxInputMode.Word)}
+          disabled={program.settings.max_input_mode == MaxInputMode.Word}
           name="Word (4)"
         />
         <Button
-          handleClick={() => channel.setMaxInputMode(10)}
-          disabled={program.settings.max_input_mode == 10}
+          handleClick={() => channel.setMaxInputMode(MaxInputMode.Line)}
+          disabled={program.settings.max_input_mode == MaxInputMode.Line}
           name="Line (10)"
         />
       </div>

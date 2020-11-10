@@ -8,9 +8,10 @@ import Output from "./Shared/Output";
 import Time from "./Shared/Time";
 import Title from "./Shared/Title";
 import Votes from "./Shared/Votes";
-import Controls from "./Program/Controls";
+import Controls from "./Admin/Program/Controls";
 import Constants from "../lib/constants/constants";
 import ConfettiGenerator from "confetti-js";
+import { MaxInputMode } from "../lib/types/types";
 
 const Program = () => {
   const client = new ApiClient();
@@ -55,7 +56,19 @@ const Program = () => {
   }, [confetti]);
 
   const _handleInput = (program) => (e) => {
-    if (e.target.value.length < program.settings.max_input_mode) {
+    let maxInput = 0;
+    switch (program.settings.max_input_mode) {
+      case MaxInputMode.Char:
+        maxInput = 1
+        break;
+      case MaxInputMode.Word:
+        maxInput = 5
+        break;
+      case MaxInputMode.Line:
+        maxInput = 11
+        break;
+    }
+    if (e.target.value.length <= maxInput) {
       setAddition(e.target.value);
     }
   };
