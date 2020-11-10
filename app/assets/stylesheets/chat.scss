@@ -43,10 +43,13 @@
     border: none;
     border-radius: 25px;
     background: rgb(240, 242, 245);
+    padding: 1rem;
     padding-left: 0.75rem;
+    font-size: 16px;
+    border: 2px solid transparent;
     &:focus {
       outline: none;
-      border: 1px solid rgb(230, 232, 235);
+      border: 2px solid rgb(230, 232, 235);
       &::placeholder {
         color: #AAAAAA;
       }
@@ -57,7 +60,7 @@
     height: 100%;
     input {
       margin-left: 10px;
-      height: 2rem;
+      height: 2.5rem;
       border: none;
       border-radius: 25px;
       background: #b491c8;
@@ -89,7 +92,7 @@
     font-family: 'Hasklig', 'SourceSans Pro', 'Courier New', Courier, monospace;
     background: #ddd3ee;
     width: fit-content;
-    padding: 0.3rem 1rem;
+    padding: 0.9rem 1rem;
     border-radius: 14px;
     text-align: right;
     :before{content:"\"";};

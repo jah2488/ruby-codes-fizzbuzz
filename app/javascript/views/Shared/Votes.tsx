@@ -4,7 +4,8 @@ import React from "react";
 const Votes = ({ program, _handleSubmit, canVote = true }) => {
   return (
     <div className="vote-section">
-      <h3 className="vote-title">{program.mode} - Threshold: {program.settings.vote_threshold}</h3>
+      <h3 className="vote-title">{program.mode.toUpperCase()}</h3>
+      <h4>Max Input Length: {program.settings.vote_threshold} Char(s)</h4>
       <ul className="vote-list">
         {program && program.chars && program.chars.map(char => (
             <li key={char.id} className="vote-item">
