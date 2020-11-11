@@ -11,8 +11,8 @@ class Char < ApplicationRecord
   }
 
   SPECIAL_CHAR = {
-    COMMANDS[:TAB] => "\t",
-    COMMANDS[:NEW_LINE] => "\n",
+    COMMANDS[:TAB] => " \t",
+    COMMANDS[:NEW_LINE] => " \n",
     COMMANDS[:SPACE] => " "
   }.freeze
 
