@@ -1,5 +1,5 @@
 class ProgramChannel < ApplicationCable::Channel
-  periodically :tick, every: 1.seconds
+  # periodically :tick, every: 1.seconds
 
   def subscribed
     stream_for room
@@ -29,6 +29,16 @@ class ProgramChannel < ApplicationCable::Channel
   def set_max_input_mode(message)
     current_program.update(settings: current_program.settings.merge({
       max_input_mode: message["data"]
+    }))
+    ProgramChannel.broadcast_to(room, {
+      action: :tick,
+      data: current_program.tick_view
+    })
+  end
+
+  def set_can_vote(message)
+    current_program.update(settings: current_program.settings.merge({
+      can_vote: message["data"]
     }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
