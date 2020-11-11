@@ -48,3 +48,7 @@ pre {
   max-width: 99vw;
   white-space: pre-wrap;
 }
+
+.text-cursor {
+  padding-left: 1px;
+}

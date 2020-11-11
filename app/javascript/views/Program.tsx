@@ -121,7 +121,7 @@ const Program = () => {
               <Result output={program.output}/>
             </div>
             <div className="section">
-              <Votes _handleSubmit={_handleSubmit} program={program} canVote={false} />
+              <Votes _handleSubmit={_handleSubmit} program={program} canVote={program.settings.can_vote} />
             </div>
           </Col>
           <Col>

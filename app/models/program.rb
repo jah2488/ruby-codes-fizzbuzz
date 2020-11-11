@@ -12,6 +12,7 @@ class Program < ApplicationRecord
       self.settings = {
         play_state: "created",
         max_input_mode: Program.max_input_modes["word"],
+        can_vote: false,
         vote_interval: VOTE_THRESHOLD[mode],
         vote_threshold: VOTE_THRESHOLD[mode],
         confetti: false

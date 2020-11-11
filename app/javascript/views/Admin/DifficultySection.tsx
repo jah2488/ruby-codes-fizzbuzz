@@ -27,6 +27,20 @@ const DifficultySection = ({ channel, program }) => {
       {program.mode === "Democracy" && 
         <>
           <br />
+          <label>Can Vote</label>
+          <div className="flex">
+            <Button
+              handleClick={() => channel.setCanVote(true)}
+              disabled={program.settings.can_vote}
+              name="On"
+            />
+            <Button
+              handleClick={() => channel.setCanVote(false)}
+              disabled={!program.settings.can_vote}
+              name="Off"
+            />
+          </div>
+          <br />
           <label>Vote Interval</label>
           <div className="flex">
             <Button
