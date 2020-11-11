@@ -57,6 +57,7 @@ class Program < ApplicationRecord
   end
 
   def handle_backspace
+    # binding.pry
     case settings["max_input_mode"]
     when Program.max_input_modes["char"] then code.split("", -1)[0..-3].join("")
     when Program.max_input_modes["word"] then code.split(/ /, -1)[0..-2].join(" ")
