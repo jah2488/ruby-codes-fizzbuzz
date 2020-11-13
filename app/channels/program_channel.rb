@@ -3,13 +3,6 @@ class ProgramChannel < ApplicationCable::Channel
     stream_for room
   end
 
-  def fetch_user_token
-    ProgramChannel.broadcast_to(room, {
-      action: :set_user_token,
-      data: { token: current_user.token }
-    })
-  end
-
   def set_mode(message)
     current_program.update(
       mode: message["data"],
@@ -111,13 +104,16 @@ class ProgramChannel < ApplicationCable::Channel
     program = current_program
     addition = data.fetch("addition")
     is_code = data.fetch("isCode")
-    program.messages.create(name: addition, is_code: is_code, user: current_user)
-    if is_code
-      char = program.chars.find_or_create_by(name: addition)
-      Vote.create(char: char)
-      if char.votes_count >= program.settings["vote_threshold"]
-        program.update(code: program.formatted_code(char))
-        program.chars.destroy_all
+
+    program.with_lock do
+      program.messages.create(name: addition, is_code: is_code, user: current_user)
+      if is_code
+        char = program.chars.find_or_create_by(name: addition)
+        Vote.create(char: char)
+        if char.votes_count >= program.settings["vote_threshold"]
+          program.update(code: program.formatted_code(program.code, char))
+          program.chars.destroy_all
+        end
       end
     end
 
