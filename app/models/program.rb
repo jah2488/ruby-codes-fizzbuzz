@@ -78,7 +78,6 @@ class Program < ApplicationRecord
       mode: mode,
       code: code,
       messages: messages_data,
-      tick: tick,
       settings: settings,
     }
   end
