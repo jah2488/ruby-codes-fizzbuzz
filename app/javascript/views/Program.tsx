@@ -3,6 +3,7 @@ import ApiClient from "../lib/client/ApiClient";
 import { Program } from "../lib/types/types";
 import { ProgramChannel } from "../channels/program_channel";
 import { parseCookies } from "../lib/helpers/helpers"
+import Filter from "../lib/helpers/filter";
 import React, { useEffect, useState } from "react";
 import Chat from "./Shared/Chat";
 import Output from "./Shared/Output";
@@ -73,6 +74,10 @@ const Program = () => {
     if (Object.values(Constants.COMMANDS).includes(val) == false && val[0] !== Constants.CODE_KEY) {
       if (val.length > program.settings.max_input_mode) {
         setError("Message too long")
+        return;
+      }
+      if (new Filter().isProfane(val)) {
+        setError("Message includes inappropriate language")
         return;
       }
     }
