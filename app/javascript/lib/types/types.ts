@@ -6,7 +6,6 @@ export type Program = {
   chars: [Char];
   output: string;
   messages: [Message];
-  tick: number;
   settings: any;
 };
 

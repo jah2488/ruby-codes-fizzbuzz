@@ -8,7 +8,6 @@ import FunSection from "./Admin/FunSection";
 import PlayControlsSection from "./Admin/PlayControlsSection";
 import RestartControlsSection from "./Admin/RestartControlsSection";
 import Output from "./Shared/Output";
-import Time from "./Shared/Time";
 import Title from "./Shared/Title";
 import Votes from "./Shared/Votes";
 
@@ -35,7 +34,6 @@ const AdminProgram = () => {
   return (
     <>
       <Title program={program} />
-      <Time program={program} />
       <div className="program-container">
         <div className="program-content section column">
           <Output program={program} />

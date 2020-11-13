@@ -6,7 +6,6 @@ const RestartControlsSection = ({ channel }) => {
   return (
     <Section name="Restart Controls">
       <Button handleClick={channel.clear} name="Clear Progress" />
-      <Button handleClick={channel.resetTick} name="Reset Timer" />
       <Button handleClick={channel.reset} name="Restart" />
     </Section>
   )

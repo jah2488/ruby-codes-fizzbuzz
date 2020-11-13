@@ -5,7 +5,6 @@ import { ProgramChannel } from "../channels/program_channel";
 import React, { useEffect, useState } from "react";
 import Chat from "./Shared/Chat";
 import Output from "./Shared/Output";
-import Time from "./Shared/Time";
 import Title from "./Shared/Title";
 import Votes from "./Shared/Votes";
 import Controls from "./Admin/Program/Controls";
@@ -111,7 +110,6 @@ const Program = () => {
       )}
       <Row>
         <Title program={program} />
-        <Time program={program} />
       </Row>
       <Row>
         <div className="program-container">

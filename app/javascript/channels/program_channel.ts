@@ -12,7 +12,6 @@ export interface ProgramChannel {
   setConfetti: (value: boolean) => void;
   pause: () => void;
   resume: () => void;
-  resetTick: () => void;
   clear: () => void;
   reset: () => void;
 }
@@ -69,11 +68,9 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
     setConfetti: (value) => sub.perform("set_confetti", { data: value }),
     pause: () => sub.perform("pause"),
     resume: () => sub.perform("resume"),
-    resetTick: () => sub.perform("reset_tick"),
     clear: () => sub.perform("clear"),
     reset: () => {
       sub.perform("clear");
-      sub.perform("reset_tick");
     },
   };
 };

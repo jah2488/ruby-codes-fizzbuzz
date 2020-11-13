@@ -1,5 +1,4 @@
 class ProgramChannel < ApplicationCable::Channel
-  # periodically :tick, every: 1.seconds
 
   def subscribed
     stream_for room
@@ -94,29 +93,12 @@ class ProgramChannel < ApplicationCable::Channel
     })
   end
 
-  def reset_tick
-    current_program.update(tick: 0)
-    ProgramChannel.broadcast_to(room, {
-      action: :tick,
-      data: current_program.tick_view
-    })
-  end
-
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
   end
 
   def receive(data)
     puts "receive:#{data}"
-  end
-
-  def tick
-    if current_program.playing?
-      ProgramChannel.broadcast_to(room, {
-        action: :tick,
-        data: current_program.tick_view
-      })
-    end
   end
 
   def evaluate_code
