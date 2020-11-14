@@ -10,7 +10,7 @@ const Output = ({ program: { code, tick }, program }) => (
       <h4>Ruby Code</h4>
       <pre
         dangerouslySetInnerHTML={{
-          __html: `${formatCode(hljs.highlight('ruby', code).value)}${tick % 2 === 0 ? "<span class='text-cursor'>&block;</span>" : "&nbsp;"}&nbsp;</span>`,
+          __html: `${formatCode(hljs.highlight('ruby', code).value)}${tick % 2 === 0 ? "<span class='text-cursor'></span>" : "&nbsp;"}&nbsp;</span>`,
         }}
       />
     </div>
