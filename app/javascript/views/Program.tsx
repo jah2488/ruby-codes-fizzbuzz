@@ -1,16 +1,15 @@
 import _ from "lodash";
 import ApiClient from "../lib/client/ApiClient";
-import { maxInputModeToInt, Program } from "../lib/types/types";
+import { Program } from "../lib/types/types";
 import { ProgramChannel } from "../channels/program_channel";
+import { parseCookies } from "../lib/helpers/helpers"
 import React, { useEffect, useState } from "react";
 import Chat from "./Shared/Chat";
 import Output from "./Shared/Output";
 import Title from "./Shared/Title";
 import Votes from "./Shared/Votes";
-import Controls from "./Admin/Program/Controls";
 import Constants from "../lib/constants/constants";
 import ConfettiGenerator from "confetti-js";
-import { MaxInputMode } from "../lib/types/types";
 
 const Program = () => {
   const client = new ApiClient();
@@ -19,6 +18,9 @@ const Program = () => {
   const [addition, setAddition] = useState("");
   const [error, setError] = useState(null);
   const [confetti, setConfetti] = useState(false);
+
+  const cookies = parseCookies();
+  const userToken = cookies.user_token;
 
   useEffect(() => {
     const id = window.location.pathname.split("/")[2];
@@ -30,7 +32,6 @@ const Program = () => {
       .then((program) => {
         const programChannel = ProgramChannel(program, setProgram);
         setTimeout(() => {
-          programChannel.fetchUserToken();
           programChannel.message({ isCode: false, addition: "" });
         }, 500);
 
@@ -69,8 +70,8 @@ const Program = () => {
   const _handleSubmit = (val) => {
     if (val === "") return;
 
-    if (Object.values(Constants.COMMANDS).includes(val) == false || val[0] !== Constants.CODE_KEY) {
-      if (val.length > maxInputModeToInt(program.settings.max_input_mode)) {
+    if (Object.values(Constants.COMMANDS).includes(val) == false && val[0] !== Constants.CODE_KEY) {
+      if (val.length > program.settings.max_input_mode) {
         setError("Message too long")
         return;
       }
@@ -92,10 +93,6 @@ const Program = () => {
 
     (channel as ProgramChannel).message(data);
     setAddition("");
-  };
-
-  const _handleClear = () => {
-    channel.clear();
   };
 
   if (!program || !program.id) return null;
@@ -131,6 +128,7 @@ const Program = () => {
                 program={program}
                 addition={addition}
                 error={error}
+                userToken={userToken}
               />
             </div>
           </Col>

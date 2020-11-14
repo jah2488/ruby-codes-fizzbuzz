@@ -51,4 +51,10 @@ pre {
 
 .text-cursor {
   padding-left: 1px;
+  display: inline-block;
+  position: relative;
+  top: 3px;
+  background: black;
+  height: 18px;
+  width: 10px;
 }

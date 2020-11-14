@@ -8,7 +8,7 @@ module ApplicationCable
 
     private
     def find_user
-      token = cookies.encrypted[:user_token]
+      token = request.cookies["user_token"]
       User.find_or_create_by_token(token, request.remote_ip)
     end
   end

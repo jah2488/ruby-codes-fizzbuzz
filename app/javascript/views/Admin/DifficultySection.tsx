@@ -1,27 +1,16 @@
 import React from "react";
 import Section from "../../components/Section";
 import Button from "../../components/Button";
-import { MaxInputMode } from "../../lib/types/types";
+import NumberInput from "../../components/NumberInput";
 
 const DifficultySection = ({ channel, program }) => {
   return(
     <Section name="Difficulty">
       <label>Max Char Length</label>
       <div className="flex">
-        <Button
-          handleClick={() => channel.setMaxInputMode(MaxInputMode.Char)}
-          disabled={program.settings.max_input_mode == MaxInputMode.Char}
-          name="Character (1)"
-        />
-        <Button
-          handleClick={() => channel.setMaxInputMode(MaxInputMode.Word)}
-          disabled={program.settings.max_input_mode == MaxInputMode.Word}
-          name="Word (4)"
-        />
-        <Button
-          handleClick={() => channel.setMaxInputMode(MaxInputMode.Line)}
-          disabled={program.settings.max_input_mode == MaxInputMode.Line}
-          name="Line (10)"
+        <NumberInput
+          handleClick={(e) => channel.setMaxInputMode(Number(e.target.value))}
+          value={program.settings.max_input_mode}
         />
       </div>
       {program.mode === "Democracy" && 
