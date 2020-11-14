@@ -80,6 +80,11 @@ const Program = () => {
         setError("Message includes inappropriate language")
         return;
       }
+    } else {
+      if (new Filter().isProfane(val.substring(1))) {
+        setError("Message includes inappropriate language")
+        return;
+      }
     }
 
     type Data = {
