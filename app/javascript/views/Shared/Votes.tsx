@@ -1,12 +1,11 @@
 import Button from "../../components/Button";
 import React from "react";
-import {maxInputModeToInt} from "../../lib/types/types";
 
 const Votes = ({ program, _handleSubmit, canVote = true }) => {
   return (
     <div className="vote-section">
       <h3 className="vote-title">{program.mode.toUpperCase()}</h3>
-      <h4>Max Input Length: {maxInputModeToInt(program.settings.max_input_mode)} Char(s)</h4>
+      <h4>Max Input Length: {program.settings.max_input_mode} Char(s)</h4>
       {program && program.mode.toLowerCase() === "democracy" &&
         <>
           <h4>Vote's Needed: {program.settings.vote_threshold}</h4>

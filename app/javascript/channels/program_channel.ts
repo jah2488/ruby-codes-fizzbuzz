@@ -1,11 +1,10 @@
-import { Program, MaxInputMode } from "../lib/types/types";
+import { Program } from "../lib/types/types";
 import consumer from "./consumer";
 
 export interface ProgramChannel {
-  fetchUserToken: () => void;
   message: (msg: any) => void;
   setMode: (mode: "Anarchy" | "Democracy") => void;
-  setMaxInputMode: (mode: MaxInputMode) => void;
+  setMaxInputMode: (mode: number) => void;
   setVoteInterval: (interval: number) => void;
   setVoteThreshold: (threshold: number) => void;
   setCanVote: (value: boolean) => void;
@@ -36,10 +35,6 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
 
       received({ action, data }) {
         switch (action) {
-          case "set_user_token":
-            document.cookie = "user_token=" + data.token
-            break;
-
           case "tick":
             console.debug("tick");
             updateProgram({ ...program, ...data });
@@ -58,10 +53,9 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
     }
   );
   return {
-    fetchUserToken: () => sub.perform("fetch_user_token"),
     message: (msg: any) => sub.perform("message", msg),
     setMode: (mode: "Anarchy" | "Democracy") => sub.perform("set_mode", { data: mode }),
-    setMaxInputMode: (mode: MaxInputMode) => sub.perform("set_max_input_mode", { data: mode }),
+    setMaxInputMode: (mode: number) => sub.perform("set_max_input_mode", { data: mode }),
     setVoteInterval: (interval: number) => sub.perform("set_vote_interval", { data: interval }),
     setVoteThreshold: (threshold: number) => sub.perform("set_vote_threshold", { data: threshold }),
     setCanVote: (value) => sub.perform("set_can_vote", { data: value }),

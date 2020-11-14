@@ -1,17 +1,17 @@
 class Program < ApplicationRecord
   attr_accessor :addition
+  serialize :code
 
   has_many :chars, dependent: :destroy
   has_many :messages, dependent: :destroy
   validates :name, presence: true
 
-  enum max_input_mode: { char: 0, word: 1, line: 2 }
-
   before_save -> () do
+    self.code = [] if code.empty?
     if settings.empty?
       self.settings = {
         play_state: "created",
-        max_input_mode: Program.max_input_modes["word"],
+        max_input_mode: 5,
         can_vote: false,
         vote_interval: VOTE_THRESHOLD[mode],
         vote_threshold: VOTE_THRESHOLD[mode],
@@ -44,28 +44,16 @@ class Program < ApplicationRecord
     end
   end
 
-  def formatted_code(char)
+  def formatted_code(code, char)
     case char.name
-    when Char::COMMANDS[:BACKSPACE] then handle_backspace
+    when Char::COMMANDS[:BACKSPACE] then code.first
     else
       handle_addition(char)
     end
   end
 
   def handle_addition(char)
-    "#{code}#{char.formatted_name}"
-  end
-
-  def handle_backspace
-    # binding.pry
-    case settings["max_input_mode"]
-    when Program.max_input_modes["char"] then code.split("", -1)[0..-3].join("")
-    when Program.max_input_modes["word"] then code.split(/ /, -1)[0..-2].join(" ")
-    when Program.max_input_modes["line"] then code.split("\n", -1)[0..-2].join("\n")
-    else
-      ""
-    end
-    # split(//, -1) is necessary to prevent over-deletion when the last character is a new-line
+    [code, char.formatted_name]
   end
 
   def playing?
@@ -77,7 +65,7 @@ class Program < ApplicationRecord
       id: id,
       name: name,
       mode: mode,
-      code: code,
+      code: code.join(),
       messages: messages_data,
       settings: settings,
     }
@@ -88,7 +76,7 @@ class Program < ApplicationRecord
       id: id,
       name: name,
       mode: mode,
-      code: code,
+      code: code.join(),
       chars: chars
         .select(:id, :name, :votes_count)
         .order(votes_count: :desc),
