@@ -1,6 +1,20 @@
 class ProgramChannel < ApplicationCable::Channel
+
   def subscribed
+    current_program.reload.with_lock do 
+      current_program.update(settings: current_program.settings.merge({
+        user_count: current_program.settings.fetch("user_count", 0) + 1
+      }))
+    end
     stream_for room
+  end
+
+  def unsubscribed
+    current_program.reload.with_lock do 
+      current_program.update(settings: current_program.settings.merge({
+        user_count: current_program.settings.fetch("user_count", 1) - 1
+      }))
+    end
   end
 
   def set_mode(message)
@@ -83,10 +97,6 @@ class ProgramChannel < ApplicationCable::Channel
       action: :tick,
       data: current_program.tick_view
     })
-  end
-
-  def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
   end
 
   def receive(data)
