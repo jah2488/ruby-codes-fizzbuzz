@@ -2,7 +2,7 @@ import _ from "lodash";
 import ApiClient from "../lib/client/ApiClient";
 import { Program } from "../lib/types/types";
 import { ProgramChannel } from "../channels/program_channel";
-import { parseCookies } from "../lib/helpers/helpers"
+import { parseCookies } from "../lib/helpers/helpers";
 import Filter from "../lib/helpers/filter";
 import React, { useEffect, useState } from "react";
 import Chat from "./Shared/Chat";
@@ -45,11 +45,10 @@ const Program = () => {
     setConfetti(_.get(program, "settings.confetti"));
   }, [program]);
 
-
   useEffect(() => {
     if (!confetti) return;
     const confettiSettings = {
-      target: 'my-canvas'
+      target: "my-canvas",
     };
     const _confetti = new ConfettiGenerator(confettiSettings);
     _confetti.render();
@@ -58,7 +57,7 @@ const Program = () => {
   }, [confetti]);
 
   const _handleInput = (program) => (e) => {
-    setError(null)
+    setError(null);
     setAddition(e.target.value);
   };
 
@@ -73,16 +72,16 @@ const Program = () => {
 
     if (Object.values(Constants.COMMANDS).includes(val) == false && val[0] !== Constants.CODE_KEY) {
       if (val.length > program.settings.max_input_mode) {
-        setError("Message too long")
+        setError("Message too long");
         return;
       }
       if (new Filter().isProfane(val)) {
-        setError("Message includes inappropriate language")
+        setError("Message includes inappropriate language");
         return;
       }
     } else {
       if (new Filter().isProfane(val.substring(1))) {
-        setError("Message includes inappropriate language")
+        setError("Message includes inappropriate language");
         return;
       }
     }
@@ -108,6 +107,7 @@ const Program = () => {
   if (!program || !program.id) return null;
   return (
     <>
+      {JSON.stringify(program.settings)}
       <canvas className={program.settings.confetti ? "confetti-on" : "confetti-off"} id="my-canvas"></canvas>
       {program.settings.play_state === "paused" && (
         <>
@@ -123,14 +123,14 @@ const Program = () => {
           <Col>
             <div className="program-content section column">
               <Output program={program} />
-              <Result output={program.output}/>
+              <Result output={program.output} />
             </div>
             <div className="section">
               <Votes _handleSubmit={_handleSubmit} program={program} canVote={program.settings.can_vote} />
             </div>
           </Col>
           <Col>
-           <div className="section">
+            <div className="section">
               <Chat
                 _handleSubmit={_handleSubmit}
                 _handleInput={_handleInput}
@@ -154,7 +154,7 @@ const formatCode = (code?: string): string => {
   return `<span class="line">${lines.join("</span><span class='line'>")}</span>`;
 };
 
-const Result = ({output}) =>(
+const Result = ({ output }) => (
   <div className="code-section">
     <div className="program-code">
       <h4>Output</h4>
@@ -163,7 +163,7 @@ const Result = ({output}) =>(
   </div>
 );
 
-const Col = ({children}) => <div className="column">{children}</div>
-const Row = ({children}) => <div className="row">{children}</div>
+const Col = ({ children }) => <div className="column">{children}</div>;
+const Row = ({ children }) => <div className="row">{children}</div>;
 
 export default Program;
