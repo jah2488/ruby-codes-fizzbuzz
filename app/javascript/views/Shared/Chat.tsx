@@ -1,24 +1,18 @@
 import Button from "../../components/Button";
 import Reference from "../Admin/Program/Reference";
 import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCode } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCode } from "@fortawesome/free-solid-svg-icons";
 
-const Chat = ({
-  _handleSubmit,
-  _handleInput,
-  _handleEnter,
-  program,
-  addition,
-  error,
-  userToken
-}) => (
+const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition, error, userToken }) => (
   <div className="chat">
+    {program.settings.user_count} users
     <div className="chat__section--column-reverse">
       <div className="chat__section--output">
         {program &&
-          program.messages.map(message => {
-            const currentUserStyle = userToken === message.token ? "chat__output--current-user" : "chat__output--other-user";
+          program.messages.map((message) => {
+            const currentUserStyle =
+              userToken === message.token ? "chat__output--current-user" : "chat__output--other-user";
 
             if (message.is_code) {
               return (
@@ -26,16 +20,15 @@ const Chat = ({
                   <FontAwesomeIcon size="xs" icon={faCode} />
                   <span className="chat__output--text">{message.name}</span>
                 </div>
-              )
+              );
             } else {
               return (
                 <div key={message.id} className={`chat__output ${currentUserStyle}`}>
                   <span className="chat__output--text">{message.name}</span>
                 </div>
-              )
+              );
             }
-          })
-        }
+          })}
       </div>
     </div>
     <div className="chat__section--input">
@@ -54,9 +47,9 @@ const Chat = ({
         name="Send"
       />
     </div>
-    <small>△  {error}</small>
+    <small>△ {error}</small>
     <Reference />
   </div>
-  );
+);
 
 export default Chat;
