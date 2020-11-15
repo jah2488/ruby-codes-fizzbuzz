@@ -11,7 +11,7 @@ gem 'webpacker', '~> 4.3'
 gem 'redis', '~> 4.2'
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '~> 1.4', require: false
-gem 'rufus-scheduler', "~> 3.6"
+gem 'color-generator'
 
 group :development, :test do
   gem 'pry-rails', "~> 0.3"
