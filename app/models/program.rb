@@ -39,7 +39,7 @@ class Program < ApplicationRecord
       # - 1) Each program should have a set of test criteria that we are testing against.
       # - 2) It could be either a simple string, or code to be evaluated _against_ the code provided. ie a test suite or just an answer.
     Rails.cache.fetch("#{self.id}-#{self.code.length}") do
-      ce = CodeEvaluator.new(self.code).process
+      ce = CodeEvaluator.new(self.code.join).process
       "#{ce.output}\n#{ce.error}"
     end
   end
