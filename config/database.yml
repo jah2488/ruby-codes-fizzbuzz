@@ -15,3 +15,7 @@ production:
   <<: *default
   #database: codetogether_production
   url: <%= ENV['DATABASE_URL'] %>
+  connect_timeout: 1
+  checkout_timeout: 1
+  variables:
+    statement_timeout: 5s

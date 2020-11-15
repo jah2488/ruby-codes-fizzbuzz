@@ -12,6 +12,9 @@ gem 'redis', '~> 4.2'
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '~> 1.4', require: false
 gem 'color-generator'
+gem 'rack-timeout'
+gem 'rack-cors'
+gem 'rack-attack'
 
 group :development, :test do
   gem 'pry-rails', "~> 0.3"
