@@ -119,7 +119,7 @@ class ProgramChannel < ApplicationCable::Channel
     if is_code
       if program.anarchy?
         program.with_lock do
-          program.update(code: program.formatted_code(program.code, addition))
+          program.update(code: program.formatted_code(program.code, Char.new(name: addition)))
         end
       else
         char = program.chars.find_or_create_by(name: addition)
