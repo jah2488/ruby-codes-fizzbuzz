@@ -1,10 +1,13 @@
 module Admin
   class ProgramsController < ApplicationController
-    http_basic_authenticate_with name: "rubyconf", password: "rubyconf"
+    if Rails.env.production?
+      http_basic_authenticate_with name: ENV.fetch("HTTP_AUTH_NAME"), password: ENV.fetch("HTTP_AUTH_PASS")
+    end
 
     def index
-      programs = Program.all
-      render locals: { programs: programs }
+      render locals: { 
+        programs: Program.all
+      }
     end
 
     def show
@@ -36,8 +39,6 @@ module Admin
 
     def program_params
       params.require(:program).permit(:name, :mode)
-      # settings = unformatted_params.fetch(:settings).gsub(/["{}]/, '').split(",").map { |pairs| pairs.split("=>") }.to_h
-      # unformatted_params.merge({ settings: settings })
     end
   end
 end

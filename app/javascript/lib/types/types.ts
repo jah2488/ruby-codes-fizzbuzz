@@ -4,7 +4,7 @@ export type Program = {
   mode: string;
   name: string;
   chars: [Char];
-  output: string;
+  output: { raw: string; err_ln: number; }
   messages: [Message];
   settings: any;
 };
@@ -18,6 +18,7 @@ export type Char = {
 export type Message = {
   id: number;
   name: string;
+  color: string;
   is_code: boolean;
   user_id: number;
 };

@@ -51,6 +51,14 @@
   span.present-line {
     background: #eee;
   }
+
+  span.error-line {
+    background: #ec777779;
+  }
+
+  span.space, span.newline {
+    color: #ddd;
+  }
 }
 
 

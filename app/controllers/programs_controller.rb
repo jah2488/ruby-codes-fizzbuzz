@@ -3,18 +3,18 @@ class ProgramsController < ApplicationController
 
   def show
     program = Program.find(params.fetch(:id))
-    if request.headers["HTTP_RESPONSE_TYPE"] == "json"
-      render json: program.view
-    else
-      cookies[:user_token] = find_user.token
-      render :show, locals: { program: program }
-    end
+
+    render json: program.view and return if request.headers["HTTP_RESPONSE_TYPE"] == "json"
+
+    cookies[:user_token] = current_user.token
+
+    render :show, locals: {
+      program: program
+    }
   end
 
   private
-  
-  def find_user
-    token = cookies[:user_token]
-    User.find_or_create_by_token(token, request.remote_ip)
+  def current_user
+    @current_user ||= User.find_or_create_by_token(cookies[:user_token], request.remote_ip)
   end
 end

@@ -57,7 +57,11 @@ const Program = () => {
   }, [confetti]);
 
   const _handleInput = (program) => (e) => {
-    setError(null);
+    if (e.target.value.length <= program.settings.max_input_mode) {
+      setError(null);
+    } else {
+      setError("Too many characters");
+    }
     setAddition(e.target.value);
   };
 
@@ -67,12 +71,20 @@ const Program = () => {
     }
   };
 
+  const _handleInvisibilityToggle = (on: boolean) => {
+    if (on) {
+      setProgram({ ...program, ...{ settings: { ...program.settings, show_invisibles: true } } });
+    } else {
+      setProgram({ ...program, ...{ settings: { ...program.settings, show_invisibles: false } } });
+    }
+  };
+
   const _handleSubmit = (val) => {
     if (val === "") return;
 
     if (Object.values(Constants.COMMANDS).includes(val) == false && val[0] !== Constants.CODE_KEY) {
       if (val.length > program.settings.max_input_mode) {
-        setError("Message too long");
+        setError("This message is too long");
         return;
       }
       if (new Filter().isProfane(val)) {
@@ -95,6 +107,7 @@ const Program = () => {
       isCode: true,
       addition: val,
     };
+
     if (val[0] === Constants.CODE_KEY) {
       data.isCode = false;
       data.addition = val.substring(1);
@@ -107,12 +120,12 @@ const Program = () => {
   if (!program || !program.id) return null;
   return (
     <>
-      {JSON.stringify(program.settings)}
       <canvas className={program.settings.confetti ? "confetti-on" : "confetti-off"} id="my-canvas"></canvas>
       {program.settings.play_state === "paused" && (
         <>
-          <div className="paused"></div>
-          <h1>PAUSED</h1>
+          <div className="paused">
+            <h1>PAUSED</h1>
+          </div>
         </>
       )}
       <Row>
@@ -122,7 +135,7 @@ const Program = () => {
         <div className="program-container">
           <Col>
             <div className="program-content section column">
-              <Output program={program} />
+              <Output program={program} output={program.output} />
               <Result output={program.output} />
             </div>
             <div className="section">
@@ -135,6 +148,7 @@ const Program = () => {
                 _handleSubmit={_handleSubmit}
                 _handleInput={_handleInput}
                 _handleEnter={_handleEnter}
+                _handleInvisibilityToggle={_handleInvisibilityToggle}
                 program={program}
                 addition={addition}
                 error={error}
@@ -148,13 +162,14 @@ const Program = () => {
   );
 };
 
-const formatCode = (code?: string): string => {
-  if (!code) return "";
-  const lines = code.replace("<", "&lt;").split("\n");
+const formatCode = (output): string => {
+  if (!output) return "";
+  if (!output.raw) return "";
+  const lines = output.raw.replace("<", "&lt;").split("\n");
   return `<span class="line">${lines.join("</span><span class='line'>")}</span>`;
 };
 
-const Result = ({ output }) => (
+const Result = ({ output }): JSX.Element => (
   <div className="code-section">
     <div className="program-code">
       <h4>Output</h4>

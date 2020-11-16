@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2020_10_03_145731) do
   create_table "users", force: :cascade do |t|
     t.string "name", default: "user", null: false
     t.string "token", null: false
+    t.string "color", null: false
     t.inet "ip", null: false
     t.boolean "mod", default: false, null: false
     t.boolean "banned", default: false, null: false

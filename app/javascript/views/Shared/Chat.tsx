@@ -2,11 +2,27 @@ import Button from "../../components/Button";
 import Reference from "../Admin/Program/Reference";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCode } from "@fortawesome/free-solid-svg-icons";
+import { faCode, faUsers, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition, error, userToken }) => (
+const Chat = ({
+  _handleSubmit,
+  _handleInput,
+  _handleEnter,
+  _handleInvisibilityToggle,
+  program,
+  addition,
+  error,
+  userToken,
+}) => (
   <div className="chat">
-    {program.settings.user_count} users
+    <span>
+      {program.settings.user_count} <FontAwesomeIcon size="sm" icon={faUsers} />
+      {program.settings.show_invisibles ? (
+        <FontAwesomeIcon size="sm" icon={faEye} pull={"right"} onClick={() => _handleInvisibilityToggle(false)} />
+      ) : (
+        <FontAwesomeIcon size="sm" icon={faEyeSlash} pull={"right"} onClick={() => _handleInvisibilityToggle(true)} />
+      )}
+    </span>
     <div className="chat__section--column-reverse">
       <div className="chat__section--output">
         {program &&
@@ -16,14 +32,22 @@ const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition, er
 
             if (message.is_code) {
               return (
-                <div key={message.id} className={`chat__output chat__output--code ${currentUserStyle}`}>
+                <div
+                  key={message.id}
+                  style={{ backgroundColor: message.color }}
+                  className={`chat__output chat__output--code ${currentUserStyle}`}
+                >
                   <FontAwesomeIcon size="xs" icon={faCode} />
                   <span className="chat__output--text">{message.name}</span>
                 </div>
               );
             } else {
               return (
-                <div key={message.id} className={`chat__output ${currentUserStyle}`}>
+                <div
+                  key={message.id}
+                  style={{ backgroundColor: message.color }}
+                  className={`chat__output ${currentUserStyle}`}
+                >
                   <span className="chat__output--text">{message.name}</span>
                 </div>
               );
@@ -31,9 +55,13 @@ const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition, er
           })}
       </div>
     </div>
+    <small>
+      {Math.min(Math.max(program.settings.max_input_mode - addition.length, 0), program.settings.max_input_mode)} △
+      {error}
+    </small>
     <div className="chat__section--input">
       <input
-        className="chat__field--input mb-space-sm"
+        className={"chat__field--input mb-space-sm" + (error ? " with-error" : "")}
         onInput={_handleInput(program)}
         onKeyDown={(e) => _handleEnter(e)}
         onChange={() => {}}
@@ -47,7 +75,6 @@ const Chat = ({ _handleSubmit, _handleInput, _handleEnter, program, addition, er
         name="Send"
       />
     </div>
-    <small>△ {error}</small>
     <Reference />
   </div>
 );
