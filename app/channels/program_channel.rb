@@ -121,7 +121,7 @@ class ProgramChannel < ApplicationCable::Channel
       char = program.chars.find_or_create_by(name: addition)
       if program.anarchy?
         program.with_lock do
-          program.update(code: program.formatted_code(program.code, char))
+          program.process_addition(addition)
         end
       else
         Vote.create(char: char)
