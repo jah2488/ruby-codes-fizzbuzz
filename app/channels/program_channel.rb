@@ -114,7 +114,7 @@ class ProgramChannel < ApplicationCable::Channel
     program = current_program
     addition = data.fetch("addition")
     is_code = data.fetch("isCode")
-    
+
     program.messages.create(name: addition, is_code: is_code, user: current_user)
     if is_code
       if program.anarchy?
