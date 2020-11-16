@@ -127,7 +127,7 @@ class ProgramChannel < ApplicationCable::Channel
         Vote.create(char: char)
         if char.votes_count >= program.settings["vote_threshold"]
           program.with_lock do
-            program.update(code: program.formatted_code(program.code, char))
+            program.process_addition(addition)
           end
           program.chars.destroy_all
         end

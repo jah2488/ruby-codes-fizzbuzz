@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_03_145731) do
+ActiveRecord::Schema.define(version: 2020_11_16_215607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 2020_10_03_145731) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "votes_count"
     t.index ["program_id"], name: "index_chars_on_program_id"
+  end
+
+  create_table "entries", force: :cascade do |t|
+    t.string "name"
+    t.bigint "program_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["program_id"], name: "index_entries_on_program_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -37,7 +45,6 @@ ActiveRecord::Schema.define(version: 2020_10_03_145731) do
 
   create_table "programs", force: :cascade do |t|
     t.string "name", null: false
-    t.text "code", default: "", null: false
     t.text "boilerplate", default: "", null: false
     t.string "mode", default: "anarchy", null: false
     t.boolean "complete", default: false, null: false
@@ -59,7 +66,6 @@ ActiveRecord::Schema.define(version: 2020_10_03_145731) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.string "chat", limit: 1
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "char_id", null: false
@@ -67,6 +73,7 @@ ActiveRecord::Schema.define(version: 2020_10_03_145731) do
   end
 
   add_foreign_key "chars", "programs"
+  add_foreign_key "entries", "programs"
   add_foreign_key "messages", "programs"
   add_foreign_key "messages", "users"
   add_foreign_key "votes", "chars"
