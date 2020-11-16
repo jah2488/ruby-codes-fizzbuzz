@@ -116,13 +116,14 @@ class ProgramChannel < ApplicationCable::Channel
     is_code = data.fetch("isCode")
 
     program.messages.create(name: addition, is_code: is_code, user: current_user)
+
     if is_code
+      char = program.chars.find_or_create_by(name: addition)
       if program.anarchy?
         program.with_lock do
-          program.update(code: program.formatted_code(program.code, Char.new(name: addition)))
+          program.update(code: program.formatted_code(program.code, char))
         end
       else
-        char = program.chars.find_or_create_by(name: addition)
         Vote.create(char: char)
         if char.votes_count >= program.settings["vote_threshold"]
           program.with_lock do
