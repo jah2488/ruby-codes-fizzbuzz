@@ -7,7 +7,7 @@ hljs.configure({
   tabReplace: "  ",
 });
 
-const Output = ({ program: { code, tick }, program, output }) => (
+const Output = ({ program: { code }, program, output }) => (
   <div className="code-section">
     <div className="program-code">
       <h4>Ruby Code</h4>

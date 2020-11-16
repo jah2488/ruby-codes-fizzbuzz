@@ -1,13 +1,12 @@
 class Program < ApplicationRecord
   attr_accessor :addition
-  serialize :code
 
   has_many :chars, dependent: :destroy
+  has_many :entries, dependent: :destroy
   has_many :messages, dependent: :destroy
   validates :name, presence: true
 
   before_save -> () do
-    self.code = [] if code.empty?
     if settings.empty?
       self.settings = {
         play_state: "created",
@@ -36,13 +35,17 @@ class Program < ApplicationRecord
   def anarchy?
     mode == "anarchy"
   end
+  
+  def code
+    entries.order(id: :asc).pluck(:name).join
+  end
 
   def evaluate
     # TODO) determine if output is correct?
       # - 1) Each program should have a set of test criteria that we are testing against.
       # - 2) It could be either a simple string, or code to be evaluated _against_ the code provided. ie a test suite or just an answer.
     Rails.cache.fetch("#{self.id}-#{self.updated_at}") do
-      resp = CodeEvaluator.new(self.code.join).process
+      resp = CodeEvaluator.new(self.code).process
       ostr = ''
       erln = nil
       return '' if resp.output.blank? && resp.error.blank?
@@ -73,16 +76,12 @@ class Program < ApplicationRecord
     end
   end
 
-  def formatted_code(code, char)
-    case char.name
-    when Char::COMMANDS[:BACKSPACE] then code.first
+  def process_addition(addition)
+    case addition
+    when Entry::COMMANDS[:BACKSPACE] then entries.last.destroy
     else
-      handle_addition(char)
+      entries.create(name: Entry.formatted_name(addition))
     end
-  end
-
-  def handle_addition(char)
-    [code, char.formatted_name]
   end
 
   def playing?
@@ -103,7 +102,7 @@ class Program < ApplicationRecord
       id: id,
       name: name,
       mode: mode,
-      code: code.join,
+      code: code,
       chars: chars
         .select(:id, :name, :votes_count)
         .order(votes_count: :desc),
