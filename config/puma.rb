@@ -1,3 +1,5 @@
+require 'barnes'
+
 max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 8 }
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
@@ -12,3 +14,7 @@ workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 preload_app!
 
 plugin :tmp_restart
+
+before_fork do
+  Barnes.start
+end

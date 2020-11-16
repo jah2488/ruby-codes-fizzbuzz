@@ -15,6 +15,7 @@ gem 'color-generator'
 gem 'rack-timeout'
 gem 'rack-cors'
 gem 'rack-attack'
+gem 'barnes'
 
 group :development, :test do
   gem 'pry-rails', "~> 0.3"
@@ -27,6 +28,7 @@ group :development do
   gem 'spring', "~> 2.1"
   gem 'spring-watcher-listen', '~> 2.0'
 
+  gem 'derailed_benchmarks'
   gem 'rack-mini-profiler', "~> 2.1", require: false
   gem 'memory_profiler', "~> 0.9"
   gem 'flamegraph', "~> 0.9"
