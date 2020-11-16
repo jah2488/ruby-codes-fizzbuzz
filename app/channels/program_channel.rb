@@ -114,14 +114,20 @@ class ProgramChannel < ApplicationCable::Channel
     program = current_program
     addition = data.fetch("addition")
     is_code = data.fetch("isCode")
-
-    program.with_lock do
-      program.messages.create(name: addition, is_code: is_code, user: current_user)
-      if is_code
+    
+    program.messages.create(name: addition, is_code: is_code, user: current_user)
+    if is_code
+      if program.anarchy?
+        program.with_lock do
+          program.update(code: program.formatted_code(program.code, addition))
+        end
+      else
         char = program.chars.find_or_create_by(name: addition)
         Vote.create(char: char)
         if char.votes_count >= program.settings["vote_threshold"]
-          program.update(code: program.formatted_code(program.code, char))
+          program.with_lock do
+            program.update(code: program.formatted_code(program.code, char))
+          end
           program.chars.destroy_all
         end
       end
@@ -147,7 +153,7 @@ class ProgramChannel < ApplicationCable::Channel
 
   private
   def current_program
-    Program.find(params.fetch(:id))
+    @current_program ||= Program.find(params.fetch(:id))
   end
 
   def room

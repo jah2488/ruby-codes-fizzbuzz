@@ -33,6 +33,9 @@ class Program < ApplicationRecord
     self.active.where("settings ->> 'play_state' = :state", state: "playing")
   end
 
+  def anarchy?
+    mode == "anarchy"
+  end
 
   def evaluate
     # TODO) determine if output is correct?
