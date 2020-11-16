@@ -94,8 +94,6 @@ class Program < ApplicationRecord
       id: id,
       name: name,
       mode: mode,
-      code: code.join,
-      messages: messages_data,
       settings: settings,
     }
   end
