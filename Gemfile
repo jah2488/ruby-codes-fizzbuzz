@@ -16,6 +16,7 @@ gem 'rack-timeout'
 gem 'rack-cors'
 gem 'rack-attack'
 gem 'barnes'
+gem 'newrelic_rpm'
 
 group :development, :test do
   gem 'pry-rails', "~> 0.3"
