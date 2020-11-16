@@ -36,7 +36,7 @@ const AdminProgram = () => {
       <Title program={program} />
       <div className="program-container">
         <div className="program-content section column">
-          <Output program={program} />
+          <Output program={program} output={program.output} />
         </div>
 
         <div className="section">

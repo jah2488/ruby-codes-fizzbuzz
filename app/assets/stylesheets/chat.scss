@@ -54,6 +54,10 @@
         color: #AAAAAA;
       }
     }
+    &.with-error {
+      border: 2px solid #ec777779;
+      color: #ec7777;
+    }
   }
   &--submit {
     flex: 0 0 10%;
