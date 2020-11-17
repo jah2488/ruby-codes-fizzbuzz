@@ -2,7 +2,16 @@ import Button from "../../components/Button";
 import Reference from "../Admin/Program/Reference";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCode, faUsers, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCode,
+  faUsers,
+  faEye,
+  faEyeSlash,
+  faKeyboard,
+  faUserPlus,
+  faVoteYea,
+} from "@fortawesome/free-solid-svg-icons";
+import constants from "../../lib/constants/constants";
 
 const Chat = ({
   _handleSubmit,
@@ -15,14 +24,35 @@ const Chat = ({
   userToken,
 }) => (
   <div className="chat">
-    <span>
-      {program.settings.user_count} <FontAwesomeIcon size="sm" icon={faUsers} />
-      {program.settings.show_invisibles ? (
-        <FontAwesomeIcon size="sm" icon={faEye} pull={"right"} onClick={() => _handleInvisibilityToggle(false)} />
-      ) : (
-        <FontAwesomeIcon size="sm" icon={faEyeSlash} pull={"right"} onClick={() => _handleInvisibilityToggle(true)} />
-      )}
-    </span>
+    <div className="chat__toolbar">
+      <span className="clickable">
+        {program.settings.show_invisibles ? (
+          <FontAwesomeIcon size="sm" icon={faEye} onClick={() => _handleInvisibilityToggle(false)} />
+        ) : (
+          <FontAwesomeIcon size="sm" icon={faEyeSlash} onClick={() => _handleInvisibilityToggle(true)} />
+        )}
+      </span>
+      <span>
+        {program.mode.toLowerCase() === constants.ANARCHY ? (
+          <>
+            <span>ANARCHY</span>
+            <FontAwesomeIcon size="sm" icon={faUserPlus} />
+          </>
+        ) : (
+          <>
+            <span>DEMOCRACY</span>
+            <FontAwesomeIcon size="sm" icon={faVoteYea} />
+          </>
+        )}
+      </span>
+      <span>
+        <span>{program.settings.max_input_mode}</span>
+        <FontAwesomeIcon size="sm" icon={faKeyboard} />
+      </span>
+      <span>
+        <span>{program.settings.user_count}</span> <FontAwesomeIcon size="sm" icon={faUsers} />
+      </span>
+    </div>
     <div className="chat__section--column-reverse">
       <div className="chat__section--output">
         {program &&
@@ -56,26 +86,30 @@ const Chat = ({
       </div>
     </div>
     <div className="chat__section--input">
-      <small>
-        {Math.min(Math.max(program.settings.max_input_mode - addition.length, 0), program.settings.max_input_mode)} △
-        {error}
-      </small>
-      <input
-        className={"chat__field--input mb-space-sm" + (error ? " with-error" : "")}
-        onInput={_handleInput(program)}
-        onKeyDown={(e) => _handleEnter(e)}
-        onChange={() => {}}
-        placeholder="Start Coding..."
-        value={`${addition}`}
-        autoFocus
-      />
-      <Button
-        className="button chat__field--submit mb-space-sm"
-        handleClick={() => _handleSubmit(addition)}
-        name="Send"
-      />
+      <small>{error}</small>
+      <div className="chat__field--input-wrapper">
+        <span className={error ? " with-error" : ""}>
+          {Math.min(Math.max(program.settings.max_input_mode - addition.length, 0), program.settings.max_input_mode)}
+        </span>
+        <input
+          className={"chat__field--input " + (error ? " with-error" : "")}
+          onInput={_handleInput(program)}
+          onKeyDown={(e) => _handleEnter(e)}
+          onChange={() => {}}
+          placeholder="Start Coding..."
+          value={`${addition}`}
+          autoFocus
+        />
+      </div>
+      <div className="chat__field--submit-wrapper">
+        <Reference />
+        <Button
+          className="button chat__field--submit mb-space-sm"
+          handleClick={() => _handleSubmit(addition)}
+          name="Send"
+        />
+      </div>
     </div>
-    <Reference />
   </div>
 );
 
