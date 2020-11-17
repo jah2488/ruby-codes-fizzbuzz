@@ -38,20 +38,12 @@ const AdminProgram = () => {
       <Row className="header">
         <Title program={program} />
       </Row>
-      <Row>
-        <div className="program-container">
-          <Col>
-            <div className="output-content section column">
-              <Editor program={program} output={program.output} />
-            </div>
-          </Col>
-        </div>
-      </Row>
-      <Col>
-        <div className="chat-sidebar scrollable">
-          <div className="section">
-            <Votes program={program} _handleSubmit={() => {}} canVote={true} />
-          </div>
+      <Row className="program-container">
+        <Col className="output-content column scrollable">
+          <Editor program={program} output={program.output} />
+        </Col>
+        <Col className="chat-sidebar scrollable">
+          <Votes program={program} _handleSubmit={() => {}} canVote={true} />
 
           <div className="admin-section section">
             <ModeSection channel={channel} program={program} />
@@ -60,8 +52,8 @@ const AdminProgram = () => {
             <PlayControlsSection channel={channel} program={program} />
             <RestartControlsSection channel={channel} />
           </div>
-        </div>
-      </Col>
+        </Col>
+      </Row>
     </>
   );
 };
