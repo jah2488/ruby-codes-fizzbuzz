@@ -11,7 +11,7 @@ import {
   faUserPlus,
   faVoteYea,
 } from "@fortawesome/free-solid-svg-icons";
-import constants from "../../lib/constants/constants";
+import Constants from "../../lib/constants/constants";
 import Votes from "../Shared/Votes";
 
 const Chat = ({
@@ -23,98 +23,106 @@ const Chat = ({
   addition,
   error,
   userToken,
-}) => (
-  <div className="chat">
-    <div className="chat__toolbar">
-      {program.mode.toLowerCase() !== constants.ANARCHY && (
-        <Votes _handleSubmit={_handleSubmit} program={program} canVote={program.settings.can_vote} />
-      )}
-      <span className="clickable">
-        {program.settings.show_invisibles ? (
-          <FontAwesomeIcon size="sm" icon={faEye} onClick={() => _handleInvisibilityToggle(false)} />
-        ) : (
-          <FontAwesomeIcon size="sm" icon={faEyeSlash} onClick={() => _handleInvisibilityToggle(true)} />
-        )}
-      </span>
-      <span>
-        {program.mode.toLowerCase() === constants.ANARCHY ? (
-          <>
-            <span>ANARCHY</span>
-            <FontAwesomeIcon size="sm" icon={faUserPlus} />
-          </>
-        ) : (
-          <>
-            <span>DEMOCRACY</span>
-            <FontAwesomeIcon size="sm" icon={faVoteYea} />
-          </>
-        )}
-      </span>
-      <span>
-        <span>{program.settings.max_input_mode}</span>
-        <FontAwesomeIcon size="sm" icon={faKeyboard} />
-      </span>
-      <span>
-        <span>{program.settings.user_count}</span> <FontAwesomeIcon size="sm" icon={faUsers} />
-      </span>
-    </div>
-    <div className="chat__section--column-reverse">
-      <div className="chat__section--output">
-        {program &&
-          program.messages.map((message) => {
-            const currentUserStyle =
-              userToken === message.token ? "chat__output--current-user" : "chat__output--other-user";
+}) => {
+  const isMessage = addition.substr(0, 1) === Constants.CODE_KEY;
+  const remainingCharacters = Math.min(Math.max(program.settings.max_input_mode - addition.length, 0), program.settings.max_input_mode);
 
-            if (message.is_code) {
-              return (
-                <div
-                  key={message.id}
-                  style={{ backgroundColor: message.color }}
-                  className={`chat__output chat__output--code ${currentUserStyle}`}
-                >
-                  <FontAwesomeIcon size="xs" icon={faCode} />
-                  <span className="chat__output--text">{message.name}</span>
-                </div>
-              );
-            } else {
-              return (
-                <div
-                  key={message.id}
-                  style={{ backgroundColor: message.color }}
-                  className={`chat__output ${currentUserStyle}`}
-                >
-                  <span className="chat__output--text">{message.name}</span>
-                </div>
-              );
-            }
-          })}
-      </div>
-    </div>
-    <div className="chat__section--input">
-      <small>{error}</small>
-      <div className="chat__field--input-wrapper">
-        <span className={error ? " with-error" : ""}>
-          {Math.min(Math.max(program.settings.max_input_mode - addition.length, 0), program.settings.max_input_mode)}
+  return (
+    <div className="chat">
+      <div className="chat__toolbar">
+        {program.mode.toLowerCase() !== Constants.ANARCHY && (
+          <Votes _handleSubmit={_handleSubmit} program={program} canVote={program.settings.can_vote} />
+        )}
+        <span className="clickable">
+          {program.settings.show_invisibles ? (
+            <FontAwesomeIcon size="sm" icon={faEye} onClick={() => _handleInvisibilityToggle(false)} />
+          ) : (
+            <FontAwesomeIcon size="sm" icon={faEyeSlash} onClick={() => _handleInvisibilityToggle(true)} />
+          )}
         </span>
-        <input
-          className={"chat__field--input " + (error ? " with-error" : "")}
-          onInput={_handleInput(program)}
-          onKeyDown={(e) => _handleEnter(e)}
-          onChange={() => {}}
-          placeholder="Start Coding..."
-          value={`${addition}`}
-          autoFocus
-        />
-        <Button
-          className="button chat__field--submit mb-space-sm"
-          handleClick={() => _handleSubmit(addition)}
-          name="Send"
-        />
+        <span>
+          {program.mode.toLowerCase() === Constants.ANARCHY ? (
+            <>
+              <span>ANARCHY</span>
+              <FontAwesomeIcon size="sm" icon={faUserPlus} />
+            </>
+          ) : (
+            <>
+              <span>DEMOCRACY</span>
+              <FontAwesomeIcon size="sm" icon={faVoteYea} />
+            </>
+          )}
+        </span>
+        <span>
+          <span>{program.settings.max_input_mode}</span>
+          <FontAwesomeIcon size="sm" icon={faKeyboard} />
+        </span>
+        <span>
+          <span>{program.settings.user_count}</span> <FontAwesomeIcon size="sm" icon={faUsers} />
+        </span>
       </div>
-      <div className="chat__field--submit-wrapper">
-        <Reference />
+      <div className="chat__section--column-reverse">
+        <div className="chat__section--output">
+          {program &&
+            program.messages.map((message) => {
+              const currentUserStyle =
+                userToken === message.token ? "chat__output--current-user" : "chat__output--other-user";
+
+              if (message.is_code) {
+                return (
+                  <div
+                    key={message.id}
+                    style={{ backgroundColor: message.color }}
+                    className={`chat__output chat__output--code ${currentUserStyle}`}
+                  >
+                    <FontAwesomeIcon size="xs" icon={faCode} />
+                    <span className="chat__output--text">{message.name}</span>
+                  </div>
+                );
+              } else {
+                return (
+                  <div
+                    key={message.id}
+                    style={{ backgroundColor: message.color }}
+                    className={`chat__output ${currentUserStyle}`}
+                  >
+                    <span className="chat__output--text">{message.name}</span>
+                  </div>
+                );
+              }
+            })}
+        </div>
+      </div>
+      <div className="chat__section--input">
+        <small>{error}</small>
+        <div className="chat__field--input-wrapper">
+          <span className={error ? " with-error" : ""}>
+            {!isMessage
+              ? remainingCharacters
+              : "∞"
+            }
+          </span>
+          <input
+            className={"chat__field--input " + (error ? " with-error" : "")}
+            onInput={_handleInput(program)}
+            onKeyDown={(e) => _handleEnter(e)}
+            onChange={() => {}}
+            placeholder="Start Coding..."
+            value={`${addition}`}
+            autoFocus
+          />
+          <Button
+            className="button chat__field--submit mb-space-sm"
+            handleClick={() => _handleSubmit(addition)}
+            name="Send"
+          />
+        </div>
+        <div className="chat__field--submit-wrapper">
+          <Reference />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Chat;

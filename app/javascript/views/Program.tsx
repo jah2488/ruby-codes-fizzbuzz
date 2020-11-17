@@ -16,7 +16,7 @@ const Program = () => {
   const [channel, setChannel] = useState(null);
   const [program, setProgram] = useState({} as Program);
   const [addition, setAddition] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const [confetti, setConfetti] = useState(false);
 
   const cookies = parseCookies();
@@ -56,8 +56,8 @@ const Program = () => {
   }, [confetti]);
 
   const _handleInput = (program) => (e) => {
-    if (e.target.value.length <= program.settings.max_input_mode) {
-      setError(null);
+    if (e.target.value.length <= program.settings.max_input_mode || e.target.value.substr(0, 1) === Constants.CODE_KEY) {
+      setError("");
     } else {
       setError("Too many characters");
     }
