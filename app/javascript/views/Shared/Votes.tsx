@@ -12,8 +12,8 @@ const Votes = ({ program, _handleSubmit, canVote = true }) => {
           program.chars
             .filter((char) => char.votes_count > 1)
             .map((char) => (
-              <li key={char.id} className="vote-item" onClick={() => _handleSubmit(char.name)}>
-                <div className="badge clickable full-width vote">
+              <li key={char.id} className="vote-item" onClick={() => canVote && _handleSubmit(char.name)}>
+                <div className={"badge full-width " + (canVote ? "vote clickable" : "disabled")}>
                   <span>{char.votes_count} Votes</span>
                   <pre>{char.name}</pre>
                 </div>
