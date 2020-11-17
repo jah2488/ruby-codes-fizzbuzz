@@ -9,17 +9,20 @@ const Reference = () => {
 
   return (
     <div className="chat-reference">
-      <h4>Special Formatting: </h4>
-      <div className="flex space-between full">
-        <div className="flex column half">
-          <div>{CODE_KEY} - Chat</div>
-          <div>{TAB} - Tab</div>
-          <div>{SPACE} - Space</div>
-        </div>
-        <div className="flex column half">
-          <div>{NEW_LINE} - New Line</div>
-          <div>{BACKSPACE} - Backspace</div>
-        </div>
+      <div className="badge">
+        <pre>{CODE_KEY}</pre>CHAT
+      </div>
+      <div className="badge">
+        <pre>{TAB}</pre>TAB
+      </div>
+      <div className="badge">
+        <pre>{SPACE}</pre>SPACE
+      </div>
+      <div className="badge">
+        <pre>{NEW_LINE}</pre>NEW LINE
+      </div>
+      <div className="badge">
+        <pre>{BACKSPACE}</pre>DELETE
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 const ENTER = "Enter";
 const CODE_KEY = "!";
+const ANARCHY = "anarchy";
 const COMMANDS = {
   TAB: ":t",
   NEW_LINE: ":nl",
@@ -10,5 +11,6 @@ const COMMANDS = {
 export default {
   COMMANDS,
   ENTER,
-  CODE_KEY
+  CODE_KEY,
+  ANARCHY
 };
