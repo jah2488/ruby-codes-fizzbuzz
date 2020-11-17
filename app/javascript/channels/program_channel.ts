@@ -45,7 +45,6 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
             break;
 
           default:
-            console.log(`Data:`, data);
             updateProgram({ ...program, ...data });
             break;
         }
