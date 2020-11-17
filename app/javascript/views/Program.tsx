@@ -143,10 +143,10 @@ const Program = () => {
           <Editor program={program} output={program.output} />
           <Output output={program.output} />
         </Col>
+        {program.mode.toLowerCase() !== Constants.ANARCHY && (
+          <Votes _handleSubmit={_handleSubmit} program={program} canVote={program.settings.can_vote} />
+        )}
         <Col className="chat-sidebar">
-          {program.mode.toLowerCase() !== Constants.ANARCHY && (
-            <Votes _handleSubmit={_handleSubmit} program={program} canVote={program.settings.can_vote} />
-          )}
           <Chat
             _handleSubmit={_handleSubmit}
             _handleInput={_handleInput}
