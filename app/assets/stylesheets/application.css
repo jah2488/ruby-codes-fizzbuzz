@@ -99,10 +99,10 @@ pre {
   border: 1px solid #c3c3c3;
   border-top: none;
 
-  max-width: min(45%, 50vw);
+  max-width: 50vw;
   width: 33vw;
   min-width: 270px;
-  height: max(100%, 100vh - 4.35rem);
+  height: calc(100vh - 4.35rem);
 }
 
 .sidebar.scrollable {
