@@ -1,5 +1,5 @@
 import React from "react";
 
-const Col = ({ children }) => <div className="column">{children}</div>;
+const Col = ({ className="", children }) => <div className={`column ${className}`}>{children}</div>;
 
 export default Col;

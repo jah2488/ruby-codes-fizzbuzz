@@ -1,7 +1,7 @@
 .flex {
   display: flex;
   &.space-between { justify-content: space-between; }
-  &.column { flex-direction: column;}
+  &.column {flex-direction: column;}
 }
 
 .full { width: 100%; }
@@ -10,8 +10,3 @@
 
 .two-thirds { width: 66%; }
 .third { width: 33%; }
-
-.section {
-  margin-bottom: 1rem;
-  margin-right: 1rem;
-}
