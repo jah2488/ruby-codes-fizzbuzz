@@ -8,7 +8,7 @@ hljs.configure({
 });
 
 const Output = ({ program: { code }, program, output }) => (
-  <div className="code-section">
+  <div className="code-section source">
     <div className="program-code">
       <pre
         dangerouslySetInnerHTML={{

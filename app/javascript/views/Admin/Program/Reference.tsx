@@ -13,16 +13,16 @@ const Reference = () => {
         <pre>{CODE_KEY}</pre>CHAT
       </div>
       <div className="badge">
-        <pre>{TAB}</pre>TAB
+        <pre>{NEW_LINE}</pre>NEW LINE
+      </div>
+      <div className="badge">
+        <pre>{BACKSPACE}</pre>DELETE
       </div>
       <div className="badge">
         <pre>{SPACE}</pre>SPACE
       </div>
       <div className="badge">
-        <pre>{NEW_LINE}</pre>NEW LINE
-      </div>
-      <div className="badge">
-        <pre>{BACKSPACE}</pre>DELETE
+        <pre>{TAB}</pre>TAB
       </div>
     </div>
   );

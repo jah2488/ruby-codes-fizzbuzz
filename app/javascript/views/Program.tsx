@@ -8,7 +8,6 @@ import React, { useEffect, useState } from "react";
 import Chat from "./Shared/Chat";
 import Output from "./Shared/Output";
 import Title from "./Shared/Title";
-import Votes from "./Shared/Votes";
 import Constants from "../lib/constants/constants";
 import ConfettiGenerator from "confetti-js";
 
@@ -138,9 +137,6 @@ const Program = () => {
               <Output program={program} output={program.output} />
               <Result output={program.output} />
             </div>
-            <div className="section">
-              <Votes _handleSubmit={_handleSubmit} program={program} canVote={program.settings.can_vote} />
-            </div>
           </Col>
         </div>
       </Row>
@@ -170,7 +166,7 @@ const formatCode = (output): string => {
 };
 
 const Result = ({ output }): JSX.Element => (
-  <div className="code-section">
+  <div className="code-section output">
     <div className="program-code">
       <pre dangerouslySetInnerHTML={{ __html: `${formatCode(output)}` }} />
     </div>

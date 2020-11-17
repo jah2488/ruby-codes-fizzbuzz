@@ -12,6 +12,7 @@ import {
   faVoteYea,
 } from "@fortawesome/free-solid-svg-icons";
 import constants from "../../lib/constants/constants";
+import Votes from "../Shared/Votes";
 
 const Chat = ({
   _handleSubmit,
@@ -25,6 +26,9 @@ const Chat = ({
 }) => (
   <div className="chat">
     <div className="chat__toolbar">
+      {program.mode.toLowerCase() !== constants.ANARCHY && (
+        <Votes _handleSubmit={_handleSubmit} program={program} canVote={program.settings.can_vote} />
+      )}
       <span className="clickable">
         {program.settings.show_invisibles ? (
           <FontAwesomeIcon size="sm" icon={faEye} onClick={() => _handleInvisibilityToggle(false)} />
@@ -100,14 +104,14 @@ const Chat = ({
           value={`${addition}`}
           autoFocus
         />
-      </div>
-      <div className="chat__field--submit-wrapper">
-        <Reference />
         <Button
           className="button chat__field--submit mb-space-sm"
           handleClick={() => _handleSubmit(addition)}
           name="Send"
         />
+      </div>
+      <div className="chat__field--submit-wrapper">
+        <Reference />
       </div>
     </div>
   </div>

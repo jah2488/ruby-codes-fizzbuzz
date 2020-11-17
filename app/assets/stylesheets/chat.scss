@@ -6,6 +6,7 @@
   min-height: 15rem;
   height: 100%;
   max-height: 100vh;
+  justify-content: space-between;
 }
 
 .chat__toolbar {
@@ -33,8 +34,6 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: column-reverse;
-    height: 100%;
-    max-height: 70vh;
     overflow-y: scroll;
     overflow-x: hidden;
     background: #FEFEFE;
@@ -47,12 +46,12 @@
     flex: 1 0 auto;
   }
   &--input {
-    display: flex;
-    flex: 0 1 5rem;
+    flex: 0 1 30rem;
     flex-direction: column;
     border: 1px solid #c3c3c3;
     border-bottom: none;
-    padding: .4rem;
+    border-left: none;
+    padding: .5rem;
   }
 }
 
@@ -61,11 +60,14 @@
     flex: 0 0 33%;
     display: flex;
     & > span {
-      line-height: 34px;
-      padding-left: 7px;
+      height: 18px;
+      padding: 0.61rem;
+      padding-left: 9px;
+      line-height: 14px;
       background: rgb(240, 242, 245);
       border: 2px solid rgb(230, 232, 235);
       border-right: none;
+      font-family: 'Space Mono', monospace;
       &.with-error {
         border: 2px solid #ec777779;
         border-right: none;
@@ -78,12 +80,13 @@
     border: none;
     background: rgb(240, 242, 245);
     font-size: 16px;
+    height: 18px;
     padding: .61rem;
-    border: 2px solid transparent;
+    border: 2px solid rgb(230, 232, 235);
+    border-left-color: transparent;
     &:focus {
       outline: none;
-      border: 2px solid rgb(230, 232, 235);
-      border-left: none;
+      border: 2px solid rgb(185, 180, 181);
       &::placeholder {
         color: #AAAAAA;
       }
@@ -100,9 +103,8 @@
     justify-content: flex-end;
   }
   &--submit {
-    height: 100%;
+    height: 18px;
     align-self: baseline;
-    margin-top: 0.4rem;
     input {
       padding: 0.61rem;
       margin-left: 10px;
@@ -233,10 +235,9 @@
 .badge {
   display: inline-block;
   min-width: 10px;
-  margin: 0.61rem 0.305rem;
-  padding: .3em .625em;
-  padding-left: 0.35rem;
-  font-size: 0.75rem;
+  margin: 0.61rem 0.305rem 0 0;
+  padding: 0.35em 0.505em;
+  font-size: 0.70rem;
   font-weight: 700;
   color: #fff;
   line-height: 19px;
