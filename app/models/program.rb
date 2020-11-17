@@ -44,7 +44,7 @@ class Program < ApplicationRecord
     # TODO) determine if output is correct?
       # - 1) Each program should have a set of test criteria that we are testing against.
       # - 2) It could be either a simple string, or code to be evaluated _against_ the code provided. ie a test suite or just an answer.
-    Rails.cache.fetch("#{self.id}-#{self.updated_at}") do
+    Rails.cache.fetch("#{self.id}-#{self.entries.last.id}", expires_in: 30.seconds) do
       resp = CodeEvaluator.new(self.code).process
       ostr = ''
       erln = nil
