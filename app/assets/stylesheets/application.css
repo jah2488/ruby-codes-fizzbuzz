@@ -105,6 +105,10 @@ pre {
   height: max(100%, 100vh - 4.35rem);
 }
 
+.sidebar.scrollable {
+  overflow-y: scroll; 
+}
+
 .footer {
   box-sizing: border-box;
   position: fixed;

@@ -5,6 +5,8 @@ import { ProgramChannel } from "../channels/program_channel";
 import { parseCookies } from "../lib/helpers/helpers";
 import Filter from "../lib/helpers/filter";
 import React, { useEffect, useState } from "react";
+import Row from "../components/Row";
+import Col from "../components/Col";
 import Chat from "./Shared/Chat";
 import Output from "./Shared/Output";
 import Title from "./Shared/Title";
@@ -172,8 +174,5 @@ const Result = ({ output }): JSX.Element => (
     </div>
   </div>
 );
-
-const Col = ({ children }) => <div className="column">{children}</div>;
-const Row = ({ className = "", children }) => <div className={"row " + className}>{children}</div>;
 
 export default Program;
