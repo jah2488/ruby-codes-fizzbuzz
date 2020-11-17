@@ -12,11 +12,11 @@ const Output = ({ program: { code }, program, output }) => (
     <div className="program-code">
       <pre
         dangerouslySetInnerHTML={{
-          __html: `${formatCode(
+          __html: formatCode(
             code,
             output,
             program.settings.show_invisibles
-          )}<span class='text-cursor'></span>&nbsp;</span>`,
+          ),
         }}
       />
     </div>
@@ -24,14 +24,28 @@ const Output = ({ program: { code }, program, output }) => (
 );
 
 const formatCode = (code: string, output: { raw: string; err_ln: number }, showInvisibles: boolean): string => {
-  if (code === "") return "";
+  const MAX_START_LINES = 20;
+  const textCursor = `<span class='text-cursor'></span>&nbsp;</span>`;
   let lines = [];
+  let remainderLines = [];
+
   if (showInvisibles) {
     lines = code.replace(/ /g, "<span class='space'>·</span>").split("\n");
   } else {
     const highlighted_code = hljs.highlight("ruby", code).value;
     lines = highlighted_code.split("\n");
   }
+
+  for (let i = 0; i < MAX_START_LINES - lines.length; i++) {
+    remainderLines.push(`<span class='line'></span>`)
+  }
+
+  if (code === "") return (
+    `<span class='line present-line'>` +
+    textCursor +
+    remainderLines.join("")
+  );
+  
   const presentLine = lines.pop();
   const allLines = lines
     .map((line, index) => {
@@ -40,15 +54,19 @@ const formatCode = (code: string, output: { raw: string; err_ln: number }, showI
       }
 
       return `${line}<span class='newline'>${showInvisibles ? "⏎" : ""}</span></span><span class='line ${
-        output?.err_ln == index + 2 ? "error-line" : ""
+        Number(output?.err_ln) === Number(index + 2) ? "error-line" : ""
       }'>`;
     })
     .join("");
 
+  const errorOnFirstLine = Number(output?.err_ln) === 1;
+  const errorOnPresentLine = Number(output?.err_ln) === Number(lines.length + 1);
+
   return (
-    `<span class="line ${output?.err_ln == 1 ? "error-line" : ""}">` +
-    `${allLines}` +
-    `<span class='line present-line'>${presentLine}`
+    (allLines ? `<span class="line ${errorOnFirstLine ? "error-line" : ""}">${allLines}` : "") +
+    `<span class="line present-line ${errorOnPresentLine ? "error-line" : ""}">${presentLine}` +
+    textCursor +
+    remainderLines.join("")
   );
 };
 
