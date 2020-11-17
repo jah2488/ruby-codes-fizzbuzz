@@ -13,6 +13,7 @@ import Output from "./Shared/Output";
 import Title from "./Shared/Title";
 import Constants from "../lib/constants/constants";
 import ConfettiGenerator from "confetti-js";
+import Votes from "./Shared/Votes";
 
 const Program = () => {
   const client = new ApiClient();
@@ -143,6 +144,9 @@ const Program = () => {
           <Output output={program.output} />
         </Col>
         <Col className="chat-sidebar">
+          {program.mode.toLowerCase() !== Constants.ANARCHY && (
+            <Votes _handleSubmit={_handleSubmit} program={program} canVote={program.settings.can_vote} />
+          )}
           <Chat
             _handleSubmit={_handleSubmit}
             _handleInput={_handleInput}

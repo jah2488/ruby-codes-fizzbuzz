@@ -16,6 +16,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  &.democracy {
+    flex: 0 0 4.2rem;
+  }
   & > span {
     display:flex;
     flex: 0;

@@ -12,7 +12,6 @@ import {
   faVoteYea,
 } from "@fortawesome/free-solid-svg-icons";
 import Constants from "../../lib/constants/constants";
-import Votes from "../Shared/Votes";
 
 const Chat = ({
   _handleSubmit,
@@ -25,14 +24,14 @@ const Chat = ({
   userToken,
 }) => {
   const isMessage = addition.substr(0, 1) === Constants.CODE_KEY;
-  const remainingCharacters = Math.min(Math.max(program.settings.max_input_mode - addition.length, 0), program.settings.max_input_mode);
+  const remainingCharacters = Math.min(
+    Math.max(program.settings.max_input_mode - addition.length, 0),
+    program.settings.max_input_mode
+  );
 
   return (
     <div className="chat">
-      <div className="chat__toolbar">
-        {program.mode.toLowerCase() !== Constants.ANARCHY && (
-          <Votes _handleSubmit={_handleSubmit} program={program} canVote={program.settings.can_vote} />
-        )}
+      <div className={"chat__toolbar " + program.mode.toLowerCase()}>
         <span className="clickable">
           {program.settings.show_invisibles ? (
             <FontAwesomeIcon size="sm" icon={faEye} onClick={() => _handleInvisibilityToggle(false)} />
@@ -61,6 +60,8 @@ const Chat = ({
           <span>{program.settings.user_count}</span> <FontAwesomeIcon size="sm" icon={faUsers} />
         </span>
       </div>
+      <span>{program.settings.vote_threshold}</span>
+      <span> needed</span>
       <div className="chat__section--column-reverse">
         <div className="chat__section--output">
           {program &&
@@ -96,12 +97,7 @@ const Chat = ({
       <div className="chat__section--input">
         <small>{error}</small>
         <div className="chat__field--input-wrapper">
-          <span className={error ? " with-error" : ""}>
-            {!isMessage
-              ? remainingCharacters
-              : "∞"
-            }
-          </span>
+          <span className={error ? " with-error" : ""}>{!isMessage ? remainingCharacters : "∞"}</span>
           <input
             className={"chat__field--input " + (error ? " with-error" : "")}
             id="chatFieldInput"
