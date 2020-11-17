@@ -105,7 +105,7 @@ class Program < ApplicationRecord
       code: code,
       chars: chars
         .select(:id, :name, :votes_count)
-        .order(votes_count: :desc),
+        .order(name: :asc),
       messages: messages_data,
       tick: tick,
       settings: settings
