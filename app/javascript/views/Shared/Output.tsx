@@ -10,7 +10,6 @@ hljs.configure({
 const Output = ({ program: { code }, program, output }) => (
   <div className="code-section">
     <div className="program-code">
-      <h4>Ruby Code</h4>
       <pre
         dangerouslySetInnerHTML={{
           __html: `${formatCode(

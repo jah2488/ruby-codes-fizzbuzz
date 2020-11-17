@@ -1,6 +1,9 @@
 .program-container {
+  position: relative;
+  top: 4.25rem;
   display: flex;
   flex-wrap: wrap;
+  width: 100vw;
 }
 
 .program-content {
@@ -8,20 +11,16 @@
 
   &.column {
     flex-direction: column;
+    width: 100vw;
   }
 }
 
 .program-code {
   overflow-x: scroll;
   min-height: 10rem;
-  width: 40rem;
+  width: 100%;
   background: #FEFEFE;
-  border: 1px solid #EEE;
-  border-radius: .25em;
-  box-shadow: .1em .1em .5em rgba(0, 0, 0, .45);
-  padding: 0.5rem;
   margin-bottom: 1rem;
-  font-family: 'Hasklig', 'SourceSans Pro', 'Courier New', Courier, monospace;
   line-height: 0;
   counter-reset: line;
 
