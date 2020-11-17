@@ -51,6 +51,8 @@ const Program = () => {
     if (!confetti) return;
     const confettiSettings = {
       target: "my-canvas",
+      max: 300,
+      size: 0.8,
     };
     const _confetti = new ConfettiGenerator(confettiSettings);
     _confetti.render();
@@ -59,7 +61,10 @@ const Program = () => {
   }, [confetti]);
 
   const _handleInput = (program) => (e) => {
-    if (e.target.value.length <= program.settings.max_input_mode || e.target.value.substr(0, 1) === Constants.CODE_KEY) {
+    if (
+      e.target.value.length <= program.settings.max_input_mode ||
+      e.target.value.substr(0, 1) === Constants.CODE_KEY
+    ) {
       setError("");
     } else {
       setError("Too many characters");
@@ -126,9 +131,7 @@ const Program = () => {
       <canvas className={program.settings.confetti ? "confetti-on" : "confetti-off"} id="my-canvas"></canvas>
       {program.settings.play_state === "paused" && (
         <>
-          <div className="paused">
-            <h1>PAUSED</h1>
-          </div>
+          <div className="paused"></div>
         </>
       )}
       <Row className="header">
