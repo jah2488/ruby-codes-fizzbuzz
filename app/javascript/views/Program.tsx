@@ -128,7 +128,7 @@ const Program = () => {
           </div>
         </>
       )}
-      <Row>
+      <Row className="header">
         <Title program={program} />
       </Row>
       <Row>
@@ -142,22 +142,22 @@ const Program = () => {
               <Votes _handleSubmit={_handleSubmit} program={program} canVote={program.settings.can_vote} />
             </div>
           </Col>
-          <Col>
-            <div className="section">
-              <Chat
-                _handleSubmit={_handleSubmit}
-                _handleInput={_handleInput}
-                _handleEnter={_handleEnter}
-                _handleInvisibilityToggle={_handleInvisibilityToggle}
-                program={program}
-                addition={addition}
-                error={error}
-                userToken={userToken}
-              />
-            </div>
-          </Col>
         </div>
       </Row>
+      <Col>
+        <div className="sidebar">
+          <Chat
+            _handleSubmit={_handleSubmit}
+            _handleInput={_handleInput}
+            _handleEnter={_handleEnter}
+            _handleInvisibilityToggle={_handleInvisibilityToggle}
+            program={program}
+            addition={addition}
+            error={error}
+            userToken={userToken}
+          />
+        </div>
+      </Col>
     </>
   );
 };
@@ -172,13 +172,12 @@ const formatCode = (output): string => {
 const Result = ({ output }): JSX.Element => (
   <div className="code-section">
     <div className="program-code">
-      <h4>Output</h4>
       <pre dangerouslySetInnerHTML={{ __html: `${formatCode(output)}` }} />
     </div>
   </div>
 );
 
 const Col = ({ children }) => <div className="column">{children}</div>;
-const Row = ({ children }) => <div className="row">{children}</div>;
+const Row = ({ className = "", children }) => <div className={"row " + className}>{children}</div>;
 
 export default Program;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Codetogether</title>
+    <title><%= local_assigns.dig(:program)&.name.titleize %> CodeTogether</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,21 +11,23 @@
   </head>
 
   <body>
+    <div class="main-container">
+      <%= yield %>
+    </div>
+    <div class="footer">
+      Made with love for RubyConf2020 by Matt Rice and Justin Herrick
+    </div>
     <% flash.each do |type, msg| %>
       <div class="flash-<%=type%>">
         <%= msg %>
       </div>
     <% end %>
-
-    <% if Rails.env.development? %>
+    <% if Rails.env.development? && params[:debug].present? %>
       <div class="debug">
         <%= link_to :home, :home %>
         <%= link_to :admin, :admin_root %>
         <pre><%= local_assigns.dig(:program)&.attributes&.dig("settings")&.inspect %></pre>
       </div>
     <% end %>
-    <div class="main-container">
-      <%= yield %>
-    </div>
   </body>
 </html>

@@ -55,11 +55,11 @@ const Chat = ({
           })}
       </div>
     </div>
-    <small>
-      {Math.min(Math.max(program.settings.max_input_mode - addition.length, 0), program.settings.max_input_mode)} △
-      {error}
-    </small>
     <div className="chat__section--input">
+      <small>
+        {Math.min(Math.max(program.settings.max_input_mode - addition.length, 0), program.settings.max_input_mode)} △
+        {error}
+      </small>
       <input
         className={"chat__field--input mb-space-sm" + (error ? " with-error" : "")}
         onInput={_handleInput(program)}

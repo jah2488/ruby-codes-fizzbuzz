@@ -8,7 +8,7 @@ const Reference = () => {
   const { TAB, NEW_LINE, BACKSPACE, SPACE } = COMMANDS;
 
   return (
-    <>
+    <div className="chat-reference">
       <h4>Special Formatting: </h4>
       <div className="flex space-between full">
         <div className="flex column half">
@@ -21,8 +21,8 @@ const Reference = () => {
           <div>{BACKSPACE} - Backspace</div>
         </div>
       </div>
-    </>
-  )
+    </div>
+  );
 };
 
 export default Reference;
