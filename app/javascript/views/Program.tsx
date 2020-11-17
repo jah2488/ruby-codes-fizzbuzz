@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import Row from "../components/Row";
 import Col from "../components/Col";
 import Chat from "./Shared/Chat";
+import Editor from "./Shared/Editor";
 import Output from "./Shared/Output";
 import Title from "./Shared/Title";
 import Constants from "../lib/constants/constants";
@@ -132,18 +133,12 @@ const Program = () => {
       <Row className="header">
         <Title program={program} />
       </Row>
-      <Row>
-        <div className="program-container">
-          <Col>
-            <div className="program-content section column">
-              <Output program={program} output={program.output} />
-              <Result output={program.output} />
-            </div>
-          </Col>
-        </div>
-      </Row>
-      <Col>
-        <div className="sidebar">
+      <Row className="program-container">
+        <Col className="output-content section column">
+          <Editor program={program} output={program.output} />
+          <Output output={program.output} />
+        </Col>
+        <Col className="chat-sidebar">
           <Chat
             _handleSubmit={_handleSubmit}
             _handleInput={_handleInput}
@@ -154,25 +149,10 @@ const Program = () => {
             error={error}
             userToken={userToken}
           />
-        </div>
-      </Col>
+        </Col>
+      </Row>
     </>
   );
 };
-
-const formatCode = (output): string => {
-  if (!output) return "";
-  if (!output.raw) return "";
-  const lines = output.raw.replace("<", "&lt;").split("\n");
-  return `<span class="line">${lines.join("</span><span class='line'>")}</span>`;
-};
-
-const Result = ({ output }): JSX.Element => (
-  <div className="code-section output">
-    <div className="program-code">
-      <pre dangerouslySetInnerHTML={{ __html: `${formatCode(output)}` }} />
-    </div>
-  </div>
-);
 
 export default Program;

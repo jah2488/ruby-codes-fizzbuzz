@@ -9,7 +9,7 @@ import PlayControlsSection from "./Admin/PlayControlsSection";
 import RestartControlsSection from "./Admin/RestartControlsSection";
 import Row from "../components/Row";
 import Col from "../components/Col";
-import Output from "./Shared/Output";
+import Editor from "./Shared/Editor";
 import Title from "./Shared/Title";
 import Votes from "./Shared/Votes";
 
@@ -41,14 +41,14 @@ const AdminProgram = () => {
       <Row>
         <div className="program-container">
           <Col>
-            <div className="program-content section column">
-              <Output program={program} output={program.output} />
+            <div className="output-content section column">
+              <Editor program={program} output={program.output} />
             </div>
           </Col>
         </div>
       </Row>
       <Col>
-        <div className="sidebar scrollable">
+        <div className="chat-sidebar scrollable">
           <div className="section">
             <Votes program={program} _handleSubmit={() => {}} canVote={true} />
           </div>

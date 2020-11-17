@@ -44,9 +44,6 @@ html, body, p {
 .main-container > div {
   height: 100%;
 }
-.row {
-  height: 100%;
-}
 
 .debug {
   border: 2px dashed darkorchid;
@@ -88,25 +85,6 @@ pre {
 .row.header h1 {
   font-size: 1.75rem;
   margin: 1rem;
-}
-
-.sidebar {
-  position: fixed;
-  right: 0;
-  top: 4.35rem;
-
-  background: white;
-  border: 1px solid #c3c3c3;
-  border-top: none;
-
-  max-width: 50vw;
-  width: 33vw;
-  min-width: 270px;
-  height: calc(100vh - 4.35rem);
-}
-
-.sidebar.scrollable {
-  overflow-y: scroll; 
 }
 
 .footer {
