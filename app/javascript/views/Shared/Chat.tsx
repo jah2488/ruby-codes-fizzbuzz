@@ -104,6 +104,7 @@ const Chat = ({
           </span>
           <input
             className={"chat__field--input " + (error ? " with-error" : "")}
+            id="chatFieldInput"
             onInput={_handleInput(program)}
             onKeyDown={(e) => _handleEnter(e)}
             onChange={() => {}}
@@ -118,7 +119,7 @@ const Chat = ({
           />
         </div>
         <div className="chat__field--submit-wrapper">
-          <Reference />
+          <Reference _handleSubmit={_handleSubmit} />
         </div>
       </div>
     </div>

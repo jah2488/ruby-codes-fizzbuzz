@@ -117,6 +117,7 @@ const Program = () => {
 
     (channel as ProgramChannel).message(data);
     setAddition("");
+    document.getElementById("chatFieldInput").focus();
   };
 
   if (!program || !program.id) return null;
