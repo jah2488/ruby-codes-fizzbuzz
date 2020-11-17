@@ -143,7 +143,7 @@ class ProgramChannel < ApplicationCable::Channel
 
   def clear
     program = current_program
-    program.update(code: "")
+    program.entries.destroy_all
     program.chars.destroy_all
 
     ProgramChannel.broadcast_to(room, {
