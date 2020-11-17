@@ -17,7 +17,6 @@
   align-items: center;
   justify-content: space-between;
   &.democracy {
-    flex: 0 0 4.2rem;
   }
   & > span {
     display:flex;
@@ -236,7 +235,7 @@
 }
 
 .badge {
-  display: inline-block;
+  display: flex;
   min-width: 10px;
   margin: 0.61rem 0.305rem 0 0;
   padding: 0.35em 0.505em;
@@ -249,6 +248,7 @@
   background-color: #17a2b8;
   border-radius: 5px;
   user-select: none;
+  justify-content: space-between;
 
   & pre {
     display: inline-block;
@@ -266,5 +266,17 @@
 
   &.clickable:hover {
     cursor: pointer;
+  }
+
+  &.vote {
+    background-color: #b491c8;
+    &:hover {
+      background-color: #663a82;
+    }
+  }
+
+  &.full-width {
+    width: 100%;
+    text-align: center;
   }
 }

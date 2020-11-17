@@ -4,25 +4,21 @@ import React from "react";
 const Votes = ({ program, _handleSubmit, canVote = true }) => {
   return (
     <div className="vote-section">
-      {program && program.mode.toLowerCase() === "democracy" && (
-        <>
-          <h4>Vote's Needed: {program.settings.vote_threshold}</h4>
-        </>
-      )}
+      <ul className="vote-list">
+        <h4>Choices</h4>
+        <div className="info">{program.settings.vote_threshold} Votes Needed</div>
+        {program &&
+          program.chars &&
+          program.chars.map((char) => (
+            <li key={char.id} className="vote-item" onClick={() => _handleSubmit(char.name)}>
+              <div className="badge clickable full-width vote">
+                <span>{char.votes_count} Votes</span>
+                <pre>{char.name}</pre>
+              </div>
+            </li>
+          ))}
+      </ul>
     </div>
   );
 };
-/*
-<ul className="vote-list">
-            {program &&
-              program.chars &&
-              program.chars.map((char) => (
-                <li key={char.id} className="vote-item">
-                  {`${char.name} - ${char.votes_count}`}
-                  {canVote && <Button className="button" handleClick={() => _handleSubmit(char.name)} name="Vote" />}
-                </li>
-              ))}
-          </ul>
-          */
-
 export default Votes;

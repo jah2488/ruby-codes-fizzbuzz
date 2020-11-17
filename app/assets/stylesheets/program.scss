@@ -39,18 +39,18 @@
 
 .code-section {
   &.source {
-    flex: 1 0 10rem;
+    flex: 1 1 80%;
     overflow-y: scroll;
     border-bottom: 1px solid #c3c3c3;
   }
   &.output {
-    flex: 0 0 8rem;
-    height: 10rem;
+    flex: 1 1 10rem;
     overflow-y: scroll;
   }
 }
 
 .program-code {
+  height: 100%;
   width: 100%;
   background: #FEFEFE;
   line-height: 0;

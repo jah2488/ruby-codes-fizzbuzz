@@ -60,8 +60,6 @@ const Chat = ({
           <span>{program.settings.user_count}</span> <FontAwesomeIcon size="sm" icon={faUsers} />
         </span>
       </div>
-      <span>{program.settings.vote_threshold}</span>
-      <span> needed</span>
       <div className="chat__section--column-reverse">
         <div className="chat__section--output">
           {program &&
