@@ -94,6 +94,7 @@ pre {
   font-size: 12px;
   z-index: 0;
   width: 100vw;
+
 }
 
 .clickable:hover {
@@ -145,6 +146,5 @@ pre {
   cursor: pointer;
   background: transparent;
   transition: 2s ease background;
-
   z-index: -100;
 }
