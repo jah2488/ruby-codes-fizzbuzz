@@ -17,6 +17,7 @@
   width: 34vw;
   min-width: 270px;
   height: calc(100vh - 4.35rem);
+  z-index: 1;
 }
 
 .output-content {
@@ -89,12 +90,56 @@
   }
 
   span.space, span.newline {
-    color: #ddd;
+    color: #888;
   }
 }
-
 
 .addition-field {
   display: flex;
   align-items: flex-start;
+}
+
+.admin {
+  .flex {
+    align-items: center;
+  }
+  label {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  input[type="number"] {
+    padding: 0.61rem 1rem;
+    margin: 1rem;
+    font-size: 18px;
+    font-weight: bold;
+    width: 3rem;
+  }
+  .button input {
+    display: inline-block;
+    padding: 0.61rem 1rem;
+    margin: 1rem;
+    background:#b491c8;
+    font-size: 16px;
+    font-weight: bold;
+
+    border-radius: 5px;
+    border: none;
+    box-shadow: .1em .1em .25em rgba(0, 0, 0, .45);
+
+    &:disabled {
+      background:#c2adce;
+      box-shadow: .1em .1em .1em rgba(0, 0, 0, .45);
+      &:hover {
+        cursor: not-allowed;
+        background:#c2adce;
+        box-shadow: .1em .1em .1em rgba(0, 0, 0, .45);
+      }
+    }
+
+    &:hover {
+      background:#ae7bcc;
+      box-shadow: .1em .1em .5em rgba(0, 0, 0, .45);
+    }
+  }
 }

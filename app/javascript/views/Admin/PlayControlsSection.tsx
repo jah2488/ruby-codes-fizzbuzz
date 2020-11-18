@@ -8,7 +8,7 @@ const PlayControlsSection = ({ channel, program }) => {
     <Section name={`Play Controls: (${program.settings.play_state || "playing"})`}>
       <PlayControls channel={channel} current={program.settings.play_state as PlayState} />
     </Section>
-  )
+  );
 };
 
 interface PlayControlProps {
@@ -16,15 +16,16 @@ interface PlayControlProps {
   channel: ProgramChannel;
 }
 type PlayState = "created" | "playing" | "paused";
+
 const PlayControls = ({ channel, current }: PlayControlProps) => {
   switch (current) {
     case "created":
-      return <button onClick={channel.resume}>Start</button>;
+      return <Button handleClick={channel.resume} name="Start" />;
     case "paused":
-      return <button onClick={channel.resume}>Resume</button>;
+      return <Button handleClick={channel.resume} name="Resume" />;
     case "playing":
     default:
-      return <button onClick={channel.pause}>Pause</button>;
+      return <Button handleClick={channel.pause} name="Pause" />;
   }
 };
 

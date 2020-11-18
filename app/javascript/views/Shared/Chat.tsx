@@ -34,20 +34,20 @@ const Chat = ({
       <div className={"chat__toolbar " + program.mode.toLowerCase()}>
         <span className="clickable">
           {program.settings.show_invisibles ? (
-            <FontAwesomeIcon size="sm" icon={faEye} onClick={() => _handleInvisibilityToggle(false)} />
+            <FontAwesomeIcon size="sm" border icon={faEye} onClick={() => _handleInvisibilityToggle(false)} />
           ) : (
-            <FontAwesomeIcon size="sm" icon={faEyeSlash} onClick={() => _handleInvisibilityToggle(true)} />
+            <FontAwesomeIcon size="sm" border icon={faEyeSlash} onClick={() => _handleInvisibilityToggle(true)} />
           )}
         </span>
         <span>
           {program.mode.toLowerCase() === Constants.ANARCHY ? (
             <>
-              <span>ANARCHY</span>
+              <span> ANARCHY</span>
               <FontAwesomeIcon size="sm" icon={faUserPlus} />
             </>
           ) : (
             <>
-              <span>DEMOCRACY</span>
+              <span> DEMOCRACY</span>
               <FontAwesomeIcon size="sm" icon={faVoteYea} />
             </>
           )}

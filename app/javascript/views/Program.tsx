@@ -64,7 +64,9 @@ const Program = () => {
   const _handleInput = (program) => (e) => {
     if (
       e.target.value.length <= program.settings.max_input_mode ||
-      e.target.value.substr(0, 1) === Constants.CODE_KEY
+      e.target.value.substr(0, 1) === Constants.CODE_KEY ||
+      Object.values(Constants.COMMANDS).join("").includes(e.target.value)
+
     ) {
       setError("");
     } else {

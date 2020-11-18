@@ -38,11 +38,14 @@ const AdminProgram = () => {
       <Row className="header">
         <Title program={program} />
       </Row>
-      <Row className="program-container">
+      <Row className="program-container admin">
         <Col className="output-content column scrollable">
           <Editor program={program} output={program.output} />
         </Col>
         <Col className="chat-sidebar scrollable">
+          <a href={`/programs/${program.id}`} className="button" target="_blank">
+            Open User Program View
+          </a>
           <Votes program={program} _handleSubmit={() => {}} canVote={true} />
 
           <div className="admin-section section">
