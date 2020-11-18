@@ -89,13 +89,11 @@ pre {
   bottom: 0;
   left: 0;
   padding: 0.5rem;
-  background: #b491c8;
+  background: #b491c899;
   color: white;
   font-size: 12px;
-  z-index: -1;
-  width: 65vw;
-  max-width: calc(100vw - 270px);
-
+  z-index: 0;
+  width: 100vw;
 }
 
 .clickable:hover {
@@ -133,12 +131,20 @@ pre {
   height: 100vh;
   width: 100vw;
   position: absolute;
-  z-index:100;
+  background: rgba(255, 255, 255, 0.8);
+  transition: 1s ease-in-out background;
+  z-index: 100;
 }
 
 .confetti-off {
+  top: 0;
+  left: 0;
   height: 0;
   width: 0;
   position: absolute;
   cursor: pointer;
+  background: transparent;
+  transition: 2s ease background;
+
+  z-index: -100;
 }

@@ -7,19 +7,11 @@ const FunSection = ({ channel, program }) => {
     <Section name="Confetti">
       <label>Confetti</label>
       <div className="flex">
-        <Button
-          handleClick={() => channel.setConfetti(true)}
-          disabled={program.settings.confetti}
-          name="On"
-        />
-        <Button
-          handleClick={() => channel.setConfetti(false)}
-          disabled={!program.settings.confetti}
-          name="Off"
-        />
+        <Button handleClick={() => channel.setConfetti(true)} disabled={program.settings.confetti} name="On" />
+        <Button handleClick={() => channel.setConfetti(false)} disabled={!program.settings.confetti} name="Off" />
       </div>
     </Section>
-  )
+  );
 };
 
 export default FunSection;

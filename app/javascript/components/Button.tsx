@@ -1,7 +1,7 @@
 import React from "react";
 
 const Button = ({ className = "", handleClick, name, disabled = false }) => (
-  <div className={className}>
+  <div className={"button " + className}>
     <input type="button" onClick={handleClick} value={name} disabled={disabled} />
   </div>
 );
