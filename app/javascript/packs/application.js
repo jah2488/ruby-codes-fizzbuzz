@@ -2,6 +2,8 @@ require("@rails/ujs").start();
 require("@rails/activestorage").start();
 require("channels");
 import ProgramChannel from "channels/program_channel";
+import * as confettijs from "confetti-js";
+import * as highlightjs from "highlight.js";
 import * as ActionCable from "@rails/actioncable";
 
 ActionCable.logger.enabled = true;
