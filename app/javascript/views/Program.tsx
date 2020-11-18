@@ -72,7 +72,10 @@ const Program = () => {
     } else {
       setError("Too many characters");
     }
-    setAddition(e.target.value);
+
+    const value = e.target.value.replace(/['`]/, "\"")
+
+    setAddition(value);
   };
 
   const _handleEnter = (e) => {
