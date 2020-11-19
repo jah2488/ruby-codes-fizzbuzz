@@ -4,7 +4,7 @@ class ProgramsController < ApplicationController
   def show
     program = Program.find(params.fetch(:id))
 
-    render json: program.view and return if request.headers["HTTP_RESPONSE_TYPE"] == "json"
+    render json: program.init_view and return if request.headers["HTTP_RESPONSE_TYPE"] == "json"
 
     cookies[:user_token] = current_user.token
 

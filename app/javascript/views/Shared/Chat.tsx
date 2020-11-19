@@ -105,6 +105,7 @@ const Chat = ({
             placeholder="Start Coding..."
             value={`${addition}`}
             autoFocus
+            autoComplete="off"
           />
           <Button
             className="button chat__field--submit mb-space-sm"

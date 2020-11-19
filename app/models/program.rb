@@ -104,9 +104,24 @@ class Program < ApplicationRecord
       code: code,
       chars: chars
         .select(:id, :name, :votes_count)
-        .order(name: :asc),
+        .order(id: :asc),
+      messages: messages_data,
+      tick: tick
+    }
+  end
+
+  def init_view
+    {
+      id: id,
+      name: name,
+      code: code,
+      chars: chars
+        .select(:id, :name, :votes_count)
+        .order(id: :asc),
       messages: messages_data,
       tick: tick,
+      mode: mode,
+      settings: settings
     }
   end
 

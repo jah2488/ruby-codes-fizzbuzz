@@ -35,6 +35,7 @@ const Program = () => {
       .then((response) => response.json())
       .then((program) => {
         const programChannel = ProgramChannel(program, setProgram);
+        
         setTimeout(() => {
           programChannel.message({ isCode: false, addition: "" });
         }, 500);
@@ -131,7 +132,7 @@ const Program = () => {
     document.getElementById("chatFieldInput").focus();
   };
 
-  if (!program || !program.id) return null;
+  if (!program || !program.id || !program.mode || !program.settings) return null;
   return (
     <>
       <canvas className={program.settings.confetti ? "confetti-on" : "confetti-off"} id="my-canvas"></canvas>
