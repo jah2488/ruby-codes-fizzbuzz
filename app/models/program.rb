@@ -101,14 +101,12 @@ class Program < ApplicationRecord
     {
       id: id,
       name: name,
-      mode: mode,
       code: code,
       chars: chars
         .select(:id, :name, :votes_count)
         .order(name: :asc),
       messages: messages_data,
       tick: tick,
-      settings: settings
     }
   end
 
