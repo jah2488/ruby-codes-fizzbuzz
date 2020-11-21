@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<!DOCTYPE tsung SYSTEM "/Users/justinherrick/.tsung/tsung-1.0.dtd">  
-<tsung loglevel="debug" version="1.0">
+<!DOCTYPE tsung SYSTEM "/Users/justinherrick/.tsung/tsung-1.0.dtd">
+<tsung loglevel="debug" backend="json" version="1.0">
   <clients>
     <client host="localhost" use_controller_vm="true" maxusers="60000"/>
   </clients>
@@ -9,9 +9,9 @@
     <server host="localhost" port="3000" type="tcp"/>
   </servers>
 
-  <load>
-    <arrivalphase phase="1" duration="1000" unit="second">
-      <users maxnumber="1500" arrivalrate="200" unit="second"/>
+  <load duration="5" unit="minute">
+    <arrivalphase phase="1" duration="10" unit="second">
+      <users maxnumber="500" arrivalrate="100" unit="second"/>
     </arrivalphase>
   </load>
 
@@ -31,11 +31,11 @@
         </websocket>
       </request>
 
-      <for var="i" from="1" to="1000" incr="1">
-        <thinktime min="10" max="60" random="true"/>
+      <for var="i" from="1" to="500" incr="1">
+        <thinktime min="1" max="2" random="true"/>
         <request subst="true">
           <websocket type="message" frame="text">
-            {"command":"message","identifier":"{\"channel\":\"ProgramChannel\",\"id\":1}","data":"{\"isCode\":true,\"addition\":\"hi\",\"action\":\"message\"}"}
+            {"command":"message","identifier":"{\"channel\":\"ProgramChannel\",\"id\":1}","data":"{\"isCode\":true,\"addition\":\"a\",\"action\":\"message\"}"}
           </websocket>
         </request>
       </for>

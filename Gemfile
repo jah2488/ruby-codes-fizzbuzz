@@ -17,6 +17,7 @@ gem 'rack-cors'
 gem 'rack-attack'
 gem 'barnes'
 gem 'newrelic_rpm'
+gem 'dotenv-rails'
 
 group :development, :test do
   gem 'pry-rails', "~> 0.3"

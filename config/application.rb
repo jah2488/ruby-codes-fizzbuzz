@@ -14,6 +14,7 @@ require "action_cable/engine"
 require "sprockets/railtie"
 
 Bundler.require(*Rails.groups)
+Dotenv::Railtie.load
 
 module Codetogether
   class Application < Rails::Application

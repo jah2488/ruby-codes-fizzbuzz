@@ -115,29 +115,27 @@ class ProgramChannel < ApplicationCable::Channel
     addition = data.fetch("addition")
     is_code = data.fetch("isCode")
 
-    program.messages.create(name: addition, is_code: is_code, user: current_user)
+    message = program.messages.create(
+      name: addition,
+      is_code: is_code,
+      user: current_user
+    )
 
     if is_code
-      char = program.chars.find_or_create_by(name: addition)
-      if program.anarchy?
-        program.with_lock do
-          program.process_addition(addition)
-        end
-      else
-        Vote.create(char: char)
-        if char.votes_count >= program.settings["vote_threshold"]
-          program.with_lock do
-            program.process_addition(addition)
-          end
-          program.chars.destroy_all
-        end
-      end
+      message_processor.enqueue({
+        id: message.id,
+        name: addition,
+        user: current_user,
+        program_id: program.id
+      })
     end
 
     ProgramChannel.broadcast_to(room, {
       action: :message,
-      data: program.view
+      data: program.reload.view
     })
+
+    message_processor.process
     evaluate_code
   end
 
@@ -153,6 +151,10 @@ class ProgramChannel < ApplicationCable::Channel
   end
 
   private
+  def message_processor
+    $message_process ||= MessageProcessor.new
+  end
+
   def current_program
     Program.includes(:entries, :messages).find(params.fetch(:id))
   end
