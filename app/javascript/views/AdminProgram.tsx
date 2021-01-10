@@ -1,5 +1,5 @@
 import ApiClient from "../lib/client/ApiClient";
-import { ProgramChannel } from "../channels/program_channel";
+import { AdminProgramChannel } from "../channels/admin_program_channel";
 import { Program } from "../lib/types/types";
 import React, { useEffect, useState } from "react";
 import ModeSection from "./Admin/ModeSection";
@@ -27,7 +27,7 @@ const AdminProgram = () => {
       .get(url)
       .then((response) => response.json())
       .then((program) => {
-        setChannel(ProgramChannel(program, setProgram));
+        setChannel(AdminProgramChannel(program, setProgram));
         setProgram(program);
       });
   }, []);
