@@ -1,7 +1,7 @@
 import React from "react";
 import Section from "../../components/Section";
 import NumberInput from "../../components/NumberInput";
-import { ProgramChannel } from "../../channels/program_channel";
+import { AdminProgramChannel } from "../../channels/admin_program_channel";
 
 const GeneralSettings = ({ channel, program }) => {
   return (
@@ -13,7 +13,7 @@ const GeneralSettings = ({ channel, program }) => {
 
 interface DebounceProps {
   debounceInterval: Number;
-  channel: ProgramChannel;
+  channel: AdminProgramChannel;
 }
 const DebounceInterval = ({ channel, debounceInterval }: DebounceProps) => (
   <div>

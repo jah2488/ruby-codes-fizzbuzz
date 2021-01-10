@@ -1,7 +1,7 @@
 import React from "react";
 import Section from "../../components/Section";
 import Button from "../../components/Button";
-import { ProgramChannel } from "../../channels/program_channel";
+import { AdminProgramChannel } from "../../channels/admin_program_channel";
 
 const PlayControlsSection = ({ channel, program }) => {
   return (
@@ -13,7 +13,7 @@ const PlayControlsSection = ({ channel, program }) => {
 
 interface PlayControlProps {
   current: PlayState;
-  channel: ProgramChannel;
+  channel: AdminProgramChannel;
 }
 type PlayState = "created" | "playing" | "paused";
 

@@ -112,7 +112,7 @@ const Chat = ({
             className="button chat__field--submit mb-space-sm"
             handleClick={() => _handleSubmit(addition)}
             disabled={debounce}
-            name="Send"
+            name={debounce ? "Sending..." : "Send"}
           />
         </div>
         <div className="chat__field--submit-wrapper">
