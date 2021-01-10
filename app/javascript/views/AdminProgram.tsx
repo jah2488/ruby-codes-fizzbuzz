@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import ModeSection from "./Admin/ModeSection";
 import DifficultySection from "./Admin/DifficultySection";
 import FunSection from "./Admin/FunSection";
+import GeneralSettings from "./Admin/GeneralSettings";
 import PlayControlsSection from "./Admin/PlayControlsSection";
 import RestartControlsSection from "./Admin/RestartControlsSection";
 import Row from "../components/Row";
@@ -52,6 +53,7 @@ const AdminProgram = () => {
             <ModeSection channel={channel} program={program} />
             <DifficultySection channel={channel} program={program} />
             <FunSection channel={channel} program={program} />
+            <GeneralSettings channel={channel} program={program} />
             <PlayControlsSection channel={channel} program={program} />
             <RestartControlsSection channel={channel} />
           </div>

@@ -17,6 +17,16 @@ class ProgramChannel < ApplicationCable::Channel
     end
   end
 
+  def set_debounce_interval(message)
+    current_program.update(settings: current_program.settings.merge({
+      debounce_interval: message["data"]
+    }))
+    ProgramChannel.broadcast_to(room, {
+      action: :tick,
+      data: current_program.tick_view
+    })
+  end
+
   def set_mode(message)
     current_program.update(
       mode: message["data"],

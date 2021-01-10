@@ -14,7 +14,8 @@ class Program < ApplicationRecord
         can_vote: false,
         vote_interval: VOTE_THRESHOLD[mode],
         vote_threshold: VOTE_THRESHOLD[mode],
-        confetti: false
+        confetti: false,
+        debounce_interval: 1
       }
     end
   end

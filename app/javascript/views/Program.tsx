@@ -22,6 +22,7 @@ const Program = () => {
   const [addition, setAddition] = useState("");
   const [error, setError] = useState("");
   const [confetti, setConfetti] = useState(false);
+  const [debounce, setDebounce] = useState(false);
 
   const cookies = parseCookies();
   const userToken = cookies.user_token;
@@ -80,7 +81,7 @@ const Program = () => {
   };
 
   const _handleEnter = (e) => {
-    if (e.key === Constants.ENTER) {
+    if (e.key === Constants.ENTER && !debounce) {
       _handleSubmit(addition);
     }
   };
@@ -127,6 +128,11 @@ const Program = () => {
       data.addition = val.substring(1);
     }
 
+    setDebounce(true)
+    setTimeout(() => {
+      setDebounce(false)
+    }, program.settings.debounce_interval * 1000);
+
     (channel as ProgramChannel).message(data);
     setAddition("");
     document.getElementById("chatFieldInput").focus();
@@ -160,6 +166,7 @@ const Program = () => {
             _handleInvisibilityToggle={_handleInvisibilityToggle}
             program={program}
             addition={addition}
+            debounce={debounce}
             error={error}
             userToken={userToken}
           />
