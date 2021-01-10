@@ -3,6 +3,7 @@ import consumer from "./consumer";
 
 export interface ProgramChannel {
   message: (msg: any) => void;
+  setDebounceInterval: (interval: number) => void;
   setMode: (mode: "Anarchy" | "Democracy") => void;
   setMaxInputMode: (mode: number) => void;
   setVoteInterval: (interval: number) => void;
@@ -53,6 +54,7 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
   );
   return {
     message: (msg: any) => sub.perform("message", msg),
+    setDebounceInterval: (interval: number) => sub.perform("set_debounce_interval", { data: interval }),
     setMode: (mode: "Anarchy" | "Democracy") => sub.perform("set_mode", { data: mode }),
     setMaxInputMode: (mode: number) => sub.perform("set_max_input_mode", { data: mode }),
     setVoteInterval: (interval: number) => sub.perform("set_vote_interval", { data: interval }),

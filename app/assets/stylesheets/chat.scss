@@ -107,6 +107,14 @@
   &--submit {
     height: 18px;
     align-self: baseline;
+    &.disabled input {
+      filter: grayscale(100%);
+      &:hover {
+        background: #b491c8;
+        filter: grayscale(100%);
+        cursor: unset;
+      }
+    }
     input {
       padding: 0.61rem;
       margin-left: 10px;

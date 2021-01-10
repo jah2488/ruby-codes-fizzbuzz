@@ -20,6 +20,7 @@ const Chat = ({
   _handleInvisibilityToggle,
   program,
   addition,
+  debounce,
   error,
   userToken,
 }) => {
@@ -97,12 +98,12 @@ const Chat = ({
         <div className="chat__field--input-wrapper">
           <span className={error ? " with-error" : ""}>{!isMessage ? remainingCharacters : "∞"}</span>
           <input
-            className={"chat__field--input " + (error ? " with-error" : "")}
+            className={`chat__field--input ${error ? "with-error" : ""}`}
             id="chatFieldInput"
             onInput={_handleInput(program)}
             onKeyDown={(e) => _handleEnter(e)}
             onChange={() => {}}
-            placeholder="Start Coding..."
+            placeholder={debounce ? "Please wait..." : "Start Coding..."}
             value={`${addition}`}
             autoFocus
             autoComplete="off"
@@ -110,6 +111,7 @@ const Chat = ({
           <Button
             className="button chat__field--submit mb-space-sm"
             handleClick={() => _handleSubmit(addition)}
+            disabled={debounce}
             name="Send"
           />
         </div>
