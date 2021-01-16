@@ -1,0 +1,3 @@
+broadcast_tick:
+  every: '1s'
+  class: TickBroadcastJob

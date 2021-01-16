@@ -17,6 +17,8 @@ gem 'rack-cors'
 gem 'rack-attack'
 gem 'barnes'
 gem 'newrelic_rpm'
+gem 'sidekiq'
+gem 'sidekiq-scheduler'
 
 group :development, :test do
   gem 'pry-rails', "~> 0.3"
