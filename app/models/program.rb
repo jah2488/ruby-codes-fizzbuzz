@@ -95,6 +95,10 @@ class Program < ApplicationRecord
       name: name,
       mode: mode,
       settings: settings,
+      chars: chars
+        .select(:id, :name, :votes_count)
+        .order(id: :asc),
+      tick: tick
     }
   end
 
@@ -108,6 +112,18 @@ class Program < ApplicationRecord
         .order(id: :asc),
       messages: messages_data,
       tick: tick
+    }
+  end
+
+  def message_view
+    {
+      id: id,
+      name: name,
+      code: code,
+      chars: chars
+        .select(:id, :name, :votes_count)
+        .order(id: :asc),
+      messages: messages_data
     }
   end
 

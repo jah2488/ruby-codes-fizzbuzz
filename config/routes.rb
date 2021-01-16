@@ -1,4 +1,8 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
+  
   resources :programs, only: [:show, :update] do
     member do
       put :clear

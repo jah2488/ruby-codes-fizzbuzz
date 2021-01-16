@@ -27,6 +27,7 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
         switch (action) {
           case "tick":
             console.debug("tick");
+            console.log(data)
             updateProgram({ ...program, ...data });
             break;
 

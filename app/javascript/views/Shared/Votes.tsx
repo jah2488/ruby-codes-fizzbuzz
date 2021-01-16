@@ -6,7 +6,7 @@ const Votes = ({ program, _handleSubmit, canVote = true }) => {
     <div className="vote-section">
       <ul className="vote-list">
         <h4>Choices</h4>
-        <div className="info">{program.settings.vote_threshold} Votes Needed</div>
+        <div className="info">{program.settings.vote_interval - program.tick} seconds left</div>
         {program &&
           program.chars &&
           program.chars
