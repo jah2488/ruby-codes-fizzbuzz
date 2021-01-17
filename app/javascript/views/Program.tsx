@@ -2,7 +2,7 @@ import _ from "lodash";
 import ApiClient from "../lib/client/ApiClient";
 import { Program } from "../lib/types/types";
 import { ProgramChannel } from "../channels/program_channel";
-import { parseCookies } from "../lib/helpers/helpers";
+import { parseCookies, isDisabled } from "../lib/helpers/helpers";
 import Filter from "../lib/helpers/filter";
 import React, { useEffect, useState } from "react";
 import Row from "../components/Row";
@@ -166,7 +166,7 @@ const Program = () => {
             _handleInvisibilityToggle={_handleInvisibilityToggle}
             program={program}
             addition={addition}
-            debounce={debounce}
+            isDisabled={isDisabled(program, debounce)}
             error={error}
             userToken={userToken}
           />

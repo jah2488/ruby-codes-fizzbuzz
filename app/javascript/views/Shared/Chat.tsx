@@ -20,7 +20,7 @@ const Chat = ({
   _handleInvisibilityToggle,
   program,
   addition,
-  debounce,
+  isDisabled,
   error,
   userToken,
 }) => {
@@ -103,7 +103,7 @@ const Chat = ({
             onInput={_handleInput(program)}
             onKeyDown={(e) => _handleEnter(e)}
             onChange={() => {}}
-            placeholder={debounce ? "Please wait..." : "Start Coding..."}
+            placeholder={isDisabled ? "Please wait..." : "Start Coding..."}
             value={`${addition}`}
             autoFocus
             autoComplete="off"
@@ -111,12 +111,12 @@ const Chat = ({
           <Button
             className="button chat__field--submit mb-space-sm"
             handleClick={() => _handleSubmit(addition)}
-            disabled={debounce}
-            name={debounce ? "Sending..." : "Send"}
+            disabled={isDisabled}
+            name={isDisabled ? "Wait" : "Send"}
           />
         </div>
         <div className="chat__field--submit-wrapper">
-          <Reference _handleSubmit={_handleSubmit} />
+          <Reference _handleSubmit={_handleSubmit} isDisabled={isDisabled} />
         </div>
       </div>
     </div>

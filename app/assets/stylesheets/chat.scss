@@ -232,6 +232,16 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
+
+  &.disabled {
+    .badge.clickable {
+      background: #ACACAC;
+      user-select: none;
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
+  }
 }
 
 .chat__output--text {

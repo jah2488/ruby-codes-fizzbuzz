@@ -36,6 +36,10 @@ class Program < ApplicationRecord
   def anarchy?
     mode.downcase == "anarchy"
   end
+ 
+  def playing?
+    settings["play_state"] == "playing"
+  end
   
   def code
     entries.order(id: :asc).pluck(:name).join
@@ -83,9 +87,6 @@ class Program < ApplicationRecord
     end
   end
 
-  def playing?
-    settings["play_state"] == "playing"
-  end
 
   def tick_view
     {
