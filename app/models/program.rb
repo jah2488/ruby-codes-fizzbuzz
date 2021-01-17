@@ -81,7 +81,7 @@ class Program < ApplicationRecord
 
   def process_addition(addition)
     case addition
-    when Entry::COMMANDS[:BACKSPACE] then entries.last.destroy
+    when Entry::COMMANDS[:BACKSPACE] then entries.last && entries.last.destroy
     else
       entries.create(name: Entry.formatted_name(addition))
     end
