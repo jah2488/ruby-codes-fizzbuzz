@@ -95,6 +95,7 @@ class Program < ApplicationRecord
       name: name,
       mode: mode,
       settings: settings,
+      code: code,
       chars: chars
         .select(:id, :name, :votes_count)
         .order(id: :asc),
