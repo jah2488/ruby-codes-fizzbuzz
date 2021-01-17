@@ -39,14 +39,14 @@ class ProgramChannel < ApplicationCable::Channel
         char = program.chars.find_or_create_by(name: addition)
         if program.anarchy?
           program.process_addition(addition)
-          ProgramChannel.broadcast_to(room, {
-            action: :message,
-            data: program.message_view
-          })
+          broadcast_message_view(program)
           evaluate_code
         else
           Vote.create(char: char)
+          broadcast_message_view(program)
         end
+      else
+        broadcast_message_view(program)
       end
     end
   end
@@ -58,5 +58,12 @@ class ProgramChannel < ApplicationCable::Channel
 
   def room
     "program_#{current_program.id}"
+  end
+
+  def broadcast_message_view(program)
+    ProgramChannel.broadcast_to(room, {
+      action: :tick,
+      data: program.message_view
+    })
   end
 end

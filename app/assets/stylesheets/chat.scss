@@ -280,6 +280,9 @@
 
   &.disabled {
     filter: grayscale(90%);
+    &:hover {
+      cursor: not-allowed;
+    }
   }
 
   &.clickable:hover {

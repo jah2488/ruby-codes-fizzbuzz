@@ -95,7 +95,7 @@ const Program = () => {
   };
 
   const _handleSubmit = (val) => {
-    if (val === "") return;
+    if (val === "" || debounce) return;
 
     if (Object.values(Constants.COMMANDS).includes(val) == false && val[0] !== Constants.CODE_KEY) {
       if (val.length > program.settings.max_input_mode) {
@@ -156,7 +156,12 @@ const Program = () => {
           <Output output={program.output} />
         </Col>
         {program.mode.toLowerCase() !== Constants.ANARCHY && (
-          <Votes _handleSubmit={_handleSubmit} program={program} canVote={program.settings.can_vote} />
+          <Votes
+            _handleSubmit={_handleSubmit}
+            program={program}
+            canVote={program.settings.can_vote}
+            debounce={debounce}
+          />
         )}
         <Col className="chat-sidebar">
           <Chat
