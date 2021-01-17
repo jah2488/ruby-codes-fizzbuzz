@@ -14,6 +14,8 @@ class TickBroadcastJob
             program.process_addition(char.name)
             program.chars.destroy_all
           end
+          Sidekiq::ScheduledSet.new.clear
+          Sidekiq::Queue.all.each(&:clear)
           broadcast_view_and_eval(program)
         end
       else
