@@ -31,6 +31,11 @@ const DebounceInterval = ({ channel, program, debounceInterval }: DebounceProps)
         value={debounceInterval}
       />
       <Button
+        handleClick={() => channel.setDebounceInterval(Number(0))}
+        disabled={program.settings.debounce_interval == 0}
+        name="0 second"
+      />
+      <Button
         handleClick={() => channel.setDebounceInterval(Number(1))}
         disabled={program.settings.debounce_interval == 1}
         name="1 second"
@@ -44,11 +49,6 @@ const DebounceInterval = ({ channel, program, debounceInterval }: DebounceProps)
         handleClick={() => channel.setDebounceInterval(Number(3))}
         disabled={program.settings.debounce_interval == 3}
         name="3 seconds"
-      />
-      <Button
-        handleClick={() => channel.setDebounceInterval(Number(4))}
-        disabled={program.settings.debounce_interval == 4}
-        name="4 seconds"
       />
     </div>
   </div>
