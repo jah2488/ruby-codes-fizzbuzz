@@ -20,12 +20,12 @@ class ProgramChannel < ApplicationCable::Channel
     puts "receive:#{data}"
   end
 
-  # def evaluate_code
-  #   ProgramChannel.broadcast_to(room, {
-  #     action: :output,
-  #     data: current_program.evaluate
-  #   })
-  # end
+  def evaluate_code
+    ProgramChannel.broadcast_to(room, {
+      action: :output,
+      data: current_program.evaluate
+    })
+  end
 
   def message(data)
     program = current_program
@@ -49,12 +49,6 @@ class ProgramChannel < ApplicationCable::Channel
         end
       end
     end
-
-    # ProgramChannel.broadcast_to(room, {
-    #   action: :message,
-    #   data: program.message_view
-    # })
-    # evaluate_code
   end
 
   private
