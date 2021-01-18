@@ -1,3 +1,6 @@
 broadcast_tick:
   every: '1s'
   class: TickBroadcastJob
+eval_code:
+  every: '3s'
+  class: EvalCodeJob

@@ -19,14 +19,7 @@ class ProgramChannel < ApplicationCable::Channel
   def receive(data)
     puts "receive:#{data}"
   end
-
-  def evaluate_code
-    ProgramChannel.broadcast_to(room, {
-      action: :output,
-      data: current_program.evaluate
-    })
-  end
-
+  
   def message(data)
     program = current_program
     addition = data.fetch("addition")
@@ -34,17 +27,14 @@ class ProgramChannel < ApplicationCable::Channel
 
     program.messages.create(name: addition, is_code: is_code, user: current_user)
     broadcast_message_view(program)
-    program.with_lock do
-      if is_code
-        char = program.chars.find_or_create_by(name: addition)
-        if program.anarchy?
-          program.process_addition(addition)
-          ProgramChannel.broadcast_to(room, { action: :tick, data: program.view })
-          evaluate_code
-        else
-          Vote.create(char: char)
-        end
-      end
+
+    return unless is_code
+
+    if program.anarchy?
+      program.process_addition(addition)
+      ProgramChannel.broadcast_to(room, { action: :tick, data: program.view })
+    else
+      Vote.create(char: program.chars.find_or_create_by(name: addition))
     end
   end
 
