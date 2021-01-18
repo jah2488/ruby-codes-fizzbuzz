@@ -30,7 +30,7 @@ class Program < ApplicationRecord
   end
 
   def self.running
-    self.active.where("settings ->> 'play_state' = :state", state: "playing", mode: "Democracy")
+    self.active.where(mode: "Democracy").where("settings ->> 'play_state' = :state", state: "playing")
   end
 
   def anarchy?
@@ -88,17 +88,17 @@ class Program < ApplicationRecord
   end
 
 
-  def tick_view
+  def admin_view
     {
-      id: id,
-      name: name,
       mode: mode,
       settings: settings,
-      code: code,
-      messages: messages_data,
-      chars: chars
-        .select(:id, :name, :votes_count)
-        .order(id: :asc),
+      tick: tick
+    }
+  end
+
+  def tick_view
+    {
+      chars: chars.select(:id, :name, :votes_count).order(id: :asc),
       tick: tick
     }
   end
@@ -108,22 +108,13 @@ class Program < ApplicationRecord
       id: id,
       name: name,
       code: code,
-      chars: chars
-        .select(:id, :name, :votes_count)
-        .order(id: :asc),
-      messages: messages_data,
+      chars: chars.select(:id, :name, :votes_count).order(id: :asc),
       tick: tick
     }
   end
 
   def message_view
     {
-      id: id,
-      name: name,
-      code: code,
-      chars: chars
-        .select(:id, :name, :votes_count)
-        .order(id: :asc),
       messages: messages_data
     }
   end
@@ -150,7 +141,6 @@ class Program < ApplicationRecord
       .joins(:user)
       .select(:id, :name, :is_code, :token, :color)
       .order(created_at: :desc)
-      .limit(50)
-      .reverse
+      .limit(25)
   end
 end

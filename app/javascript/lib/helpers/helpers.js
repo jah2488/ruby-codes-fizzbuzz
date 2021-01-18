@@ -10,5 +10,7 @@ export const parseCookies = () => {
 };
 
 export const isDisabled = (program, debounceHook) => {
-  return program.settings.vote_interval - program.tick < 2 || debounceHook;
+  return (
+    (program.mode.toLowerCase() === "democracy" && program.settings.vote_interval - program.tick < 2) || debounceHook
+  );
 };

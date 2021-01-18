@@ -68,7 +68,6 @@ const Program = () => {
       e.target.value.length <= program.settings.max_input_mode ||
       e.target.value.substr(0, 1) === Constants.CODE_KEY ||
       Object.values(Constants.COMMANDS).join("").includes(e.target.value)
-
     ) {
       setError("");
     } else {
@@ -81,7 +80,7 @@ const Program = () => {
   };
 
   const _handleEnter = (e) => {
-    if (e.key === Constants.ENTER && !debounce) {
+    if (e.key === Constants.ENTER) {
       _handleSubmit(addition);
     }
   };
@@ -95,7 +94,7 @@ const Program = () => {
   };
 
   const _handleSubmit = (val) => {
-    if (val === "" || debounce) return;
+    if (val === "" || isDisabled(program, debounce)) return;
 
     if (Object.values(Constants.COMMANDS).includes(val) == false && val[0] !== Constants.CODE_KEY) {
       if (val.length > program.settings.max_input_mode) {

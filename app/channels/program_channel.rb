@@ -33,25 +33,23 @@ class ProgramChannel < ApplicationCable::Channel
     is_code = data.fetch("isCode")
 
     program.messages.create(name: addition, is_code: is_code, user: current_user)
-
+    broadcast_message_view(program)
     program.with_lock do
       if is_code
         char = program.chars.find_or_create_by(name: addition)
         if program.anarchy?
           program.process_addition(addition)
-          broadcast_message_view(program)
+          ProgramChannel.broadcast_to(room, { action: :tick, data: program.view })
           evaluate_code
         else
           Vote.create(char: char)
-          broadcast_message_view(program)
         end
-      else
-        broadcast_message_view(program)
       end
     end
   end
 
   private
+
   def current_program
     Program.includes(:entries, :messages).find(params.fetch(:id))
   end
@@ -62,7 +60,7 @@ class ProgramChannel < ApplicationCable::Channel
 
   def broadcast_message_view(program)
     ProgramChannel.broadcast_to(room, {
-      action: :tick,
+      action: :message,
       data: program.message_view
     })
   end
