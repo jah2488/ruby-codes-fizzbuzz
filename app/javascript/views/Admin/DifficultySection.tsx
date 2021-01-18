@@ -29,28 +29,28 @@ const DifficultySection = ({ channel, program }) => {
               value={program.settings.vote_interval}
             />
             <Button
-              handleClick={() => channel.setVoteInterval(1)}
-              disabled={program.settings.vote_interval == 1}
-              name="1 sec"
+              handleClick={() => channel.setVoteInterval(10)}
+              disabled={program.settings.vote_interval == 10}
+              name="10 sec"
             />
             <Button
-              handleClick={() => channel.setVoteInterval(3)}
-              disabled={program.settings.vote_interval == 3}
-              name="3 sec"
+              handleClick={() => channel.setVoteInterval(15)}
+              disabled={program.settings.vote_interval == 15}
+              name="15 sec"
             />
             <Button
-              handleClick={() => channel.setVoteInterval(5)}
-              disabled={program.settings.vote_interval == 5}
-              name="5 sec"
+              handleClick={() => channel.setVoteInterval(30)}
+              disabled={program.settings.vote_interval == 30}
+              name="30 sec"
             />
             <Button
-              handleClick={() => channel.setVoteInterval(9)}
-              disabled={program.settings.vote_interval == 9}
-              name="9 sec"
+              handleClick={() => channel.setVoteInterval(45)}
+              disabled={program.settings.vote_interval == 45}
+              name="45 sec"
             />
           </div>
           <br />
-          <label>Vote Threshold</label>
+          {/* <label>Vote Threshold</label>
           <div className="flex">
             <NumberInput
               handleClick={(e) => channel.setVoteThreshold(Number(e.target.value))}
@@ -76,7 +76,7 @@ const DifficultySection = ({ channel, program }) => {
               disabled={program.settings.vote_threshold == 9}
               name="9 vote"
             />
-          </div>
+          </div> */}
         </>
       )}
     </Section>

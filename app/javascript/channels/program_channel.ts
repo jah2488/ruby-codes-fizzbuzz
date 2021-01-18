@@ -30,6 +30,10 @@ export const ProgramChannel = (program: Program, setProgram: (program: Program) 
             updateProgram({ ...program, ...data });
             break;
 
+          case "message":
+            updateProgram({ ...program, ...{ messages: data.messages.reverse() } });
+            break;
+
           case "output":
             console.debug(data)
             updateProgram({ ...program, ...{ output: data } });

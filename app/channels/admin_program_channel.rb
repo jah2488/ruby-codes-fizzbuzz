@@ -1,5 +1,5 @@
 class AdminProgramChannel < ApplicationCable::Channel
-  periodically :tick, every: 5.seconds
+  periodically :tick, every: 1.seconds
 
   def subscribed
     stream_for admin_room
@@ -11,7 +11,7 @@ class AdminProgramChannel < ApplicationCable::Channel
   def tick
     AdminProgramChannel.broadcast_to(admin_room, {
       action: :tick,
-      data: current_program.tick_view
+      data: current_program.admin_view
     })
   end
 
@@ -21,7 +21,7 @@ class AdminProgramChannel < ApplicationCable::Channel
     }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view
+      data: current_program.admin_view
     })
   end
 
@@ -35,7 +35,7 @@ class AdminProgramChannel < ApplicationCable::Channel
     )
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view
+      data: current_program.admin_view
     })
   end
 
@@ -45,7 +45,7 @@ class AdminProgramChannel < ApplicationCable::Channel
     }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view
+      data: current_program.admin_view
     })
   end
 
@@ -55,7 +55,7 @@ class AdminProgramChannel < ApplicationCable::Channel
     }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view
+      data: current_program.admin_view
     })
   end
 
@@ -65,7 +65,7 @@ class AdminProgramChannel < ApplicationCable::Channel
     }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view
+      data: current_program.admin_view
     })
   end
 
@@ -75,7 +75,7 @@ class AdminProgramChannel < ApplicationCable::Channel
     }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view
+      data: current_program.admin_view
     })
   end
 
@@ -85,7 +85,7 @@ class AdminProgramChannel < ApplicationCable::Channel
     }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view
+      data: current_program.admin_view
     })
   end
 
@@ -94,7 +94,7 @@ class AdminProgramChannel < ApplicationCable::Channel
       play_state: "paused" }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view
+      data: current_program.admin_view
     })
   end
 
@@ -103,7 +103,7 @@ class AdminProgramChannel < ApplicationCable::Channel
       play_state: "playing" }))
     ProgramChannel.broadcast_to(room, {
       action: :tick,
-      data: current_program.tick_view
+      data: current_program.admin_view
     })
   end
 
