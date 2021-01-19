@@ -3,6 +3,7 @@ class EvalCodeJob
 
   def perform
     Program.active.each do |program|
+      next if program.entries.empty?
       Rails.cache.fetch("#{program.id}-#{program.entries.last.id}", expires_in: 1.minute) do
         ProgramChannel.broadcast_to(room(program), {
           action: :output,
