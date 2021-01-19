@@ -4,7 +4,7 @@ class TickBroadcastJob
   def perform
     Program.running.each do |program|
       now = Time.zone.now
-      next if now - program.updated_at < 0.40
+      next if now - program.updated_at < 0.20
 
       if (program.tick + 1) > program.settings["vote_interval"]
         program.update(tick: 0)
@@ -19,8 +19,8 @@ class TickBroadcastJob
           broadcast_view(program)
         end
       else
-        broadcast_tick_view(program)
         program.update(tick: program.tick.succ)
+        broadcast_tick_view(program)
       end
     end
   end
