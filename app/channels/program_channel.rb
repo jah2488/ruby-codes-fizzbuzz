@@ -41,7 +41,7 @@ class ProgramChannel < ApplicationCable::Channel
   private
 
   def current_program
-    Program.includes(:entries, :messages).find(params.fetch(:id))
+    Program.find(params.fetch(:id))
   end
 
   def room
