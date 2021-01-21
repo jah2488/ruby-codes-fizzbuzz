@@ -98,7 +98,7 @@ class Program < ApplicationRecord
 
   def tick_view
     {
-      chars: chars.select(:id, :name, :votes_count).order(id: :asc),
+      chars: chars_data,
       tick: tick
     }
   end
@@ -108,7 +108,7 @@ class Program < ApplicationRecord
       id: id,
       name: name,
       code: code,
-      chars: chars.select(:id, :name, :votes_count).order(id: :asc),
+      chars: chars_data,
       tick: tick
     }
   end
@@ -124,9 +124,7 @@ class Program < ApplicationRecord
       id: id,
       name: name,
       code: code,
-      chars: chars
-        .select(:id, :name, :votes_count)
-        .order(id: :asc),
+      chars: chars_data,
       messages: messages_data,
       tick: tick,
       mode: mode,
@@ -136,9 +134,12 @@ class Program < ApplicationRecord
 
   private
 
+  def chars_data
+    chars.select(:id, :name, :votes_count).order(id: :asc)
+  end
+
   def messages_data
     messages
-      .joins(:user)
       .select(:id, :name, :is_code, :token, :color)
       .order(created_at: :desc)
       .limit(25)

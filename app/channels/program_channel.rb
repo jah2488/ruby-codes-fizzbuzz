@@ -25,7 +25,7 @@ class ProgramChannel < ApplicationCable::Channel
     addition = data.fetch("addition")
     is_code = data.fetch("isCode")
 
-    program.messages.create(name: addition, is_code: is_code, user: current_user)
+    program.messages.create(name: addition, is_code: is_code, user: current_user, token: current_user.token, color: current_user.color)
     broadcast_message_view(program)
 
     return unless is_code
