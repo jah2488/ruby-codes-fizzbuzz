@@ -55,6 +55,7 @@ class Program < ApplicationRecord
     "#{code}#{char.formatted_name}"
   end
 
+  # @see Program.max_input_modes
   def handle_backspace
     case settings["max_input_mode"]
     when Program.max_input_modes["char"] then code.split("", -1)[0..-3].join("")
@@ -66,6 +67,13 @@ class Program < ApplicationRecord
     # split(//, -1) is necessary to prevent over-deletion when the last character is a new-line
   end
 
+  ##
+  # Checks if the program is currently in a playing state.
+  #
+  # @return [Boolean] Returns true if the program's play state is "playing", false otherwise.
+  # @example
+  #   program = Program.first
+  #   program.playing?  # => true or false depending on the current play state
   def playing?
     settings["play_state"] == "playing"
   end
